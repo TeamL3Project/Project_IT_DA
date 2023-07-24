@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="kor">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../jQuery/jquery-3.7.0.js"></script>
+    <script>
+        // window.onload = function () {
+        //     var card = document.getElementsByClassName('card');
+        //     var count = 1;
+        //     setInterval(function () {
+        //         for (var i = 0; i < card.length; i++) {
+        //             card[i].style.transform = 'translate(' + ((i + count) % card.length) + '00%,0px)'
+        //         }
+        //         count++;
+        //     }, 3000)
+        //     // 무한 자동반복이동 로직
+        //     //             i      = 0    1   2   3| 0    1   2   3|0    1   2   3|0  1   2   3  |0   1   2   3  |0   1   2   3
+        //     //             count  =-2   -2  -2  -2|-1   -1  -1  -1|0    0   0   0|1  1   1   1  |2   2   2   2  |3   3   3   3
+        //     //             i+count=-2   -1   0   1|-1    0   1   2|0    1   2   3|1  2   3   4  |2   3   4   5  |3   4   5   6
+        //     // i+count%card.length=-2   -1   0   1|-1    0   1   2|0    1   2   3|1  2   3   0  |2   3   0   1  |3   0   1   2
+        //     //                     200  300  0  100 300  0  100 200       
+
+        // };                      -1
+        $(function () {
+            card = $('.card')
+            count = 1;
+            function rotate(){
+                for (let i = 0; i < card.length; i++) {
+                    rate = (i + count) % card.length;
+                    if(rate<0)
+                        rate = card.length+rate;
+                    card[i].style.transform = 'translate(' + rate + '00%,0px)'
+                }
+                count++;
+            };
+            function rotateReverse(){
+                for (let i = 0; i < card.length; i++) {
+                    rate = (i + count) % card.length;
+                    if(rate<0)
+                        rate = card.length+rate;
+                    card[i].style.transform = 'translate(' + rate + '00%,0px)'
+                }
+                count--;
+            };
+
+            setInterval(rotate, 10000);
+            // var left_button = document.getElementsByClassName('left-button')[0];
+            // left_button.addEventListener('click', prevCard());
+            $('.left-area').click(rotate);
+            
+            $('.right-area').click(rotateReverse);
+
+        });
+
+        // function prevCard(){
+        //     for (var i = 0; i < card.length; i++) {
+        //         if ((((i + count) % card.length)-1) == -1)
+        //             card[i].style.transform = 'translate(' + 10 + '00%,0px)';
+        //         else
+        //             card[i].style.transform = 'translate(' + (((i + count) % card.length)-1) + '00%,0px)';
+        //         }
+        // }
+
+        // 마우스 드래크 금지
+        document.addEventListener('mousedown', function (event) {
+            event.preventDefault();
+        });
+        document.addEventListener('dragstart', function (event) {
+            event.preventDefault();
+        });
+    </script>
+    <style>
+        body,
+        ul {
+            margin: 0;
+        }
+
+        .recommend_area {
+            position: relative;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .blind {
+            position: absolute;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+        }
+
+        .card {
+            list-style: none;
+            padding-left: 2em;
+
+            height: 465px;
+        }
+
+        .blur {
+            position: relative;
+            line-height: 1.5;
+            /* 줄 간격 설정 */
+            /* 글자 그라데이션 */
+            /* 가상 요소의 높이 설정 */
+            background: linear-gradient(to bottom, rgb(0, 0, 0), rgba(255, 255, 255, 1));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* 배경 그라데이션 설정 */
+            pointer-events: none;
+        }
+
+        .left-area {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: 3000;
+            margin: 0 auto;
+            top: 50%;
+            opacity: 0.9;
+        }
+
+        .right-area {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: 3000;
+            top: 50%;
+            right: 0%;
+            opacity: 0.9;
+        }
+
+        .left-area:hover,
+        .right-area:hover {
+            opacity: 1;
+        }
+
+        .left-button {
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid lightgray;
+            width: 36px;
+            height: 36px;
+            /* position: relative; */
+            top: 10px;
+            left: 10px;
+            background-image: url(../img_pro/left-arrow.png);
+            background-repeat: no-repeat;
+            background-position: 42% 50%;
+            background-size: 30%;
+        }
+
+        .right-button {
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid lightgray;
+            width: 36px;
+            height: 36px;
+            /* position: relative; */
+            top: 10px;
+            right: 10px;
+            background-image: url(../img_pro/right-arrow.png);
+            background-repeat: no-repeat;
+            background-position: 60% 50%;
+            background-size: 30%;
+        }
+        .recommend_area{
+            width: 100%;
+            height: 500px;
+            background-color: rgb(204, 204, 204,60%);
+            position: static;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="recommend_area">
+        <div class="left-area">
+            <button type="button" class="left-button"><span class="blind">이전</span></button>
+        </div>
+        <div class="right-area">
+            <button type="button" class="right-button"><span class="blind">다음</span></button>
+        </div>
+        <ul
+            style="position: relative; overflow: hidden; touch-action: pan-y; background-color: rgb(204, 204, 204,60%); height: 400px;">
+            <div
+                style="position: relative; z-index: 2000; width: 100%; height: 100%; top: 0px; transform: translate(-1600px, 0px); will-change: transform;">
+                <li class="card" style="position: absolute; transform: translate(0% , 0px);">
+                    <a href="https://www.naver.com">
+                        <img src="../img_pro/1.jpg" style="width: 320px; height: 100%;">
+                        <p><span class="blind">test</span></p>
+                    </a>
+                </li>
+                <li class="card" style="position: absolute; transform: translate(100% , 0px);"><img
+                        src="../img_pro/2.jpg" style="width: 320px; height: 100%;"></li>
+                <p></p>
+                <li class="card" style="position: absolute; transform: translate(200% , 0px);">
+                    <img src="../img_pro/3.jpg" style="width: 320px; height: 100%;">
+                </li>
+                <p></p>
+                <li class="card" style="position: absolute; transform: translate(300% , 0px);">
+                    <img src="../img_pro/4.jpg" style="width: 320px; height: 100%;">
+                </li>
+                <p></p>
+                <li class="card" style="position: absolute; transform: translate(400% , 0px);">
+                    <img src="../img_pro/5.jpg" style="width: 320px; height: 100%;">
+                </li>
+                <p></p>
+                <li class="card" style="position: absolute; transform: translate(500% , 0px);">
+                    <img src="../img_pro/6.jpg" style="width: 320px; height: 100%;">
+                </li>
+                <p></p>
+                <li class="card" style="position: absolute; transform: translate(600% , 0px);">
+                    <img src="../img_pro/7.jpg" style="width: 320px; height: 100%;">
+                </li>
+                <p></p>
+                <li class="card" style="position: absolute; transform: translate(700% , 0px);">
+                    <img src="../img_pro/8.jpg" style="width: 320px; height: 100%;">
+                </li>
+                <p></p>
+                <li class="card" style="position: absolute; transform: translate(800% , 0px);">
+                    <img src="../img_pro/9.jpg" style="width: 320px; height: 100%;">
+                </li>
+                <p></p>
+                <li class="card" style="position: absolute; transform: translate(900% , 0px);">
+                    <img src="../img_pro/10.jpg" style="width: 320px; height: 100%;">
+                </li>
+                <p></p>
+                <li class="card" style="position: absolute; transform: translate(1000% , 0px);">
+                    <img src="../img_pro/11.jpg" style="width: 320px; height: 100%;">
+                </li>
+            </div>
+        </ul>
+        <div class="card-nav-bar">
+            
+        </div>
+    </div>
+    <hr>
+    <hr>
+    <div class="blur">
+        <span class="blur-last-line">
+            This is some text. This is the last line that will appear blurred. <br>
+            그라데이션 + 마우스 우클릭 금지 + 드레그 금지
+        </span>
+    </div>
+
+
+</body>
+
+</html>
