@@ -1,3 +1,9 @@
+/*comment tag*/
+a{
+    text-decoration: none!important;
+    color: #01273C!important;
+}
+
 /*header.jsp*/
 .backyard {
     width: 100%;
@@ -18,7 +24,6 @@
     left: 100px;
 }
 
-
 #right_btns {
     float: right;
     display: flex;
@@ -30,27 +35,31 @@
 }
 
 #right_btns li {
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 #search_btn {
     width: 100px;
     height: 50px;
+    cursor: pointer;
 
 }
-#join_btn {
-    width: 100px;
-    height: 50px;
-}
+
 #login_btn {
     width: 100px;
     height: 50px;
 }
 
+#login_btn:hover {
+    background: #FBD1A7;
+    color: #01273C;
+    opacity: 0.8;
+    border: 1px solid #FBD1A7;
+}
 /*top.jsp*/
 .backyard2 {
     width: 100%;
-    /*background: rgb(204, 204, 204);*/
+    background: rgb(204, 204, 204);
     display: flex;
     justify-content: center;
 }
@@ -67,13 +76,15 @@
     color: rgb(251, 209, 167);
     position: relative;
     right: 20px;
-    top: 10px;
+    top: 5px;
 }
 
 #join_seller:hover {
-    background: rgb(251, 209, 167);
-    color: white;
-    border: 2px solid white;
+    background: #FBD1A7;
+    color: #01273C;
+    opacity: 0.8;
+    border: 1px solid black;
+
 }
 
 #title {
@@ -85,9 +96,11 @@
     text-align: center;
     color: rgb(251, 209, 167);
 }
+
 /*rotate*/
 body
 {
+    width: 100%;
     margin: 0;
     background-color: rgb(204, 204, 204, 60%);
 }
@@ -117,7 +130,7 @@ body
     height: 400px;
     margin: 0 auto;
     padding: 0;
-    z-index: 2000;
+    z-index: 1000;
 }
 
 .blind {
@@ -141,7 +154,7 @@ body
     background-color: inherit;
 }
 .card-view{
-    border-radius: 30px;
+    border-radius: 15px;
     height:99%;
     width: 100%;
     overflow: hidden;
@@ -157,8 +170,7 @@ body
 .left-area {
     display: block;
     position: absolute;
-    z-index: 3000;
-    margin: 0 auto;
+    z-index: 1010;
     top: 0;
     bottom: 0;
     right: auto;
@@ -170,7 +182,7 @@ body
 .right-area {
     display: block;
     position: absolute;
-    z-index: 3000;
+    z-index: 1010;
     top: 0;
     bottom: 0;
     margin: auto 0;
@@ -190,7 +202,7 @@ body
     border: 1px solid lightgray;
     width: 36px;
     height: 36px;
-    background-image: url(../img_pro/left-arrow.png);
+    background-image: url(../image/common/left-arrow.png);
     background-repeat: no-repeat;
     background-position: 42% 50%;
     background-size: 30%;
@@ -202,61 +214,59 @@ body
     border: 1px solid lightgray;
     width: 36px;
     height: 36px;
-    background-image: url(../img_pro/right-arrow.png);
+    background-image: url(../image/common/right-arrow.png);
     background-repeat: no-repeat;
     background-position: 60% 50%;
     background-size: 30%;
 }
 
-.card_nav_bar {
-    position: relative;
-    align-items: center;
-    justify-content: space-between;
-    width: 410px;
-    height: 22px;
-    margin: 0 auto;
-    padding-top: 25px;
-    pointer-events: none;
-    transition: transform 0.3s ease;
-}
+/*.card_nav_bar {*/
+/*    position: relative;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    width: 410px;*/
+/*    height: 22px;*/
+/*    margin: 0 auto;*/
+/*    padding-top: 25px;*/
+/*    pointer-events: none;*/
+/*    transition: transform 0.3s ease;*/
+/*}*/
 
-.card_nav_icon {
-    color: rgba(1, 0, 0, 0);
-    position: relative;
-    display: inline-block;
-    background-image: url(../img_pro/rotate_icon.png);
-    background-size: 24px 14px;
-    background-repeat: no-repeat;
-    background-position: 0;
-    flex: none;
-    width: 12.2px;
-    height: 15px;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-.card_nav_icon.on {
-    position: relative;
-    display: inline-block;
-    background-image: url(../img_pro/rotate_icon.png);
-    background-size: 28.8px 14.4px;
-    background-repeat: no-repeat;
-    background-position: -14.4px 0px;
-    width: 14.4px;
-    height: 15px;
-}
+/*.card_nav_icon {*/
+/*    color: rgba(1, 0, 0, 0);*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*    background-image: url(../image/common/rotate_icon.png);*/
+/*    background-size: 24px 14px;*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: 0;*/
+/*    flex: none;*/
+/*    width: 12.2px;*/
+/*    height: 15px;*/
+/*    margin-left: 20px;*/
+/*    margin-right: 20px;*/
+/*}*/
+/*.card_nav_icon.on {*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*    background-image: url(../img_pro/rotate_icon.png);*/
+/*    background-size: 28.8px 14.4px;*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: -14.4px 0;*/
+/*    width: 14.4px;*/
+/*    height: 15px;*/
+/*}*/
 /*footer.jsp*/
 .footer{
-    position: absolute;
-    top: 100%;
+    position: relative;
     background: #01273C;
     width: 100%;
 }
 .footer-container{
     height: 100%;
-
     justify-content: left;
-    padding: 30px 30px 0 30px;
-    padding-bottom: 10px;
+    padding: 30px 30px 10px 30px;
+    /*padding-bottom: 10px;*/
 }
 .footer-row{
     width: 180px;
@@ -268,3 +278,25 @@ body
     color: #c9c9c9!important;
 }
 
+
+/*popular-list.jsp*/
+.bt-item {
+    margin: 0 5px;
+    color: #01273C;
+    font-weight: bold;
+    border-radius: 12px;
+    border: 1px solid #01273C;
+    width: 5em;
+    font-size: 15px;
+    text-align: center;
+    line-height: 18px;
+    opacity: 0.8;
+}
+.bt-hover:hover, .on ,.bt-on {
+    background: #FBD1A7;
+    color: #01273C;
+    border: 1px solid #FBD1A7;
+}
+.bt-item:active{
+    border: none;
+}
