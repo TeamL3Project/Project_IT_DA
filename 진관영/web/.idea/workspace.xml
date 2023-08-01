@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e94b4418-b423-4a96-baa0-40983dec8074" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/channel/test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/mainpage.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/common/itda_ logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/common/itda_logo2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/common/profile.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/common/search.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/common/test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/main/text" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/image/test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/protomain.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/test" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="2TNYGb2ncyujxv2D6elFuGO7YAV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "1.8",
+    "last_opened_file_path": "D:/Project_IT_DA/진관영/web/main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "onboarding.tips.debug.path": "D:/Project_IT_DA/진관영/web/src/Main.java",
+    "project.structure.last.edited": "패싯",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.20114942",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project_IT_DA\진관영\web\main" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Project_IT_DA\진관영\web\css" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
+      <setting name="path" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workDir" value="file://$PROJECT_DIR$" />
+      <setting name="debug" value="false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="e94b4418-b423-4a96-baa0-40983dec8074" name="변경" comment="" />
+      <created>1690884915038</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1690884915038</updated>
+      <workItem from="1690884916046" duration="314000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Main.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
