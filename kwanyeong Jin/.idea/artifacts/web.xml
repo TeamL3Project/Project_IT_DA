@@ -9,6 +9,7 @@
       </element>
       <element id="dir-copy" path="$PROJECT_DIR$/web" />
       <element id="javaee-facet-resources" facet="kwanyeong Jin/javaeeApplication/javaEEApplication" />
+      <element id="javaee-facet-resources" facet="kwanyeong Jin/web/Web" />
     </root>
   </artifact>
 </component>
