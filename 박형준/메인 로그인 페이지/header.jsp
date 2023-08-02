@@ -56,11 +56,11 @@
 <div class="backyard">
 <nav id="navbody">
 	<!-- 왼쪽 상단 로고 링크 -->
-	<a id="logo-brand" href="main.jsp"><img src="../image/itda2.png" style="width: 100px; height: auto;"></a>	
+	<a id="logo-brand" href="main.jsp"><img src="../image/common/itda_logo.png" style="width: 100px; height: auto;"></a>	
 	<ul id="right_btns">
     	<li id="search">
 	      	<a id="search_btn" onclick="location.href='search.jsp'">
-		  		<img src="../image/search.png" style="width: 30px; height: auto;">
+		  		<img src="../image/common/search.png" style="width: 30px; height: auto;">
 		  	</a>
 		</li>
 		
@@ -70,7 +70,7 @@
 	%>
 	
 		<!-- 로그인이 되어 있는 경우 프로필사진 출력 -->
-		<div id="login_img"><a class="nav-link" href="mypage.jsp"><img src="/../image/profile.png"></a></div>
+		<div id="login_img"><a class="nav-link" href="mypage.jsp"><img src="/../image/common/profile.png"></a></div>
 		<div id="logout_tg"><a class="nav-link" href="logout.jsp">로그아웃</a></div>
 		
 	<%
@@ -110,7 +110,7 @@
 						</p>
 						<div style="float: right">
 							<a class="find_account" href="account.jsp"
-								style="color: black; font-size: 8px;">아이디 찾기·비밀번호 찾기</a>
+								style="color: black; font-size: 8px;">아이디·비밀번호 찾기</a>
 						</div><br><br>
 						<div style="text-align:center; margin:auto;">
 						<button type="submit" class="btn" style="color: white;
@@ -119,7 +119,7 @@
 						</div>
 					</div>
 					<div class="modal-footer" style="text-align: center; border: none;">
-						<a class="modal_join" href="join.jsp" style="color: black;
+						<a class="modal_join" style="color: black; disabled
 								text-align: center; margin: auto 0px auto auto;">아이디가 없으신가요?</a>&nbsp;
 						<a class="modal_join" href="join.jsp" style="color: black;
 							text-decoration: underline; text-align: center; margin: auto auto auto 0px;;">회원가입</a>
