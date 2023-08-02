@@ -4,11 +4,17 @@
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="lib">
-          <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="activation-1.1" />
+          <element id="library" level="project" name="cos" />
+          <element id="library" level="project" name="gson-2.10.1" />
+          <element id="library" level="project" name="javax.jms" />
+          <element id="library" level="project" name="javax.resource" />
+          <element id="library" level="project" name="javax.servlet-api-4.0.1" />
+          <element id="library" level="project" name="jstl-1.2" />
+          <element id="library" level="project" name="ojdbc6" />
         </element>
       </element>
       <element id="dir-copy" path="$PROJECT_DIR$/web" />
-      <element id="javaee-facet-resources" facet="kwanyeong Jin/javaeeApplication/javaEEApplication" />
       <element id="javaee-facet-resources" facet="kwanyeong Jin/web/Web" />
     </root>
   </artifact>
