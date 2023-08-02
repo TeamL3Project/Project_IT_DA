@@ -35,6 +35,7 @@
                 console.log('test');
                 $(this).addClass('on').css("box-shadow", "none");
             });
+
         });
     </script>
 </head>
