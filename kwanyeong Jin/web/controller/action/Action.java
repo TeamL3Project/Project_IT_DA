@@ -1,4 +1,5 @@
-package web.study.webpages_ajax.net.member.action;
+package controller.action;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

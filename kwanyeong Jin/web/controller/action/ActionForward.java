@@ -1,4 +1,4 @@
-package web.study.webpages_ajax.net.member.action;
+package controller.action;
 
 public class ActionForward {
 	private boolean redirect=false;

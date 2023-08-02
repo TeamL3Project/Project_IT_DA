@@ -1,4 +1,5 @@
-package controller.member;
+package controller.content;
+
 
 import controller.action.*;
 
@@ -8,27 +9,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-
-@WebServlet("*.me")
-public class MemberFrontController extends HttpServlet {
+@WebServlet("*.co")
+public class ContentFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String RequestURI = request.getRequestURI();
-		System.out.println("RequestURI = " + RequestURI);
+		String requestuestURI = request.getRequestURI();
+		System.out.println("RequestURI = " + requestuestURI);
 		String contextPath = request.getContextPath();
 		System.out.println("contextPath = " + contextPath);
-		int lastURI = RequestURI.lastIndexOf('/');
-		String command = RequestURI.substring(lastURI);
+		int lastURI = requestuestURI.lastIndexOf('/');
+		String command = requestuestURI.substring(lastURI);
 		System.out.println(command);
 
 		ActionForward forward = null;
 		Action action = null;
 
 		switch (command) {
-			case "/login.me":
+			case "/login.co":
 //				action = new MemberLoginAction();
 				break;
+
 		}
 		forward = action.execute(request, response);
 		if (forward != null) {
@@ -41,13 +42,13 @@ public class MemberFrontController extends HttpServlet {
 		}
 	}
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doProcess(req,resp);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request,response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("utf-8");
-		doProcess(req,resp);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		doProcess(request,response);
 	}
 }

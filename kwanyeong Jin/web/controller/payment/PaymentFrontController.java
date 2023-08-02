@@ -1,6 +1,7 @@
-package controller.member;
+package controller.payment;
 
-import controller.action.*;
+import controller.action.Action;
+import controller.action.ActionForward;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,8 +10,8 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 
-@WebServlet("*.me")
-public class MemberFrontController extends HttpServlet {
+@WebServlet("*.pay")
+public class PaymentFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

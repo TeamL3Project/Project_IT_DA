@@ -1,4 +1,9 @@
 /*comment tag*/
+body {
+    width: 100%;
+    margin: 0;
+    background-color: rgb(204, 204, 204, 60%);
+}
 a {
     text-decoration: none !important;
     color: #01273C !important;
@@ -123,12 +128,6 @@ a {
 }
 
 /*rotate*/
-body {
-    width: 100%;
-    margin: 0;
-    background-color: rgb(204, 204, 204, 60%);
-}
-
 .recommend_area {
     width: 100%;
     height: 500px;

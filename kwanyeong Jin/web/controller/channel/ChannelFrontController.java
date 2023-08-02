@@ -1,4 +1,4 @@
-package controller.member;
+package controller.channel;
 
 import controller.action.*;
 
@@ -8,16 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-
-@WebServlet("*.me")
-public class MemberFrontController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@WebServlet("*.chl")
+public class ChannelFrontController extends HttpServlet {
+	private static final long serialVersionUID = 2L;
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String RequestURI = request.getRequestURI();
-		System.out.println("RequestURI = " + RequestURI);
-		String contextPath = request.getContextPath();
-		System.out.println("contextPath = " + contextPath);
 		int lastURI = RequestURI.lastIndexOf('/');
 		String command = RequestURI.substring(lastURI);
 		System.out.println(command);
@@ -26,28 +22,32 @@ public class MemberFrontController extends HttpServlet {
 		Action action = null;
 
 		switch (command) {
-			case "/login.me":
-//				action = new MemberLoginAction();
+			case "/BoardList.chl":
+//				action = new BoardListAction();
 				break;
+
 		}
+
 		forward = action.execute(request, response);
 		if (forward != null) {
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());
 			} else {
 				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
+				System.out.println(forward.getPath());
 				dispatcher.forward(request, response);
 			}
 		}
 	}
+
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doProcess(req,resp);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("utf-8");
-		doProcess(req,resp);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("test/html;charset=utf-8");
+		doProcess(request, response);
 	}
 }
