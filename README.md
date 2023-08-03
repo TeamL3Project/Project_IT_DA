@@ -6,11 +6,11 @@
 깃 배쉬 창에서 순서대로 명령어 실행<br>  
 @처음 연결하는 경우@<br>
 git remote a https://github.com/TeamL3Project/Project_IT_DA.git    
-  - 깃 원격 저장소 연결 (a는 임의의 값, 기억만 하면 마음대로 해도 상관없음)<br>
+  > 깃 원격 저장소 연결 (a는 임의의 값, 기억만 하면 마음대로 해도 상관없음)<br>
 git pull a main                                                    
-  - main 브랜치의 자료들을 pull해옴<br>
+   main 브랜치의 자료들을 pull해옴<br>
 git branch 브랜치이름                                               
-  - 자신이 앞으로 쓸 브랜치 이름 지정, 생성 (처음 설정하고 나면 배쉬가 계속 기억함)<br>
+   자신이 앞으로 쓸 브랜치 이름 지정, 생성 (처음 설정하고 나면 배쉬가 계속 기억함)<br>
 <br><br>
 
 *fatal: refusing to merge unrelated histories 가 떴을때<br>
