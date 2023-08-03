@@ -3,7 +3,7 @@
 자기가 작업할때 사용하는 워크스페이스 폴더 -> 프로젝트 이름 -> src -> main 으로 이동
 폴더에서 webapp이 보이는 상태에서 마우스 오른쪽 클릭 git bash 실행
 
-깃 배쉬 창에서 순서대로 명령어 실행
+깃 배쉬 창에서 순서대로 명령어 실행\n
 @처음 연결하는 경우@
 git remote a https://github.com/TeamL3Project/Project_IT_DA.git     깃 원격 저장소 연결 (a는 임의의 값, 기억만 하면 마음대로 해도 상관없음)
 git pull a main                                                     main 브랜치의 자료들을 pull해옴
