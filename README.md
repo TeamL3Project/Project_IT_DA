@@ -5,7 +5,7 @@
 <br>
 깃 배쉬 창에서 순서대로 명령어 실행<br>  
 @처음 연결하는 경우@<br>
-git remote a https://github.com/TeamL3Project/Project_IT_DA.git    <br>
+git remote add a https://github.com/TeamL3Project/Project_IT_DA.git    <br>
    깃 원격 저장소 연결 (a는 임의의 값, 기억만 하면 마음대로 해도 상관없음)<br>
 git pull a main                                                    
    main 브랜치의 자료들을 pull해옴<br>
