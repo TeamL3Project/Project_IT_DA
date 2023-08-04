@@ -7,5 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface Action {
-	 ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
+	 ActionForward execute(HttpServletRequest request, HttpServletResponse response)
+			 													throws ServletException, IOException;
 }
