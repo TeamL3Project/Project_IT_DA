@@ -2,7 +2,7 @@
 body {
     width: 100%;
     margin: 0;
-    background-color: rgb(204, 204, 204, 60%);
+    /*background-color: rgb(204, 204, 204, 60%);*/
 }
 a {
     text-decoration: none !important;
