@@ -23,9 +23,9 @@ public class MemberDAO {
 	}
 
 
-
+	int result = -1;
 	public int isuserId(String userId, String userPw) {			//로그인 시 id와 pw가 있는지 확인
-		int result = -1;
+		
 		String sql = "select userId, userPw from itda_user where userId = ? ";
 		
 		try (Connection con = ds.getConnection();
@@ -56,7 +56,7 @@ public class MemberDAO {
 
 
 	public int isuserId(String userId) {	//회원가입 중 중복확인버튼 클릭시 db와 비교해 userId가 있는지 확인
-		int result = -1;
+		
 		String sql = "select uesrId from itda_user where userId = ? ";
 		
 		try (Connection con = ds.getConnection();
@@ -87,10 +87,10 @@ public class MemberDAO {
 		String sql = "insert into itda_user "
 				   + "(userId, userPw, userName, userBirth, userGender, userPhone, "
 				   + "userAddress1, userAddress2, userPost, userEmail, userCategory, "
-				   + "userJoindate, statusId, updateDate) "
+				   + "userJoindate, statusId) "
 				   + "values(?,?,?,?,?,? "
 				   + "?,?,?,?,?,"
-				   + "sysdate, 1, sysdate)";
+				   + "sysdate, 1)";
 		
 		try(Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
@@ -107,7 +107,6 @@ public class MemberDAO {
 			pre.setString(10, m.getUserEmail());		//userEmail
 			pre.setString(11, m.getUserCategory());		//userCategory
 			pre.setInt(12, m.getUserJoindate());		//userJoindate
-			pre.setInt(13, m.getUpdateDate());			//updateDate
 			
 			result = pre.executeUpdate();
 			if (result == 1) {
@@ -117,6 +116,23 @@ public class MemberDAO {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		return result;
+	}
+
+
+
+	public String loginok(String loginId) {
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		return result;
