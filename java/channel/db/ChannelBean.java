@@ -1,4 +1,4 @@
-package channel.db;
+package Channel.DB;
 
 public class ChannelBean {
 	private int chnum; // 채널번호

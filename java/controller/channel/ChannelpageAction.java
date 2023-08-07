@@ -8,8 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import channel.db.ChannelBean;
-import channel.db.ChannelDAO;
+import Channel.DB.ChannelBean;
+import Channel.DB.ChannelDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
 

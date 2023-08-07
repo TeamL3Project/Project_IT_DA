@@ -1,4 +1,4 @@
-package channel.db;
+package Channel.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

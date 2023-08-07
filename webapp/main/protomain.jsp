@@ -70,7 +70,7 @@
     </div>
 </div>
 <hr>
-<jsp:include page="pop_channel_list.jsp"/>
+<jsp:include page="channelList.jsp"/>
 <jsp:include page="pop_con_list.jsp"/>
 <jsp:include page="footer.jsp"/>
 </body>

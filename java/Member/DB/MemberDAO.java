@@ -24,13 +24,13 @@ public class MemberDAO {
 
 
 	int result = -1;
-	public int isuserId(String userId, String userPw) {			//로그인 시 id와 pw가 있는지 확인
-		
+	public int isuserId(String userId, String userPw) {            //로그인 시 id와 pw가 있는지 확인
+
 		String sql = "select userId, userPw from itda_user where userId = ? ";
-		
+
 		try (Connection con = ds.getConnection();
-			PreparedStatement pre = con.prepareStatement(sql);) {
-			
+			 PreparedStatement pre = con.prepareStatement(sql);) {
+
 			pre.setString(1, userId);
 			try (ResultSet rs = pre.executeQuery()) {
 				if (rs.next()) {
@@ -45,7 +45,8 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		return result;
+	}
 
 	public int isuserId(String userId) {	//회원가입 중 중복확인버튼 클릭시 db와 비교해 userId가 있는지 확인
 		

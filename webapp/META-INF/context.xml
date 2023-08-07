@@ -1,5 +1,4 @@
-<!-- bind to grammar/schema... -->
-<Context> 
+<Context>
   <Resource 
    name="jdbc/OracleDB" 
    auth="Container"
