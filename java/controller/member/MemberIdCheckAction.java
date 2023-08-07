@@ -17,7 +17,7 @@ public class MemberIdCheckAction implements Action {
 														throws ServletException, IOException {
 		MemberDAO dao = new MemberDAO();
 		
-		int result = dao.isuserId(request.getParameter("userId"));
+		int result = dao.isuserId(request.getParameter("userId"), request.getParameter("userPw"));
 		
 		response.getWriter().print(result);
 		System.out.println(result);

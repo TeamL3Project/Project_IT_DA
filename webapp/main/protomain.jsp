@@ -21,8 +21,7 @@
     <div class="recommend_bar">
         <button type="button" class="left-button left-area"><span class="blind">이전</span></button>
         <ul class="recommend_cards">
-            <div
-                    style="position: relative; z-index: 1000; width:100%; height: 100%; top: 0px; transform: translate(-200px, 0px); will-change: transform;">
+            <div style="position: relative; z-index: 1000; width:100%; height: 100%; top: 0px; transform: translate(-200px, 0px); will-change: transform;">
                 <li class="reco_card" style="position: absolute; transform: translate(0% , 0px);">
                     <div class="card-view">
                         <a style="text-decoration: none; color: black" href="https://www.naver.com">

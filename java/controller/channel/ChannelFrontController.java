@@ -23,7 +23,7 @@ public class ChannelFrontController extends HttpServlet {
 
 		switch (command) {
 			case "/BoardList.chl":
-//				action = new BoardListAction();
+				action = new ChannelListAction();
 				break;
 
 		}
