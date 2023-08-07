@@ -8,11 +8,11 @@
             // 현재 스크롤 위치 계산
             const currentScrollPosition = $(window).scrollTop();
             // 스크롤 위치가 맨 바닥인지 확인
-            $(".recommend_area").append($(window).height()+" / "+currentScrollPosition +" / "+ totalHeight + "<br>");
-
-            if (currentScrollPosition + 1188>= totalHeight-1) {
+            if (currentScrollPosition + 1188>= totalHeight) {
                 // 맨 바닥에 도달한 경우 수행할 동작
-                $(".popular-list-cards").append(currentScrollPosition+$(window).height()+" / " + totalHeight+ " / test<br><br><br><br><br><br><br><br><br><br><br><br>test<br>")
+                setInterval( $(".popular-list-cards").append(currentScrollPosition+$(window).height()+" / " + totalHeight+ " / test<br><br><br><br><br><br><br><br><br><br><br><br>test<br>")
+                    , 3000);
+
 
                 // 여기에 원하는 동작을 추가하면 됩니다.
             }
