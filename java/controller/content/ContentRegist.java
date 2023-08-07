@@ -13,7 +13,6 @@ public class ContentRegist implements Action {
 
     @Override
     public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ActionForward forward = new ActionForward();
 
         ContentDAO dao = new ContentDAO();
         Content con = new Content();

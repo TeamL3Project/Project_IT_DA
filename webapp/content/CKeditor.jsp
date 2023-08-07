@@ -1,4 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<html>
+<head>
+    <title>Title</title>
     <style>
         .ck-editor__editable {
             height: 400px;
@@ -7,9 +11,15 @@
             width: 300px;
         }
     </style>
-
+</head>
 <script src="ckeditor5/build/ckeditor.js"></script>
-
+<body>
+<h1>CKEditor</h1>
+<form action="contentregit.co" method="POST">
+    <textarea name="text" id="editor"></textarea>
+    <input type="submit" value="전송">
+</form>
+<hr>
 <script src="ImageUploadAdapter.js"></script>
 <script>
     ClassicEditor.create(document.querySelector('#editor'), {
@@ -49,4 +59,5 @@
         }
     }
 </script>
-
+</body>
+</html>
