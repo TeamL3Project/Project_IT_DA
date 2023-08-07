@@ -28,6 +28,4 @@ $(function () {
         $(this).addClass('on').css("box-shadow", "none");
     });
 
-
-
 });
