@@ -32,27 +32,19 @@ public class MemberDAO {
 			PreparedStatement pre = con.prepareStatement(sql);) {
 			
 			pre.setString(1, userId);
-			
 			try (ResultSet rs = pre.executeQuery()) {
 				if (rs.next()) {
 					if (rs.getString(2).equals(userPw)) {
 						result = 1;
-					}else {
+					} else {
 						result = 0;
 					}
 				}
-				
-			}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-			
-		}//Con end
-		
-		return result;
-		
-	}//isuserId end
 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 
 	public int isuserId(String userId) {	//회원가입 중 중복확인버튼 클릭시 db와 비교해 userId가 있는지 확인
@@ -74,11 +66,10 @@ public class MemberDAO {
 			e.printStackTrace();
 		
 		}//Con end
-		
-		return result;
-		
-	}//isuserId end
 
+		return result;
+
+	}
 
 
 	public int insert(Member m) {
@@ -116,61 +107,8 @@ public class MemberDAO {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+				
 		return result;
 	}
-
-
-
-	public boolean loginok(String loginId) {								//로그인 여부를 체크하는 메소드
-		String sql = "select userId from itda_user "
-				   + "where userId = ? ";
-		
-		
-		try (Connection con = ds.getConnection();
-			PreparedStatement pre = con.prepareStatement(sql);) {
-				
-			pre.setString(1, loginId);
-				
-			try (ResultSet rs = pre.executeQuery()) {
-				if (rs.next()) {			//rs값이 있는 경우 = 세션에서 가져온 id값을 db에서 찾을 수 있는 경우
-					result = 1;
-							
-				}
-				
-			}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-			
-		}//Con end
-		
-		if (result == 1) {
-			return true;
-		
-		}else {
-			return false;
-			
-		}
-		
-	}//loginok end
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
