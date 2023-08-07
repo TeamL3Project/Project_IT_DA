@@ -8,12 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+
 @WebServlet("*.chl")
 public class ChannelFrontController extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String RequestURI = request.getRequestURI();
 		int lastURI = RequestURI.lastIndexOf('/');
 		String command = RequestURI.substring(lastURI);
@@ -23,13 +23,9 @@ public class ChannelFrontController extends HttpServlet {
 		Action action = null;
 
 		switch (command) {
-//		case "/BoardList.chl":
-//				action = new BoardListAction();
-//			break;
-		case "/Channelpage.chl":
-				action = new ChannelpageAction();
-			break;
-
+			case "/BoardList.chl":
+				action = new ChannelListAction();
+				break;
 		}
 
 		forward = action.execute(request, response);
@@ -45,14 +41,12 @@ public class ChannelFrontController extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("test/html;charset=utf-8");
 		doProcess(request, response);
 	}
