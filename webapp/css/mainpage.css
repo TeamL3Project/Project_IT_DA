@@ -2,7 +2,7 @@
 body {
     width: 100%;
     margin: 0;
-    background-color: rgb(204, 204, 204, 60%);
+    /*background-color: rgb(204, 204, 204, 60%);*/
 }
 a {
     text-decoration: none !important;
@@ -32,7 +32,42 @@ a {
     border: none;
 }
 
+/* 프로필 dropdown 버튼 */
+.dropbtn {
+  background: rgb(1, 39, 60);
+  color: white;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background: rgb(1, 39, 60);}
+
 /*header.jsp*/
+
 .backyard {
     width: 100%;
     background: rgb(1, 39, 60);
