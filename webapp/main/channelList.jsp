@@ -7,7 +7,7 @@ $(function() {
 	$(".bt-item").click(function() {
 		$(".bt-item.on").removeClass('on').css("box-shadow", "");
 		$(this).addClass('on').css("box-shadow", "none");
-		loadChannelList($(this).text()); // 선택한 카테고리로 채널 목록 불러오기
+		// loadChannelList($(this).text()); // 선택한 카테고리로 채널 목록 불러오기
 	});
 });
 
