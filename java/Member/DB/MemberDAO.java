@@ -50,7 +50,7 @@ public class MemberDAO {
 
 	public int isuserId(String userId) {	//회원가입 중 중복확인버튼 클릭시 db와 비교해 userId가 있는지 확인
 		
-		String sql = "select uesrId from itda_user where userId = ? ";
+		String sql = "select userId from itda_user where userId = ? ";
 		
 		try (Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
