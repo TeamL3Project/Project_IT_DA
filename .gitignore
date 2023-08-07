@@ -1,8 +1,8 @@
-./idea/*
-./lib/*
-./META-INF/*
-./src/*
-./kwanyeong_Jin.imi
+.idea/*
+lib/*
+META-INF/*
+src/*
+kwanyeong_Jin.iml
 
 ### IntelliJ IDEA ###
 out/
