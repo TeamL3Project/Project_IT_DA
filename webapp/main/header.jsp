@@ -20,11 +20,11 @@
 <div class="backyard">
 <nav id="navbody">
 	<!-- 왼쪽 상단 로고 링크 -->
-	<a id="logo-brand" href="protomain.jsp"><img src="../image/common/itda_logo.png" style="width: 100px; height: auto;"></a>	
+	<a id="logo-brand" href="main.jsp"><img src="image/common/itda_logo.png" style="width: 100px; height: auto;"></a>
 	<ul id="right_btns">
     	<li id="search">
 	      	<a id="search_btn" onclick="location.href='search.jsp'">
-		  		<img src="../image/common/search.png" style="width: 30px; height: auto;">
+		  		<img src="image/common/search.png" style="width: 30px; height: auto;">
 		  	</a>
 		</li>
 		
@@ -34,13 +34,9 @@
 	%>
 	
 		<!-- 로그인이 되어 있는 경우 프로필사진 출력 -->
-		<div class="dropdown">
-		  <button class="dropbtn"><img src="../image/common/profile.png" style="width: 30px; height: auto;"></button>
-		  <div class="dropdown-content">
-		    <a href="mypage.jsp">마이페이지</a>
-		    <a href="logout.me">로그아웃</a>
-		  </div>
-		</div>
+		<div id="login_"><a class="nav-link" href="mypage.jsp"><img src="image/common/profile.png" style="width: 30px; height: auto;"></a></div>
+		<div id="logout_"><a class="nav-link" href="logout.me">로그아웃</a></div>
+		
 	<%
 		}else {
 	%>
