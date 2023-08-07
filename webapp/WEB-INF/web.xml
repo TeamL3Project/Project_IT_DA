@@ -5,10 +5,7 @@
          version="4.0">
 
 <welcome-file-list>
-	<welcome-file>protomain.jsp</welcome-file>
-	<welcome-file>protomain.html</welcome-file>
-	<welcome-file>protomain.htm</welcome-file>
+	<welcome-file>main/index.jsp</welcome-file>
 </welcome-file-list>
  
-
 </web-app>

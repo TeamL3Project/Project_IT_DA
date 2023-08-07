@@ -1,7 +1,8 @@
 package controller.content;
 
 
-import controller.action.*;
+import controller.action.Action;
+import controller.action.ActionForward;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,6 +30,13 @@ public class ContentFrontController extends HttpServlet {
 			case "/login.co":
 //				action = new MemberLoginAction();
 				break;
+			case "/upload.co":
+				action = new ImageUpload();
+				break;
+			case "/contentregit.co":
+				action = new ContentRegist();
+				break;
+
 
 		}
 		forward = action.execute(request, response);

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+
 @WebServlet("*.chl")
 public class ChannelFrontController extends HttpServlet {
 	private static final long serialVersionUID = 2L;
@@ -23,9 +24,8 @@ public class ChannelFrontController extends HttpServlet {
 
 		switch (command) {
 			case "/BoardList.chl":
-//				action = new BoardListAction();
+				action = new ChannelListAction();
 				break;
-
 		}
 
 		forward = action.execute(request, response);
