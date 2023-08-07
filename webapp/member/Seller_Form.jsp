@@ -4,7 +4,7 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <link rel="stylesheet" href="../css/sellerform.css">
 </head>
-<body>
+<body style="margin: 0;">
 <script>
 $(function() {
 	$('#sellerform').submit(function() {

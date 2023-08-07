@@ -45,9 +45,7 @@ public class MemberFrontController extends HttpServlet {
 			case "/logout.me":
 				action = new MemberLogoutAction();
 				break;
-			case "/user_Check.me":
-				action = new MemberUserCheckAction();
-				break;
+				
 		}
 		
 		forward = action.execute(request, response);
