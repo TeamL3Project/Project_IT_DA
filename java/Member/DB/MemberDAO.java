@@ -123,20 +123,38 @@ public class MemberDAO {
 
 
 
-	public String loginok(String loginId) {
+	public boolean loginok(String loginId) {								//로그인 여부를 체크하는 메소드
+		String sql = "select userId from itda_user "
+				   + "where userId = ? ";
 		
 		
+		try (Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+				
+			pre.setString(1, loginId);
+				
+			try (ResultSet rs = pre.executeQuery()) {
+				if (rs.next()) {			//rs값이 있는 경우 = 세션에서 가져온 id값을 db에서 찾을 수 있는 경우
+					result = 1;
+							
+				}
+				
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+		}//Con end
 		
+		if (result == 1) {
+			return true;
 		
+		}else {
+			return false;
+			
+		}
 		
-		
-		
-		
-		
-		
-		
-		return result;
-	}
+	}//loginok end
 	
 	
 	
