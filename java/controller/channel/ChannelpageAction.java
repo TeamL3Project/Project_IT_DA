@@ -23,7 +23,7 @@ public class ChannelpageAction implements Action {
 		List<ChannelBean> channelpage = new ArrayList<ChannelBean>();
 
 		
-//		channelpage = channeldao.getChannelList();
+		channelpage = channeldao.getChannellist();
 
 		req.setAttribute("channelpage", channelpage);
 

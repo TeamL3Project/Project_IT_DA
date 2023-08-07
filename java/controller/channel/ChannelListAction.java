@@ -20,7 +20,7 @@ public class ChannelListAction implements Action {
 
 	        // ChannelDAO를 이용하여 데이터베이스로부터 채널 목록을 가져옵니다.
 		 	ChannelDAO channelDAO = new ChannelDAO();
-	        List<Channel> channelList = channelDAO.getChannelList();
+	        List<ChannelBean> channelList = channelDAO.getChannelList();
 
 	        // 가져온 채널 목록을 JSP에서 사용할 수 있도록 request 속성에 저장합니다.
 	        request.setAttribute("channelList", channelList);
