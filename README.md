@@ -17,9 +17,9 @@ git branch 브랜치이름
 git pull [설정한이름] [브랜치이름] --allow-unrelated-histories      
     입력       <br>
 <br><br>
-git pull [리모트이름] main 입력 후
-error: Your local changes to the following files would be overwritten by merge:<br>에러 발생시
-git stash 입력 후 다시 git pull [리모트이름] main
+git pull [리모트이름] main 입력 후 <br>
+error: Your local changes to the following files would be overwritten by merge:  에러 발생시
+git stash 입력 후 <br> 다시 git pull [리모트이름] main
 <br><br>
 
 평소 사용할때<br>
