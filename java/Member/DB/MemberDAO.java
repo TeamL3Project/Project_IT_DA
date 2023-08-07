@@ -23,9 +23,9 @@ public class MemberDAO {
 	}
 
 
-
+	int result = -1;
 	public int isuserId(String userId, String userPw) {			//로그인 시 id와 pw가 있는지 확인
-		int result = -1;
+		
 		String sql = "select userId, userPw from itda_user where userId = ? ";
 		
 		try (Connection con = ds.getConnection();
@@ -56,7 +56,7 @@ public class MemberDAO {
 
 
 	public int isuserId(String userId) {	//회원가입 중 중복확인버튼 클릭시 db와 비교해 userId가 있는지 확인
-		int result = -1;
+		
 		String sql = "select uesrId from itda_user where userId = ? ";
 		
 		try (Connection con = ds.getConnection();
@@ -87,10 +87,10 @@ public class MemberDAO {
 		String sql = "insert into itda_user "
 				   + "(userId, userPw, userName, userBirth, userGender, userPhone, "
 				   + "userAddress1, userAddress2, userPost, userEmail, userCategory, "
-				   + "userJoindate, statusId, updateDate) "
+				   + "userJoindate, statusId) "
 				   + "values(?,?,?,?,?,? "
 				   + "?,?,?,?,?,"
-				   + "sysdate, 1, sysdate)";
+				   + "sysdate, 1)";
 		
 		try(Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
@@ -107,7 +107,6 @@ public class MemberDAO {
 			pre.setString(10, m.getUserEmail());		//userEmail
 			pre.setString(11, m.getUserCategory());		//userCategory
 			pre.setInt(12, m.getUserJoindate());		//userJoindate
-			pre.setInt(13, m.getUpdateDate());			//updateDate
 			
 			result = pre.executeUpdate();
 			if (result == 1) {
@@ -121,6 +120,41 @@ public class MemberDAO {
 		
 		return result;
 	}
+
+
+
+	public boolean loginok(String loginId) {								//로그인 여부를 체크하는 메소드
+		String sql = "select userId from itda_user "
+				   + "where userId = ? ";
+		
+		
+		try (Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+				
+			pre.setString(1, loginId);
+				
+			try (ResultSet rs = pre.executeQuery()) {
+				if (rs.next()) {			//rs값이 있는 경우 = 세션에서 가져온 id값을 db에서 찾을 수 있는 경우
+					result = 1;
+							
+				}
+				
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+		}//Con end
+		
+		if (result == 1) {
+			return true;
+		
+		}else {
+			return false;
+			
+		}
+		
+	}//loginok end
 	
 	
 	
