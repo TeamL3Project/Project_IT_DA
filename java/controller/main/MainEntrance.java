@@ -18,8 +18,10 @@ public class MainEntrance implements Action {
         ActionForward forward = new ActionForward();
         ContentDAO dao = new ContentDAO();
         List<Content> popcontentList = dao.popcontentSelect();
+        List<Content> contentSelect_per_cate = dao.contentSelect_per_cate();
 
         request.setAttribute("popcontentList",popcontentList);
+        request.setAttribute("contentSelect_per_cate",contentSelect_per_cate);
 
 
         forward.setRedirect(false);

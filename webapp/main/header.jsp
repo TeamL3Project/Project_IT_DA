@@ -6,8 +6,8 @@
 			location.href = "join.me";
 			
 		})
-		
-		
+
+
 		const userId = '${userId}';
 		
 		if (userId) {								//id값이 있는 경우
@@ -20,7 +20,7 @@
 <div class="backyard">
 <nav id="navbody">
 	<!-- 왼쪽 상단 로고 링크 -->
-	<a id="logo-brand" href="protomain.jsp"><img src="../image/common/itda_logo.png" style="width: 100px; height: auto;"></a>
+	<a id="logo-brand" href="protomain.jsp"><img src="image/common/itda_logo.png" style="width: 100px; height: auto;"></a>
 	<ul id="right_btns">
     	<li id="search">
 	      	<a id="search_btn" onclick="location.href='search.jsp'">

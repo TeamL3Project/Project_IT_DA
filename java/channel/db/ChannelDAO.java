@@ -61,9 +61,4 @@ public class ChannelDAO {
 
         return channelList;
     }
-
-	public Channel getChannelByChNum(int chNum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
