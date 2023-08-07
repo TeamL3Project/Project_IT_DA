@@ -1,5 +1,7 @@
 package controller.content;
 
+import Content.ContentDAO;
+import Content.Content;
 import controller.action.Action;
 import controller.action.ActionForward;
 import javax.servlet.ServletException;
@@ -11,6 +13,16 @@ public class ContentRegist implements Action {
 
     @Override
     public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        ContentDAO dao = new ContentDAO();
+        Content con = new Content();
+        con.setBoardTitle(req.getParameter("boardtitle"));
+        con.setBoardContent(req.getParameter("boardcontent"));
+        con.setWriter(req.getParameter("writer"));
+        con.setChcate_id(Integer.parseInt(req.getParameter("chcate_id")));
+        con.setChNum(Integer.parseInt(req.getParameter("chnum")));
+        dao.contentInsert(con);
+
 
         return null;
     }

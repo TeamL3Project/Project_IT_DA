@@ -49,7 +49,7 @@ a {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 150px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   z-index: 1;
 }
 
@@ -142,14 +142,6 @@ a {
     position: relative;
     right: 20px;
     top: 5px;
-}
-
-#join_seller:hover {
-    background: #FBD1A7;
-    color: #01273C;
-    opacity: 0.8;
-    border: 1px solid black;
-
 }
 
 #title {
@@ -368,7 +360,7 @@ a {
 }
 
 .col-md-4 {
-    padding: 0px;
+    padding: 0;
 }
 
 .ch_card {
