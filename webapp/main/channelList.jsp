@@ -163,7 +163,7 @@ function loadChannelList(category) {
 	<div class="container">
 		<div class="row area">
 			<div class="col-md-4">
-				<a href="#">
+				<a href="chboard_list">
 					<div class="card d-flex justify-content-center">
 						<img src="../image/main/man.png" class="card-img-top rounded-circle mx-auto d-block"
 							alt="...">
