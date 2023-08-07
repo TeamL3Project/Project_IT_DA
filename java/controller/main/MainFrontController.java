@@ -27,11 +27,8 @@ public class MainFrontController extends HttpServlet {
 
         switch (command) {
             case "/main":
-
 				action = new MainEntrance();
                 break;
-
-
 
         }
         forward = action.execute(request, response);
