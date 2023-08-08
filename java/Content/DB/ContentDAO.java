@@ -95,6 +95,7 @@ public class ContentDAO {
                     co.setBoardTitle(rs.getString("BoardTitle"));
                     co.setBoardContent(rs.getString("BoardContent"));
                     co.setThumbNail(rs.getString("ThumbNail"));
+                    contentSelectBycategory.add(co);
                 }
             }
         } catch (Exception ex) {

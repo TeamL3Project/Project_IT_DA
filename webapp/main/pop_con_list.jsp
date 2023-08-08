@@ -51,7 +51,7 @@
                     pageCount++;
                     console.log(pageCount);
                     isExecuted = false;
-                }, 3000);
+                }, 2000);
             }
         });
     });
