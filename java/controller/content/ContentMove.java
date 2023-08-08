@@ -1,7 +1,7 @@
 package controller.content;
 
-import Content.Content;
-import Content.ContentDAO;
+import Content.DB.ContentBean;
+import Content.DB.ContentDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
 
@@ -21,7 +21,7 @@ public class ContentMove implements Action {
         int boardNum = Integer.parseInt(chInfo.substring(lastURI+1));
         System.out.println(boardNum+"여긱가?");
         ContentDAO dao = new ContentDAO();
-        Content co = dao.contentSelect(boardNum);
+        ContentBean co = dao.contentSelect(boardNum);
         request.setAttribute("co", co);
         forward.setPath("/content/contentView.jsp");
         forward.setRedirect(false);

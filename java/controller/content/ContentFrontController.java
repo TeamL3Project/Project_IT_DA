@@ -17,20 +17,23 @@ public class ContentFrontController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String content = request.getRequestURI().substring(8, 16);
+        String requestURI = request.getRequestURI();
+        String contextPath = request.getContextPath();
+        String content = requestURI.substring(contextPath.length());
+        String isContent = content.substring(0,9);
         String command = "";
-        System.out.println(content);
-        if (content.equals("contents")) {
-            command = request.getRequestURI().substring(7, 16);
-            String chInfo = request.getRequestURI().substring(17);
+        System.out.println(isContent);
+        if (isContent.equals("/contents")) {
+            command = isContent;
+            String chInfo = content.substring(9);
             request.setAttribute("chInfo", chInfo);
         } else {
-            String requestuestURI = request.getRequestURI();
-            System.out.println("RequestURI = " + requestuestURI);
-            String contextPath = request.getContextPath();
+            requestURI = request.getRequestURI();
+            System.out.println("RequestURI = " + requestURI);
+            contextPath = request.getContextPath();
             System.out.println("contextPath = " + contextPath);
-            int lastURI = requestuestURI.lastIndexOf('/');
-            command = requestuestURI.substring(lastURI);
+            int lastURI = requestURI.lastIndexOf('/');
+            command = requestURI.substring(lastURI);
         }
         System.out.println(command);
 
@@ -38,15 +41,16 @@ public class ContentFrontController extends HttpServlet {
         Action action = null;
 
         switch (command) {
-            case "/login.co":
-//				action = new MemberLoginAction();
-                break;
             case "/upload.co":
                 action = new ImageUpload();
                 break;
             case "/contentregit.co":
                 action = new ContentRegist();
                 break;
+            case "/contentByCategory.co":
+                action = new ContentByCategory();
+                break;
+
             case "/contents":
                 action = new ContentMove();
                 break;

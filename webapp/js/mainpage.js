@@ -20,11 +20,12 @@ $(function () {
     }
     rotate();
     setInterval(rotate, 3000);
+
     $('.left-area').click(rotate);
     $('.right-area').click(rotateReverse);
+
     $(".bt-item").click(function () {
         $(".bt-item.on").removeClass('on');
-        console.log('test');
         $(this).addClass('on').css("box-shadow", "none");
     });
 
