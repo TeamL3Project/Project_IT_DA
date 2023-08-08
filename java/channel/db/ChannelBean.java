@@ -1,5 +1,7 @@
 package channel.db;
 
+import java.sql.Timestamp;
+
 public class ChannelBean {
 	private int chnum; // 채널번호
 	private String ownerid; // 소유id
@@ -8,7 +10,7 @@ public class ChannelBean {
 	private String chinfo; // 채널 소개
 	private int cate_id; // 카테고리 id
 	private int chfollow; // 구독자수
-	private int chopendate; // 채널오픈일
+	private Timestamp chopendate; // 채널오픈일
 	private int chvisit; // 채널 방문자수
 
 	public int getChnum() {
@@ -67,11 +69,11 @@ public class ChannelBean {
 		this.chfollow = chfollow;
 	}
 
-	public int getChopendate() {
+	public Timestamp getChopendate() {
 		return chopendate;
 	}
 
-	public void setChopendate(int chopendate) {
+	public void setChopendate(Timestamp chopendate) {
 		this.chopendate = chopendate;
 	}
 

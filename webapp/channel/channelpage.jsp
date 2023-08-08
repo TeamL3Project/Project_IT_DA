@@ -1,24 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../css/common.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<jsp:include page="header.jsp" />
+<jsp:include page="../main/header.jsp" />
 <script src="../js/category.js"></script>
-<html lang="kor">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>channel Page</title>
-
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <style>
@@ -119,44 +117,37 @@ td>a {
 </head>
 <body>
 	<div class="wrapper">
-		<c:forEach var="channel" items="${channelpage}">
-			<br>
-			<br>
-			<div class="info">
-				<h3 style="margin: 0 3; padding: 0 0 18;">
-					<c:out value="${channel.chname}" />
-				</h3>
-				<div id="profile1" style="margin: -20;">
-					<div id="profile"
-						style="padding: 20; border-radius: 2px; border: 1.8px solid #01273c;">
-						<p>
-							<c:out value="${channel.chinfo}" />
-						</p>
-						<p>
-							안녕하세요:)<br> 세 마리 고양이를 키우는<br> 집사입니다.<br> 잘 부탁드립니다.
-						<div class="info_button">
-							<button class="btn bt-item bt-hover" id="profiledetail"
-								onClick="location.href='channel_profile_detail.jsp'">자세히보기</button>
-						</div>
-						</p>
+		<br> <br>
+		<div class="info">
+			<h3 style="margin: 0 10; padding: 10;">[${channel.chname}]</h3>
+
+			<div id="profile1">
+				<div id="profile"
+					style="padding: 20; border-radius: 2px; border: 1.8px solid #01273c;">
+					<p>
+					<div class="chinfo" style="padding: 35;">${channel.chinfo}</div>
+					<div class="info_button">
+						<button class="btn bt-item bt-hover" id="profiledetail"
+							onClick="location.href='channel_profile_detail.jsp'">자세히보기</button>
+							
 					</div>
-					<c:out value="${channelpage}" />
-					
+					</p>
 				</div>
+
 				<img src="../image/channel/ccc.jpg"
 					style="width: 360px; height: 320px; border-bottom-left-radius: 50px; padding: 10px;">
-				<br>
-				<div class="sub_alram_btn"
-					style="padding: 30px; margin-top: -38px; padding-left: 15px;">
-					<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
-					<img src="../image/channel/alram_white.png"
-						style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
-				</div>
-				<br> <br>
 			</div>
-		</c:forEach>
-		<hr style="border: 1px bold silver;" width="100%">
 
+			<br>
+			<div class="sub_alram_btn"
+				style="padding: 30px; margin-top: -38px; padding-left: 15px;">
+				<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
+				<img src="../image/channel/alram_white.png"
+					style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
+			</div>
+			<br> <br>
+		</div>
+		<hr style="border: 1px bold silver;" width="100%">
 		<br>
 
 		<div class="category" style="padding: 0 235">
@@ -223,5 +214,5 @@ td>a {
 	});
 </script>
 </body>
-<jsp:include page="footer.jsp" />
+<jsp:include page="../main/footer.jsp" />
 </html>
