@@ -1,7 +1,7 @@
 package controller.main;
 
-import Content.Content;
-import Content.ContentDAO;
+import Content.DB.ContentBean;
+import Content.DB.ContentDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
 
@@ -17,11 +17,11 @@ public class MainEntrance implements Action {
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ActionForward forward = new ActionForward();
         ContentDAO dao = new ContentDAO();
-        List<Content> popcontentList = dao.popcontentSelect();
-        List<Content> contentSelect_per_cate = dao.contentSelect_per_cate();
+        List<ContentBean> popcontentList = dao.popcontentSelect();
+//        List<ContentBean> contentSelect_per_cate = dao.contentSelect_per_cate();
 
         request.setAttribute("popcontentList",popcontentList);
-        request.setAttribute("contentSelect_per_cate",contentSelect_per_cate);
+//        request.setAttribute("contentSelect_per_cate",contentSelect_per_cate);
 
 
         forward.setRedirect(false);

@@ -15,8 +15,8 @@ import java.io.IOException;
 public class ImageUpload implements Action {
     public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ActionForward forward = new ActionForward();
-        String chNum = req.getHeader("chNum");
-        String conNum =  req.getHeader("conNum");
+        String chNum = req.getHeader("channelNum");
+        String conNum =  req.getHeader("contentNum");
         String realFolder = "";
         String saveFolder = "/image/content/";
         String url = "http://localhost/webapp"+saveFolder + chNum +'/' +conNum +'/';
