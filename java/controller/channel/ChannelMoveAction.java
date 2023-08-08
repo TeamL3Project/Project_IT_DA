@@ -12,7 +12,6 @@ import controller.action.Action;
 import controller.action.ActionForward;
 
 public class ChannelMoveAction implements Action {
-
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

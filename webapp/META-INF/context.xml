@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <context>
 	<Resource
 		name = "jdbc/OracleDB"
@@ -36,3 +37,17 @@
 	8.url="jdbc:oracle:thin:@127.0.0.1:1521:xe"
 	  DB의 접속 URL입니다.
  -->
+=======
+<Context>
+  <Resource 
+   name="jdbc/OracleDB" 
+   auth="Container"
+   type="javax.sql.DataSource" 
+   username="itda" 
+   password="itda123!"
+   driverClassName="oracle.jdbc.driver.OracleDriver"
+   factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+   url="jdbc:oracle:thin:@175.192.130.123:1521/xe"
+  /> 
+</Context>
+>>>>>>> 007bf902c0c6857856f80df95d86739efd1a865d

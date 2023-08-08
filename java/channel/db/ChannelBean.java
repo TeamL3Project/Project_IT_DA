@@ -10,6 +10,7 @@ public class ChannelBean {
 	private String chinfo; // 채널 소개
 	private int cate_id; // 카테고리 id
 	private int chfollow; // 구독자수
+
 	private Timestamp chopendate; // 채널오픈일
 	private int chvisit; // 채널 방문자수
 
