@@ -84,5 +84,4 @@ public class ChannelBean {
 	public void setChvisit(int chvisit) {
 		this.chvisit = chvisit;
 	}
-
 }
