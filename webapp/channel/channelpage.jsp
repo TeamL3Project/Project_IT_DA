@@ -13,6 +13,8 @@
 <jsp:include page="../main/header.jsp" />
 <script src="../js/category.js"></script>
 <html lang="ko">
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -129,7 +131,7 @@ td>a {
 					<div class="info_button">
 						<button class="btn bt-item bt-hover" id="profiledetail"
 							onClick="location.href='channel_profile_detail.jsp'">자세히보기</button>
-							
+
 					</div>
 					</p>
 				</div>

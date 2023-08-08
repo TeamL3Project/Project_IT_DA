@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="webapp/css/common.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet"
@@ -95,7 +94,7 @@ body {
 	<div class="wrapper">
 		<br> <br>
 		<div class="channel_name">
-			<h1 style="margin-left: -560;">[${channel.chname}]</h1>
+			<h1 style="margin-left: -560;">[${channeldata.chname}]</h1>
 			<br>
 			<div class="sub_alram_btn"
 				style="padding: 30; margin-top: -38; padding-left: 15; margin-left: -580;">
@@ -109,7 +108,8 @@ body {
 		<div class="channel_info">
 			<div class="channel_info1">
 				<h2>채널 소개</h2>
-				<p>${channel.chinfo}</p>
+				<p>${channeldata.chinfo}</p>
+
 			</div>
 			<br>
 			<div class="channel_info2">
@@ -145,4 +145,5 @@ body {
 </script>
 </body>
 <jsp:include page="../main/footer.jsp" />
+</body>
 </html>

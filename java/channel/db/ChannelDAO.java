@@ -27,6 +27,7 @@ public class ChannelDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+
 		ChannelBean channel = new ChannelBean();
 
 		try {
@@ -97,16 +98,4 @@ public class ChannelDAO {
 		return channel;
 	}
 
-	public void setReadCountUpdate(int num) {
-		String sql = "UPDATE board SET BOARD_READCOUNT = BOARD_READCOUNT + 1 WHERE BOARD_NUM = ?";
-
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
-
-			pstmt.setInt(1, num);
-			pstmt.executeUpdate();
-
-		} catch (Exception se) {
-			System.out.println("SetReadCountUpdate() 에러 :" + se);
-		}
-	}// serReadContUpdate() 메서드 end.
 }

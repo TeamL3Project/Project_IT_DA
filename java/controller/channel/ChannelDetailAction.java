@@ -22,8 +22,6 @@ public class ChannelDetailAction implements Action {
 		// 글 번호 파라미터 값을 num변수에 저장
 		int num = Integer.parseInt(request.getParameter("num"));
 
-		channeldao.setReadCountUpdate(num);
-
 		channeldata = channeldao.getChannelDetail(num);
 
 		if (channeldata == null) {
