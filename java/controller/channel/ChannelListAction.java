@@ -1,0 +1,45 @@
+package controller.channel;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import Channel.DB.ChannelBean;
+import Channel.DB.ChannelDAO;
+import controller.action.Action;
+import controller.action.ActionForward;
+
+
+public class ChannelListAction implements Action {
+
+	 @Override
+	    public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
+	            throws ServletException, IOException {
+
+		  String catIdStr = request.getParameter("category_id");
+	        ChannelDAO channelDAO = new ChannelDAO();
+	        List<ChannelBean> channelList;
+
+	        if (catIdStr == null || catIdStr.isEmpty()) {
+	            // 카테고리 아이디가 없는 경우, 전체 채널 목록을 가져옵니다.
+	            channelList = channelDAO.getChannelList();
+	        } else {
+	            // 카테고리 아이디가 있는 경우, 해당 카테고리 아이디의 채널 목록을 가져옵니다.
+	            int cat_id = Integer.parseInt(catIdStr);
+	            channelList = channelDAO.getChannelList(cat_id);
+	        }
+
+	        // 가져온 채널 목록을 JSP에서 사용할 수 있도록 request 속성에 저장합니다.
+	        request.setAttribute("channelList", channelList);
+
+	        // channelList.jsp로 이동하도록 설정합니다.
+	        ActionForward forward = new ActionForward();
+	        forward.setPath("/channelList.jsp"); // channelList.jsp의 경로를 설정합니다.
+	        forward.setRedirect(false); // forward 방식으로 이동하도록 설정합니다.
+
+	        return forward;
+	    }
+	}
