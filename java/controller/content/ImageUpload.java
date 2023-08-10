@@ -5,39 +5,33 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import controller.action.Action;
 import controller.action.ActionForward;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
+
+import static util.dateService.toDay;
+import static util.folderService.createFolder;
 
 public class ImageUpload implements Action {
     public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ActionForward forward = new ActionForward();
-        String chNum = req.getHeader("channelNum");
-        String conNum =  req.getHeader("contentNum");
+        String channelNum = req.getHeader("channelNum");
+//        String contentNum =  req.getHeader("contentNum");
+        String contextPath = req.getContextPath();
         String realFolder = "";
         String saveFolder = "/image/content/";
-        String url = "http://localhost/webapp"+saveFolder + chNum +'/' +conNum +'/';
+        String url = contextPath+saveFolder + channelNum+"/"+ toDay()+'/';
         int fileSize = 10 * 1024 * 1024;
         ServletContext sc = req.getServletContext();
         realFolder = sc.getRealPath(saveFolder);
+        realFolder += channelNum+'/';  // 채널 폴더 생성
+        createFolder(realFolder);
+        realFolder += toDay()+'/';  // 개시날짜 폴더 생성
+        createFolder(realFolder);
 
-        realFolder += chNum+'/';  // 채널 폴더 생성
-        File makeChFolder = new File(realFolder);
-        if(!makeChFolder.exists()) {
-            makeChFolder.mkdir();
-        } else {
-            System.out.println("이미 있는 디렉토리 이름 : " + makeChFolder.getPath());
-        }
-        realFolder += conNum;  // 콘텐트 폴더 생성
-        File makeConFolder = new File(realFolder);
-        if(!makeConFolder.exists()) { // 디렉토리가 없는 경우
-           makeConFolder.mkdir();
-        } else { // 이미 있는 경우
-            System.out.println("이미 있는 디렉토리 이름 : " + makeConFolder.getPath());
-        }
 
         System.out.println("realFolder = " + realFolder);
         try {
@@ -50,6 +44,8 @@ public class ImageUpload implements Action {
             ex.printStackTrace();
         }
         return null;
+//        realFolder += contentNum;  // 콘텐트 폴더 생성
+//        createFolder(realFolder);
     }
 }
 

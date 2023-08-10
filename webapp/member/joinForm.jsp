@@ -62,15 +62,12 @@ $(function() {
 
 		// 회원가입 폼 제출 이벤트 리스너 등록
 		   $("#sellerform").submit(function(e) {
-            e.preventDefault(); // 폼 기본 동작을 중단함으로써 무결성 검사 전에 폼 전송을 중단
-
 							// 필요한 변수들을 가져옴
 							var id = $("#showid").val().trim();
 							var password = $('#password').val().trim();
 							var date_birth = $('#date_birth').val().trim();
 							var phone = $('#phone').val().trim();
 							var email = $("#email").val().trim();
-							var intro = $('#intro').val().trim();
 
 							//생년월일 중복 검사
 							if (!date_birth) {
@@ -147,22 +144,6 @@ $(function() {
 								return false;
 							}
 
-							// ID 중복 검사 재확인
-							const idInput = $('#showid');
-							if ($.trim(idInput.val()) == '') {
-								alert('아이디를 입력하세요');
-								idInput.focus();
-								return;
-							}
-							let submit_id_val = $.trim(idInput.val());
-							if (submit_id_val != idcheck) {
-								alert('아이디 중복검사를 하세요');
-								return;
-							}
-							if (checkId(submit_id_val)) {
-								alert('이미 사용중인 아이디입니다.');
-								return;
-							}
 
 							// 전화번호 유효성 검사
 							var phone = $('#phone').val();
@@ -175,65 +156,16 @@ $(function() {
 								}
 							}
 							
-							//email 유효성 검사
-							var email1 = $('#email').val();
-							pattern = /^[A-Za-z0-9_]{1,100}@[A-Za-z0-9_]{1,100}\.[A-Za-z0-9]{1,10}$/;
-
-							if (!pattern.test(email_value)
-									&& email_value !== '') {
-								$("#email_message").css('color', 'red').html(
-										"이메일 형식이 맞지 않습니다.");
-								checkemail = false;
-							} else if (email_value === '') {
-								$("#email_message").html("");
-								checkemail = false;
-							} else {
-								$("#email_message").css('color', 'green').html(
-										"이메일 형식에 맞습니다.");
-								checkemail = true;
-							}
-
 						});//submit end
 
 		let channelcheck = '';
 
-		//미리보기 기능
-		const profileInput = document.getElementById('profile');
-		var previewImage = document.getElementById('previewImage');
-
-		profileInput.addEventListener('change', function(event) {
-			const file = event.target.files[0];
-
-			if (file) {
-				const reader = new FileReader();
-
-				reader.onload = function() {
-
-					previewImage.src = reader.result;
-					previewImage.style.display = 'inline';
-					$('#profile').css("display", "none");
-				}
-
-				reader.readAsDataURL(file);
-
-			} else {
-				previewImage.src = '#';
-				previewImage.style.display = 'none';
-
-			}
-
-		});//change end
-
-		//미리보기 사진을 클릭시 다시 파일선택 가능
-		previewImage.addEventListener('click', function() {
-			profileInput.click();
 		
-		});
 
 	});//ready end
 </script>
 <div id="sellerback">
-    <form name="sellerform" id="sellerform" method="post" action="send">
+    <form name="sellerform" id="sellerform" method="post" action="joinProcess.me">
         <h1 style="margin: 30px 50px;">SIGN it-da</h1>
         <div class='num0 clearfix'>
                 <label for='id' style="float: left;"><span style="color: red">*</span>아이디</label>

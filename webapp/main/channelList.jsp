@@ -3,15 +3,18 @@
 <script>
 
 $(document).ready(function () {
-	
-	 loadChannelList(0);
 
-	    $(".channel_category").click(function () {
-	        if ($(this).hasClass("on")) {
-	            var categoryId = $(this).attr("id");
-	            loadChannelList(categoryId);
-	        }
-	    });
+    loadChannelList(0);
+
+    $(".channel_category").click(function () {
+        if ($(this).hasClass("on")) {
+
+            var categoryId = $(this).attr("id");
+            if (categoryId != "0") {
+                loadChannelList(categoryId);
+            }
+        }
+    });
 });
 
 function loadChannelList(categoryNum) {
@@ -22,10 +25,9 @@ function loadChannelList(categoryNum) {
     $.ajax({
         type: "GET", 
         url: "ChannelListAction.chl",  
-        data: {categoryNum, categoryNum},  
+        data: {categoryNum : categoryNum},  
         dataType: "json",               
         success: function (data) {     
-           
             var channelTable = $(".row.area");
             channelTable.empty();
             
@@ -35,7 +37,8 @@ function loadChannelList(categoryNum) {
             	 var appendData = '<div class="col-md-4">'
                      + '<a href="/channels/' + this.chNum + '">'
                      + '<div class="card d-flex justify-content-center">'
-                     + '<img src="' + this.chProfile + '" class="card-img-top rounded-circle mx-auto d-block" alt="...">'
+                     + '<img src="image/channel/' + this.chprofile + '" class="card-img-top rounded-circle mx-auto d-block" alt="...">'
+
                      + '<div class="card-body">'
                      + '<h5 class="card-title">' + this.chName + '</h5>'
                      + '<p class="card-text">' + this.chinfo + '</p>'
