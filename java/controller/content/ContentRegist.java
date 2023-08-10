@@ -19,8 +19,8 @@ public class ContentRegist implements Action {
         con.setBoardTitle(req.getParameter("boardtitle"));
         con.setBoardContent(req.getParameter("boardcontent"));
         con.setWriter(req.getParameter("writer"));
-        con.setChcate_id(Integer.parseInt(req.getParameter("chcate_id")));
-        con.setChNum(Integer.parseInt(req.getParameter("chnum")));
+        con.setChcate_id(2); //Integer.parseInt(req.getParameter("chcate_id"))
+        con.setChNum(Integer.parseInt(req.getParameter("channelNum")));
         dao.contentInsert(con);
 
 

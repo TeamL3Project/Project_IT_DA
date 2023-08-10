@@ -1,22 +1,18 @@
 package Content.DB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.naming.*;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-import javax.swing.text.AbstractDocument.Content;
-
 public class ContentDAO {
-	private int result = 0;
-	private DataSource ds;
-	private final int PAGE_LIMIT = 10;
-	private final int FIRST_START_PAGE = 1;
+    private int result = 0;
+    private DataSource ds;
+    private final int PAGE_LIMIT = 10;
+    private final int FIRST_START_PAGE = 1;
+	private final int POPULAR_CONTENT_NUM = 7;
+
 
 	public ContentDAO() {
 		try {
@@ -78,79 +74,78 @@ public class ContentDAO {
 		return contentList;
 	}
 
-	public List<ContentBean> contentSelectBycategory(int pageCount) {
-		String query = "select * from (select * from (select rownum r, CHBOARD.* from chboard order by boardnum desc) where r between ? and ?)";
-		int startRow = ((pageCount - FIRST_START_PAGE) / PAGE_LIMIT) * PAGE_LIMIT + FIRST_START_PAGE;
-		int endRow = pageCount * PAGE_LIMIT;
-		List<ContentBean> contentSelectBycategory = new ArrayList<>();
+	
+    public List<ContentBean> contentSelectBycategory(int pageCount) {
+        String query = "select * from (select * from (select rownum r, CHBOARD.* from chboard order by boardnum desc) where r between ? and ?)";
+        int startRow = (pageCount - FIRST_START_PAGE) * PAGE_LIMIT + FIRST_START_PAGE;
+        int endRow = pageCount * PAGE_LIMIT;
+        List<ContentBean> contentSelectBycategory = new ArrayList<>();
+        try (Connection conn = ds.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query);) {
 
-		try (Connection conn = ds.getConnection(); PreparedStatement pst = conn.prepareStatement(query);) {
+            pst.setInt(1, startRow);
+            pst.setInt(2, endRow);
+            try (ResultSet rs = pst.executeQuery();) {
+                while (rs.next()) {
+                    ContentBean co = new ContentBean();
+                    co.setBoardNum(rs.getInt("boardnum"));
+                    co.setChNum(rs.getInt("ChNum"));
+                    co.setWriter(rs.getString("Writer"));
+                    co.setBoardTitle(rs.getString("BoardTitle"));
+                    co.setBoardContent(rs.getString("BoardContent"));
+                    co.setBoardHeart(rs.getInt("boardHeart"));
+                    co.setChCate_id(rs.getInt("chCate_id"));
+                    co.setBoardOpen(rs.getString("boardOpen"));
+                    co.setBoardNore(rs.getString("boardNore"));
+                    co.setBoardDate(rs.getTimestamp("boardDate"));
+                    co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
+                    co.setThumbNail(rs.getString("ThumbNail"));
+                    contentSelectBycategory.add(co);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return contentSelectBycategory;
+    }
 
-			pst.setInt(1, startRow);
-			pst.setInt(2, endRow);
-			System.out.println(pst.toString());
+    public List<ContentBean> contentSelectBycategory(int channelCategoryId, int pageCount) {
+        String query = "select * from (select * from (select rownum r, CHBOARD.* from chboard where chcate_id = ? order by boardnum desc) where r between ? and ?)";
+        int startRow = (pageCount - FIRST_START_PAGE) * PAGE_LIMIT + FIRST_START_PAGE;
+        int endRow = pageCount * PAGE_LIMIT;
+        List<ContentBean> contentSelectBycategory = new ArrayList<>();
 
-			try (ResultSet rs = pst.executeQuery();) {
-				while (rs.next()) {
-					ContentBean co = new ContentBean();
-					co.setBoardNum(rs.getInt("boardnum"));
-					co.setChNum(rs.getInt("ChNum"));
-					co.setWriter(rs.getString("Writer"));
-					co.setBoardTitle(rs.getString("BoardTitle"));
-					co.setBoardContent(rs.getString("BoardContent"));
-					co.setBoardHeart(rs.getInt("boardHeart"));
-					co.setChCate_id(rs.getInt("chCate_id"));
-					co.setBoardOpen(rs.getString("boardOpen"));
-					co.setBoardNore(rs.getString("boardNore"));
-					co.setBoardDate(rs.getTimestamp("boardDate"));
-					co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
-					co.setThumbNail(rs.getString("ThumbNail"));
-					contentSelectBycategory.add(co);
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return contentSelectBycategory;
-	}
+        try (Connection conn = ds.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query);) {
 
-	public List<ContentBean> contentSelectBycategory(int channelCategoryId, int pageCount) {
-		String query = "select * from (select * from (select rownum r, CHBOARD.* from chboard where chcate_id = ? order by boardnum desc) where r between ? and ?)";
-		int startRow = ((pageCount - FIRST_START_PAGE) / PAGE_LIMIT) * PAGE_LIMIT + FIRST_START_PAGE;
-		int endRow = pageCount * PAGE_LIMIT;
-		System.out.println(startRow + " / " + endRow);
-		List<ContentBean> contentSelectBycategory = new ArrayList<>();
+            pst.setInt(1, channelCategoryId);
+            pst.setInt(2, startRow);
+            pst.setInt(3, endRow);
 
-		try (Connection conn = ds.getConnection(); PreparedStatement pst = conn.prepareStatement(query);) {
-
-			pst.setInt(1, channelCategoryId);
-			pst.setInt(2, startRow);
-			pst.setInt(3, endRow);
-
-			try (ResultSet rs = pst.executeQuery()) {
-				while (rs.next()) {
-					ContentBean co = new ContentBean();
-					co.setBoardNum(rs.getInt("boardnum"));
-					co.setChNum(rs.getInt("ChNum"));
-					co.setWriter(rs.getString("Writer"));
-					co.setBoardTitle(rs.getString("BoardTitle"));
-					co.setBoardContent(rs.getString("BoardContent"));
-					co.setBoardHeart(rs.getInt("boardHeart"));
-					co.setChCate_id(rs.getInt("chCate_id"));
-					co.setBoardOpen(rs.getString("boardOpen"));
-					co.setBoardNore(rs.getString("boardNore"));
-					co.setBoardDate(rs.getTimestamp("boardDate"));
-					co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
-					co.setThumbNail(rs.getString("ThumbNail"));
-					contentSelectBycategory.add(co);
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return contentSelectBycategory;
-	}
-
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    ContentBean co = new ContentBean();
+                    co.setBoardNum(rs.getInt("boardnum"));
+                    co.setChNum(rs.getInt("ChNum"));
+                    co.setWriter(rs.getString("Writer"));
+                    co.setBoardTitle(rs.getString("BoardTitle"));
+                    co.setBoardContent(rs.getString("BoardContent"));
+                    co.setBoardHeart(rs.getInt("boardHeart"));
+                    co.setChCate_id(rs.getInt("chCate_id"));
+                    co.setBoardOpen(rs.getString("boardOpen"));
+                    co.setBoardNore(rs.getString("boardNore"));
+                    co.setBoardDate(rs.getTimestamp("boardDate"));
+                    co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
+                    co.setThumbNail(rs.getString("ThumbNail"));
+                    contentSelectBycategory.add(co);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return contentSelectBycategory;
+    }
+    
 	public int contentInsert(ContentBean co) {
 		String query = "insert into chboard values(bo_seq.nextval,?,?,?,?,0,?,'Y','Y',sysdate,'',0)";
 

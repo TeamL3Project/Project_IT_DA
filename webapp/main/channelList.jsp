@@ -12,6 +12,7 @@ $(".cate-button .btn").click(function () {
 	loadChannelList(categoryId);
 });
 
+
 $(document).ready(function () {
 	loadChannelList(); //화면 켰을땐 없음
 });

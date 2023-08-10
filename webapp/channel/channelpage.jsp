@@ -233,7 +233,7 @@ function initializeDefaultContent() {
 						style="padding: 35; padding: 35; height: 220px;">${channel.chinfo}</div>
 					<div class="info_button">
 						<button class="btn bt-item bt-hover" id="profiledetail"
-							onClick="location.href='${channel.chnum}/channeldetail'">자세히보기</button>
+							onClick="location.href='${pageContext.request.contextPath}/channel/${channel.chnum}/ChannelDetail.chl'">자세히보기</button>
 					</div>
 
 				</div>

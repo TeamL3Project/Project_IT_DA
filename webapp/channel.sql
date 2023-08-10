@@ -36,6 +36,13 @@ UPDATE channellist
 SET chinfo = '안녕하세요. [밀림의냥]채널입니다.'
 WHERE chnum = 21 AND ownerid = 'itda';
 
+select * 
+from (SELECT * from chboard 
+	where chnum = 21
+	order by boardnum desc)
+where rownum <= 3;	
+
+
 
 
 UPDATE channellist
