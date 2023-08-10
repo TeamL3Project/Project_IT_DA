@@ -11,6 +11,7 @@ public class ContentDAO {
     private DataSource ds;
     private final int PAGE_LIMIT = 10;
     private final int FIRST_START_PAGE = 1;
+	private final int POPULAR_CONTENT_NUM = 7;
 
     public ContentDAO() {
         try {
@@ -76,17 +77,14 @@ public class ContentDAO {
 
     public List<ContentBean> contentSelectBycategory(int pageCount) {
         String query = "select * from (select * from (select rownum r, CHBOARD.* from chboard order by boardnum desc) where r between ? and ?)";
-        int startRow = ((pageCount - FIRST_START_PAGE) / PAGE_LIMIT) * PAGE_LIMIT + FIRST_START_PAGE;
+        int startRow = (pageCount - FIRST_START_PAGE) * PAGE_LIMIT + FIRST_START_PAGE;
         int endRow = pageCount * PAGE_LIMIT;
         List<ContentBean> contentSelectBycategory = new ArrayList<>();
-
         try (Connection conn = ds.getConnection();
              PreparedStatement pst = conn.prepareStatement(query);) {
 
             pst.setInt(1, startRow);
             pst.setInt(2, endRow);
-            System.out.println(pst.toString());
-
             try (ResultSet rs = pst.executeQuery();) {
                 while (rs.next()) {
                     ContentBean co = new ContentBean();
@@ -113,9 +111,8 @@ public class ContentDAO {
 
     public List<ContentBean> contentSelectBycategory(int channelCategoryId, int pageCount) {
         String query = "select * from (select * from (select rownum r, CHBOARD.* from chboard where chcate_id = ? order by boardnum desc) where r between ? and ?)";
-        int startRow = ((pageCount - FIRST_START_PAGE) / PAGE_LIMIT) * PAGE_LIMIT + FIRST_START_PAGE;
+        int startRow = (pageCount - FIRST_START_PAGE) * PAGE_LIMIT + FIRST_START_PAGE;
         int endRow = pageCount * PAGE_LIMIT;
-        System.out.println(startRow + " / " +endRow);
         List<ContentBean> contentSelectBycategory = new ArrayList<>();
 
         try (Connection conn = ds.getConnection();

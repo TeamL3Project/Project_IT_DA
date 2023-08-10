@@ -50,9 +50,11 @@
                     console.log(pageCount);
                     pageCount++;
                     isExecuted = false;
-                }, 2000);
+                }, 700);
             }
         });
+        let firstEntrance = 0;
+        callContents_ajax(firstEntrance);
     });
 </script>
 <div class="popular-list-view-wrap">
