@@ -44,7 +44,7 @@ public class ContentDetail implements Action{
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
-		forward.setPath("../content/content_detail.jsp");
+		forward.setPath("/content/content_detail.jsp");
 		//글 내용보기 페이지로 이동하기 위해 경로를 설정합니다.
 		return forward;
 	}
