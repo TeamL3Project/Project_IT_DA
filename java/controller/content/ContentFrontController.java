@@ -48,9 +48,11 @@ public class ContentFrontController extends HttpServlet {
                 action = new ContentRegist();
                 break;
             case "/contentByCategory.co":
-                action = new ContentByCategory();
-                break;
-
+            	action = new ContentByCategory();
+            	break;
+            case "/write.co":
+            	action = new ContentByCategory();
+            	break;
             case "/contents":
                 action = new ContentMove();
                 break;

@@ -1,4 +1,3 @@
-
  <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,6 +15,7 @@
 <div class="board_write_wrap">
 	<form>
 	<div class="text_form board_head_wrap">
+	<!-- 채널번호/카테고리번호/ -->
 	<select class="category_select_from" value="">
 		<option disabled selected>카테고리를 선택하세요</option>
 		<option value="category_title">김겨울</option>

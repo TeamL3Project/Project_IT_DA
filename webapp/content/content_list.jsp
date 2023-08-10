@@ -1,4 +1,4 @@
-<!--<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>  -->
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
@@ -19,7 +19,7 @@
     <head>
     <meta charset="utf-8">
     <title>카테고리명{$cate_name}:채널명${chname}</title>
-    <link rel="stylesheet" href="css/chboard_list.css">
+    <link rel="stylesheet" href="../css/chboard_list.css">
     <script src = "js/jquery-3.7.0.js"></script>
     </head>
     <body>
@@ -29,7 +29,7 @@
             <div class="head_content">
                 <div class="head_service">
                     <div class="head_back">
-                        <a class=back_content href><img src="image/content/errow_left.png" width="20"></a>
+                        <a class=back_content href=""><!-- 채널메인페이지로 이동 --><img src="../image/content/errow_left.png" width="20"></a>
                     </div>
                 </div>
                     <h2 class="head_title">채널명 입니다 ${chName}</h2>
@@ -37,7 +37,7 @@
             <hr>
             <div class="content_line">
                 <div class="content_tap_wrap">
-                    <h3 class="content_head"><a href><span>전체 콘텐츠<em>${listcount }</em><img src="image/content/errow_down.png" width="15"></span></a></h3>
+                    <h3 class="content_head"><a href><!-- 채널카테고리로 이동 --><span>전체 콘텐츠<em>${listcount }</em><img src="../image/content/errow_down.png" width="15"></span></a></h3>
                 </div>
                 <div class="category_sorting_wrap">
                     <div class="sorting_wrap">
@@ -64,7 +64,7 @@
                             <a href><img src class="content_thumb">
                             </a>
                             <div class="content_text">
-                                <a class="content_text_link" href="ChBoardDetailAction.bo?num=${b.boardNum }">
+                                <a class="content_text_link" href="content_detail.co?num=${b.boardNum }">
                                 
                                     <strong class="content_title">${b.boardTitle }</strong>
                                     	<c:if test="${b.boardTitle.length()>=20}">
@@ -77,10 +77,10 @@
                                 <div class="content_info">
                                     <span class="content_comment_wrap">
                                         <span class="content_info_text">${b.boardDate}</span>
-                                        <a><img class="content_comment_img" src= "image/content/heart.png">
+                                        <a><img class="content_comment_img" src= "../image/content/heart.png">
                                             <span class="content_comment_count">${b.boardHeart}</span>
                                         </a>
-                                        <a><img class="content_comment_img" src= "image/content/comment.png">
+                                        <a><img class="content_comment_img" src= "../image/content/comment.png">
                                                 <span class="content_comment_count">${boardComent}</span>
                                         </a>
                                     </span>
