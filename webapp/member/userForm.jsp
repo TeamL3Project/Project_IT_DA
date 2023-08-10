@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <head>
 <title>일반회원가입 페이지</title>
-    <script src="../js/jquery-3.7.0.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/userForm.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/userForm.css">
+    <link rel="stylesheet" href="css/common.css">
+    <jsp:include page="../main/header.jsp"/>
 </head>
 <body>
 <script>
@@ -246,8 +251,8 @@ $(function() {
 	});//ready end
 </script>
 <div id="sellerback">
-    <form name="sellerform" id="sellerform" method="post" action="send">
-        <h1 style="margin: 30px 50px;">SIGN it-da</h1>
+    <form name="sellerform" id="sellerform" method="post" action="join.me">
+        <h1 style="margin: 30px 50px;">Join IT:DA</h1>
         <div class='num0 clearfix'>
                 <label for='id' style="float: left;"><span style="color: red">*</span>아이디</label>
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">

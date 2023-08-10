@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
 <title>판매회원가입 페이지</title>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<link rel="stylesheet" href="../css/sellerform.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./css/sellerform.css">
+	<link rel="stylesheet" href="css/common.css">
+<jsp:include page="../main/header.jsp"/>
 </head>
 <body style="margin: 0;">
 <script>
@@ -134,55 +140,47 @@ $(function() {
 		}
 
 	});//click end
-	
-	
-	
-	//미리보기 기능
-	const profileInput = document.getElementById('profile');
-	const previewImage = document.getElementById('previewImage');
 
-	profileInput.addEventListener('change', function(event) {
-    const file = event.target.files[0];
-	    
-	    if (file) {
-			const reader = new FileReader();
-		        
-			reader.onload = function() {
-				previewImage.src = reader.result;
-				previewImage.style.display = 'inline';
-				$('#profile').css("display", "none");
-			}
-		        
-			reader.readAsDataURL(file);
-		        
+	
+	
+	
+
+	$('input[type=file]').change(function(e){
+		const inputfile = $(this).val().split('\\');
+		const profileName = inputfile[inputfile.length - 1];		//inputfile.length - 1 = 2
+		const pattern = /(gif|jpg|jpeg|png)$/i;						//i(ignore case) : 대소문자 무시를 의미한다
+		
+		if (pattern.test(profileName)) {
+			$('#profileName').text(profileName);
+			
+			const reader = new FileReader();						//파일을 읽기 위해 객체 생성
+			reader.readAsDataURL(event.target.files[0]);
+			
+			reader.onload = function(){								//읽기에 성공한 경우 실행되는 이벤트 핸들러
+				$('#previewImage > img').attr('src', this.result);
+			
+			};
 		}else {
-			previewImage.src = '#';
-			previewImage.style.display = 'none';
-		        
+			alert('이미지 파일(gif, jpg, jpeg, png)가 아닌 경우 업로드되지 않습니다.');
+			$(this).val('');
+		
 		}
-	    
-	    
+		
 	});//change end
 	
 	
 	
-	//미리보기 사진을 클릭시 다시 파일선택 가능
-	previewImage.addEventListener('click', function() {
-		profileInput.click();
 	
-	});
-
-
 	
 });//ready end
 
 	</script>
 <div id="sellerback">
-<form name='sellerform' id='sellerform' method='post' action='send'>
-	<h1 style="margin: 30px 50px;">Join it-da</h1>
+<form name='sellerform' id='sellerform' enctype="multipart/form-data" method='post' action='sellerjoinprocess.me'>
+	<h1 style="margin: 30px 50px;">Join Seller</h1>
 	<div class='num0'>
 		<label for='id' style="float: left;">&nbsp;아이디</label>
-		<input type="text" id="showid" value="테스트 아이디" readOnly><!-- ${itda_user.id} 유저의 아이디를 보여줄 예정 -->
+		<input type="text" name="userid" id="showid" value="${userId}" readOnly>
 	</div>
 	<div class='num1 clearfix'>
 		<label for='channel' style="float: left;"><span style="color: red">*</span>채널명</label><br>
@@ -192,13 +190,28 @@ $(function() {
 	    </div>
 	</div>
 	<div class='num2 clearfix'>
-		<label for='profile' style="float: left;">채널 프로필<span style="font-size: 12px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label><br>
-			<input type='file' name='profile' id='profile' 
-			 style=" margin-top: 20px;" accept="image/*">
-			<br>
-			<img id="previewImage" src="#" alt="프로필 미리보기" style="max-width: 300px;
-			 max-height: 70px; display: none; margin-right: 550px;
-			 border: 2px solid black; border-radius: 3%;">
+	<label for='profile' style="float: left;">채널 프로필<span style="font-size: 12px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label><br>
+		<div id="profile_select">
+			<label for="inputFile">
+				<div class="btn-Upload">파일 선택</div>
+			</label>
+			<input type='file' name='profile' id='profile' style="margin-top: 20px;" accept="image/*">
+		</div>
+		<div id="profile_preview">
+			<span id="profileName"></span>
+			<span id="previewImage">
+				<c:choose>
+					<c:when test="${empty param.profile}">
+						<c:set var="src" value="image/common/profile.png" />
+					</c:when>
+					<c:otherwise>
+						<c:set var="src" value="${param.profile}" />
+					</c:otherwise>
+				</c:choose>
+				<img src="${src}" width="100px" alt="image/*">
+			</span>
+		</div>
+	<br>
 	</div>
 	<div class='num3'>
 		<label for='phone' style="float: left;"><span style="color: red">*</span>휴대폰번호</label>
@@ -211,21 +224,21 @@ $(function() {
 	<div id="categories clearfix">
 		<label for='category' style="float: left; margin-left: 15px;"><span style="color: red">*</span>채널 카테고리</label><br>
 			<div id="section1">
-			<input type='radio' name='category' id='category1' value="공부"> 공부
-			<input type='radio' name='category' id='category2' value="게임"> 게임
-			<input type='radio' name='category' id='category3' value="운동"> 운동
-			<input type='radio' name='category' id='category4' value="등산"> 등산
-			<input type='radio' name='category' id='category5' value="낚시"> 낚시</div>
+			<input type='radio' name='category' id='category1' value="1"> 공부
+			<input type='radio' name='category' id='category2' value="2"> 게임
+			<input type='radio' name='category' id='category3' value="3"> 운동
+			<input type='radio' name='category' id='category4' value="4"> 등산
+			<input type='radio' name='category' id='category5' value="5"> 낚시</div>
 			<div id="section2">
-			<input type='radio' name='category' id='category6' value="경제"> 경제
-			<input type='radio' name='category' id='category7' value="문학"> 문학
-			<input type='radio' name='category' id='category8' value="정치"> 정치
-			<input type='radio' name='category' id='category9' value="환경"> 환경
-			<input type='radio' name='category' id='category10' value="역사"> 역사</div>
+			<input type='radio' name='category' id='category6' value="6"> 경제
+			<input type='radio' name='category' id='category7' value="7"> 문학
+			<input type='radio' name='category' id='category8' value="8"> 정치
+			<input type='radio' name='category' id='category9' value="9"> 환경
+			<input type='radio' name='category' id='category10' value="10"> 역사</div>
 	</div>
 	<div class='num5'>	
-		<label for='intro' style="float: left;"><span style="color: red">*</span>채널 소개글</label><br>
-			<textarea rows='10' name='intro' id='intro' maxLength='300'
+		<label for='info' style="float: left;"><span style="color: red">*</span>채널 소개글</label><br>
+			<textarea rows='10' name='info' id='info' maxLength='300'
 			 placeholder='채널 소개글을 작성해주세요. 최대 300자'></textarea>
 	</div>
 	<div class='num6 clearfix'>
