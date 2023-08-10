@@ -217,3 +217,35 @@
     font-weight: bolder;
     line-height: 2em;
 }
+
+
+/*channelList.jsp*/
+
+.rounded-circle {
+	width: 7rem;
+	height: 7rem;
+}
+
+.row.area {
+	width: 900px;
+	margin: 0 auto;
+	padding: 20px 0;
+	
+}
+
+.col-md-4 {
+	padding: 0px;
+}
+
+.card {
+	margin: 0 auto;
+	background-color: white;
+	overflow: hidden;
+	transition: all 0.3s ease-in-out;
+	width: 300px;
+	height: 300px;
+}
+
+.card-body {
+	text-align: center;
+}
