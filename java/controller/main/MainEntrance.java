@@ -17,11 +17,12 @@ public class MainEntrance implements Action {
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ActionForward forward = new ActionForward();
         ContentDAO dao = new ContentDAO();
+        int firstConnect = 0;
         List<ContentBean> popcontentList = dao.popcontentSelect();
-//        List<ContentBean> contentSelect_per_cate = dao.contentSelect_per_cate();
+        List<ContentBean> contentSelectBycategory = dao.contentSelectBycategory(firstConnect);
 
         request.setAttribute("popcontentList",popcontentList);
-//        request.setAttribute("contentSelect_per_cate",contentSelect_per_cate);
+        request.setAttribute("contentSelectBycategory",contentSelectBycategory);
 
 
         forward.setRedirect(false);

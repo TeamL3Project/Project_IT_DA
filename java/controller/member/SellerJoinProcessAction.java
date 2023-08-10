@@ -1,5 +1,6 @@
 package controller.member;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
@@ -22,7 +23,6 @@ public class SellerJoinProcessAction implements Action {
 	private static final int Join_Fail = 0;
 	private static final int Join_Success = 1;
 
-	
 	private Seller setSellerFromRequest(MultipartRequest multi) {
 		Seller s = new Seller();
 		s.setSellerPhone(multi.getParameter("phone"));
@@ -32,9 +32,6 @@ public class SellerJoinProcessAction implements Action {
 		return s;
 		
 	}
-	
-	
-	
 	
 	private ChannelBean setChannelOwnerFromRequest(MultipartRequest multi) {
 		ChannelBean ch = new ChannelBean();
@@ -46,28 +43,33 @@ public class SellerJoinProcessAction implements Action {
 		return ch;
 	}
 	
-	
-	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 																throws ServletException, IOException {
 		
 		ActionForward forward = new ActionForward();
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
 		
 		String saveFolder = "image/MemberUpload";
-		int fileSize = 5*1024*1024;								//업로드할 파일의 최대사이즈를 5MB로 설정
+		int fileSize = 5*1024*1024;
 		
 		ServletContext sc = request.getServletContext();		//실제 저장 경로를 지정
 		String realFolder = sc.getRealPath(saveFolder);
-		System.out.println("realFolder = " + realFolder);		//파일 업로드시 저장되는 폴더의 경로
+		System.out.println("realFolder = " + realFolder);
+		
+		//userid별 디렉토리 생성
+		String userFolder = realFolder + File.separator + userId;
+		
+		
+		File directory =  new File(userFolder);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
 		
 		try {MultipartRequest multi = new MultipartRequest(
-			request,realFolder,fileSize,"UTF-8",new DefaultFileRenamePolicy());
+			request,userFolder,fileSize,"UTF-8",new DefaultFileRenamePolicy());
 		
-			String userId = multi.getParameter("userid");
-			HttpSession session = request.getSession();
-			session.setAttribute("userid", userId);					//로그인한 id값을 세션에서 가져옴
-			
 			
 			Seller s = setSellerFromRequest(multi);
 			ChannelBean ch = setChannelOwnerFromRequest(multi);
@@ -100,7 +102,7 @@ public class SellerJoinProcessAction implements Action {
 			
 		}
 		
-		return null;
+		return forward;
 		
 	}
 

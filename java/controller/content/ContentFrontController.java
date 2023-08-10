@@ -20,7 +20,9 @@ public class ContentFrontController extends HttpServlet {
         String requestURI = request.getRequestURI();
         String contextPath = request.getContextPath();
         String content = requestURI.substring(contextPath.length());
+        System.out.println("content =" + content);
         String isContent = content.substring(0,9);
+        System.out.println("isContent =" + isContent);
         String command = "";
         System.out.println(isContent);
         if (isContent.equals("/contents")) {
@@ -50,7 +52,6 @@ public class ContentFrontController extends HttpServlet {
             case "/contentByCategory.co":
                 action = new ContentByCategory();
                 break;
-
             case "/contents":
                 action = new ContentMove();
                 break;
