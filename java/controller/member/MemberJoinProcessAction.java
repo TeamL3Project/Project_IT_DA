@@ -11,6 +11,7 @@ import Member.DB.Member;
 import Member.DB.MemberDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
+import util.messeage;
 
 public class MemberJoinProcessAction implements Action {
 
@@ -43,12 +44,12 @@ public class MemberJoinProcessAction implements Action {
 		int result = mdao.insert(m);
 		
 		if (result == 0) {										//DB삽입 실패
-			System.out.println("회원가입 실패");
+			System.out.println(messeage.Join.FAIL);
 			
 			ActionForward forward = new ActionForward();
 			
 			forward.setRedirect(false);
-			request.setAttribute("message", "회원가입 실패");
+			request.setAttribute("message", messeage.Join.FAIL);
 			forward.setPath("/main");				//실패하면 그냥 메인페이지로 이동?
 			
 			return forward;

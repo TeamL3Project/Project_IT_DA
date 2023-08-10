@@ -20,7 +20,7 @@ public class ImageUpload implements Action {
     public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String channelNum = req.getHeader("channelNum");
-//        String contentNum =  req.getHeader("contentNum");
+//      String contentNum = req.getHeader("contentNum");
         String contextPath = req.getContextPath();
         String realFolder = "";
         String saveFolder = "/image/content/";
@@ -49,8 +49,8 @@ public class ImageUpload implements Action {
         }
 
         return null;
-//        realFolder += contentNum;  // 콘텐트 폴더 생성
-//        createFolder(realFolder);
+//      realFolder += contentNum;  // 콘텐트 폴더 생성
+//      createFolder(realFolder);
     }
 }
 
