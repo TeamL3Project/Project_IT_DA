@@ -20,11 +20,11 @@
 <div class="backyard">
 <nav id="navbody">
 	<!-- 왼쪽 상단 로고 링크 -->
-	<a id="logo-brand" href="/project"><img src="image/common/itda_logo.png" style="width: 100px; height: auto;"></a>
+	<a id="logo-brand" href="/project"><img src="${pageContext.request.contextPath}/image/common/itda_logo.png" style="width: 100px; height: auto;"></a>
 	<ul id="right_btns">
     	<li id="search">
 	      	<a id="search_btn" onclick="location.href='search.me'">
-		  		<img src="image/common/search.png" style="width: 30px; height: auto;">
+		  		<img src="${pageContext.request.contextPath}/image/common/search.png" style="width: 30px; height: auto;">
 		  	</a>
 		</li>
 		
