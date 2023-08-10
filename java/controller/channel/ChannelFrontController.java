@@ -34,6 +34,7 @@ public class ChannelFrontController extends HttpServlet {
 			contextPath = request.getContextPath();
 			System.out.println("contextPath = " + contextPath);
 			int lastURI = requestURI.lastIndexOf('/');
+			command = requestURI.substring(lastURI);
 		}
 
 		// 초기화
@@ -44,10 +45,10 @@ public class ChannelFrontController extends HttpServlet {
 		case "/channels":
 			action = new ChannelMoveAction();
 			break;
-		case "/ChannelDetail":
+		case "/ChannelDetail.chl":
 			action = new ChannelDetailAction();
 			break;
-		case "/ChannelListAction.chl":
+		case "/ChannelListAction":
 			action = new ChannelListAction();
 			break;
 			
