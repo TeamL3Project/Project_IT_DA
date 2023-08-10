@@ -198,7 +198,7 @@ $(function() {
 	    </div>    
 	</div>
 	<div class='num4 clearfix'>
-		<label for='channel' style="float: left;"><span style="color: red">*</span>생년월일 (수정)</label><br>
+		<label for='channel' style="float: left;"><span style="color: red">*</span>생년월일</label><br>
 	    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
 	        <input type='text' name='date_birth' id='date_birth' placeholder='YYYY-MM-DD 형식' style="width: 100%;" required>
 	    </div>    
