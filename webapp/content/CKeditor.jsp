@@ -17,6 +17,7 @@
 <h1>CKEditor</h1>
 <form action="contentregit.co" method="POST">
     <textarea name="text" id="editor"></textarea>
+    <input type="hidden" name="channelNum" value="40">
     <input type="submit" value="전송">
 </form>
 <hr>
