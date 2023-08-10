@@ -23,7 +23,6 @@ a {
 }
 
 body {
-	display: flex;	
 	position: relative;	
 	background-color: #fff ;
 }
@@ -31,6 +30,22 @@ body {
 div {
     display: block;
 }
+
+header_wrap{
+	height: 60px;
+}
+
+header_inline{
+	min-width : 1120px;
+	margin-left : auto;
+	margin-right : auto;
+	display : flex;
+	z-index:100;
+	position : static;
+}
+
+
+
 @media (min-width: 1080px) {
 	.content_group_wrap{
 	max-width : 1120px;
@@ -290,8 +305,6 @@ hr{
 .content_item_inner .content_text {
   overflow: hidden;
   flex-grow: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   flex-direction: column;
   justify-content: center;

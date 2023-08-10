@@ -1,10 +1,17 @@
 package Content.DB;
 
-import javax.naming.*;
-import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import Channel.DB.ChannelBean;
 
 public class ContentDAO {
 	private int result = 0;
@@ -315,5 +322,39 @@ public class ContentDAO {
 		}
 		return co;
 	} // getDetail() 메서드 end
+	
+	public boolean contentInset(ContentBean co) {
+
+		int result = 0; // 초기값
+		
+		ChannelBean chdata = new ChannelBean();
+		
+		String sql = "INSERT INTO chboard " 
+				+ " (boardNum, chNum, chCate_id, writer,"
+				+ " boardTitle, boardContent, boardOpen, boardNore, thumbNail)"
+				+ "	VALUES(bo_seq.nextval, ?, ?, ?," 
+				+ "			?, Y, Y, ?, ?)";
+		try (Connection con = ds.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+
+			// 새로운 글을 등록하는 부분입니다.
+			pstmt.setString(1, co.getBoardTitle());
+			pstmt.setInt(2, chdata.getChnum());
+			pstmt.setInt(3, chdata.getCate_id());
+			pstmt.setString(4, co.getWriter());
+			pstmt.setString(5, co.getBoardContent());
+			pstmt.setString(6, co.getThumbNail());
+
+			result = pstmt.executeUpdate();
+			if (result == 1) {
+				System.out.println("데이터 삽입이 모두 완료되었습니다.");
+				return true;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("boardInset() 에러: " + ex);
+		}
+		return false;
+	} // boardInset()메서드 end
 
 }

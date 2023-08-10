@@ -85,14 +85,6 @@ public class ContentBean {
         this.chCate_id = chcate_id;
     }
 
-    public int getBoardvisit() {
-        return boardVisit;
-    }
-
-    public void setBoardvisit(int boardvisit) {
-        this.boardVisit = boardvisit;
-    }
-
     public String getWriter() {
         return writer;
     }

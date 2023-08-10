@@ -4,7 +4,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta charset="utf-8">
+ <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">
+    <jsp:include page="../main/header.jsp"/>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
 <link href="${pageContext.request.contextPath}/css/content_detail.css" type="text/css" rel="stylesheet">
@@ -46,8 +58,6 @@
 		<div class="content_main_text">
 			${co.boardContent }
 			<p>p로 글 내용 작성 입니다</p>
-			<span>span 으로 글 내용 작성합니다</span>
-			<b>b로 글 내용 작성합니다.</b>
 		</div>
 	</div>
 	<div class="viewer_bottom_warp">
@@ -82,11 +92,11 @@
 			<div class="viewer_bottom_count_wrap">
 				<div class="viewer_bottom_count">
                       <span class="content_comment_wrap">
-                            <a href><img class="content_comment_img" src=../image/heart.png>
-                               <span class="content_comment_count">${co.boardHeart}</span>
-                           		<em class="u_heart_count">00</em>
+                            <a href><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/heart.png'>
+                               <span class="content_comment_count"></span>
+                           		<em class="u_heart_count">${co.boardHeart}</em>
                             </a>
-                            <a href><img class="content_comment_img" src=../image/comment.png>
+                            <a href><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/comment.png'>
                                 <span class="content_comment_count">${boardComment}</span>
                                 <em class="u_cnt_count">00</em>
                             </a>
@@ -127,6 +137,6 @@
 		</div>
 	</div>
 </div>
-
+<jsp:include page="../main/footer.jsp" />
 </body>
 </html>
