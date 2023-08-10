@@ -188,7 +188,7 @@ $(function() {
 	<div class='num2 clearfix'>
 		<label for='channel' style="float: left;"><span style="color: red">*</span>비밀번호 확인</label><br>
 	    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-	       <input type='text' name='password_confirm' id='password_confirm' style="width: 100%;" required>
+	       <input type='password' name='password_confirm' id='password_confirm' style="width: 100%;" required>
 	    </div>    
 	</div>
 	<div class='num3 clearfix'>
