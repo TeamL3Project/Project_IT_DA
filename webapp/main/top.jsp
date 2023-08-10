@@ -5,9 +5,7 @@
 	$(document).ready(function(){
 		$("#join_seller").click(function(e){
 			var id = `<%= session.getAttribute("userId") %>`;
-			console.log(typeof(id));
-			console.log(id == null);
-			console.log(id == 'null');
+			
 			if (id == 'null') {
 				e.preventDefault();
 				alert("로그인이 필요합니다.");

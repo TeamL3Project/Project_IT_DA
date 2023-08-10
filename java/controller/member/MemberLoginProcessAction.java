@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import Member.DB.MemberDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
+import util.messeage;
 
 public class MemberLoginProcessAction implements Action {
 
@@ -50,22 +51,22 @@ public class MemberLoginProcessAction implements Action {
 			}
 		
 			forward.setRedirect(true);
-			forward.setPath("/project");				//로그인 성공 후 id값을 세션으로 들고감
+			forward.setPath("/Project");				//로그인 성공 후 id값을 세션으로 들고감
 			
 			return forward;
 			
 		}else {													//로그인 실패시
-			String message = "비밀번호가 일치하지 않습니다.";
+			String message = messeage.PASSWORD.MISMATCH;
 			
 			if(result == -1)
-				message = "아이디가 존재하지 않습니다.";
+				message = messeage.ID.NOT_EXEIST;
 			
 			response.setContentType("text/html;charset=UTF-8");
 			
 			PrintWriter out = response.getWriter();
 			out.println("<script>"
 					  + "alert('" + message + "');"
-					  + "location.href='/project';"	//메인페이지로 이동, 비로그인 상태
+					  + "location.href='/Project';"				//메인페이지로 이동, 비로그인 상태
 					  + "</script>");							//컨트롤러에서 protomain.me로 설정해야하는지?
 			
 			out.close();

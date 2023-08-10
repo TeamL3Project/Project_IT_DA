@@ -61,6 +61,12 @@ public class MemberFrontController extends HttpServlet {
 			case "/myPage.me":
 				action = new MyPageAction();
 				break;
+			case "/infoUpdate.me":
+				action = new InfoUpdateAction();
+				break;
+			case "/infoUpdateProcess.me":
+				action = new InfoUpdateProcessAction();
+				break;
 		}
 		
 		forward = action.execute(request, response);

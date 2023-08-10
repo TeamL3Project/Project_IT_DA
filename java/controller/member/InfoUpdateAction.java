@@ -9,14 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import controller.action.Action;
 import controller.action.ActionForward;
 
-public class MyPageAction implements Action {
+public class InfoUpdateAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
-																	throws ServletException, IOException {
+																throws ServletException, IOException {
+		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
-		forward.setPath("./member/myPage.jsp");
+		forward.setPath("./member/infoUpdate.jsp");
 		
 		return forward;
 	}

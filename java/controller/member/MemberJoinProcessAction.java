@@ -18,6 +18,7 @@ public class MemberJoinProcessAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+
 		String userId = request.getParameter("id");
 		String userPw = request.getParameter("password");
 		String userName = request.getParameter("name");
