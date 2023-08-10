@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.container {
+	max-width: 1200px;
+	margin: auto;
+	background-color: #9e9e9eb5;
+}
+
+.buttons-container {
+	display: flex;
+	justify-content: center;
+}
+
+.bt-item {
+	margin: 0 5px;
+	color: #01273C;
+	font-weight: bold;
+	border-radius: 12px;
+	border: 1px solid #01273C;
+	font-size: 15px;
+	text-align: center;
+	line-height: 18px;
+	position: relative;
+	overflow: hidden;
+	background: transparent;
+	cursor: pointer;
+}
+
+.bt-hover:hover, .on, .bt-on {
+	background: #FBD1A7;
+	color: #01273C;
+	opacity: 0.8;
+	border: 1px solid #FBD1A7;
+}
+
+.bt-item:active {
+	border: none;
+}
+
+

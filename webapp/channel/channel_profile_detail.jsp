@@ -1,25 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../css/common.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<jsp:include page="header.jsp" />
-<script src="../js/category.js"></script>
-<html lang="kor">
+<html lang="ko">
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>채널정보 자세히보기</title>
-
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<jsp:include page="../main/header.jsp" />
 <style>
 .wrapper {
 	display: flex;
@@ -89,25 +89,16 @@ body {
 	margin-left: 50;
 }
 </style>
-<script>
-	$(function() {
-		$(".bt-item").click(function() {
-			$(".bt-item.on").removeClass('on');
-			console.log('test');
-			$(this).addClass('on').css("box-shadow", "none");
-		});
-	});
-</script>
 </head>
 <body>
 	<div class="wrapper">
 		<br> <br>
 		<div class="channel_name">
-			<h1 style="margin-left: -560;">책장위고양이</h1>
+			<h1 style="margin-left: -560;">[${channeldata.chname}]</h1>
 			<br>
 			<div class="sub_alram_btn"
 				style="padding: 30; margin-top: -38; padding-left: 15; margin-left: -580;">
-				<button class="btn bt-item bt-hover">구독하기</button>
+				<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
 				<img src="../image/channel/alram_white.png"
 					style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
 			</div>
@@ -117,7 +108,8 @@ body {
 		<div class="channel_info">
 			<div class="channel_info1">
 				<h2>채널 소개</h2>
-				<p>고양이</p>
+				<p>${channeldata.chinfo}</p>
+
 			</div>
 			<br>
 			<div class="channel_info2">
@@ -136,7 +128,23 @@ body {
 	</div>
 	<br>
 	<br>
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	  $(".bt-item").click(function() {
+	    $(".bt-item.on").removeClass('on');
+	    console.log('test');
+	    $(this).addClass('on').css("box-shadow", "none");
+	  });
+	
+	  const subscribeBtn = document.getElementById("subscribeBtn");
+	
+	  subscribeBtn.addEventListener("click", () => {
+	    alert("구독되었습니다");
+	  });
+	});
+</script>
 </body>
-<jsp:include page="footer.jsp" />
+<jsp:include page="../main/footer.jsp" />
+</body>
 </html>
 
