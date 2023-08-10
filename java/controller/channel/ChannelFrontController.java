@@ -34,6 +34,7 @@ public class ChannelFrontController extends HttpServlet {
 			contextPath = request.getContextPath();
 			System.out.println("contextPath = " + contextPath);
 			int lastURI = requestURI.lastIndexOf('/');
+			command = requestURI.substring(lastURI);
 		}
 
 		// 초기화

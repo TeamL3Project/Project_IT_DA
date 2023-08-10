@@ -43,13 +43,13 @@ body {
 	/*position: relative;*/
 	margin: 0 5px;
 	color: #01273C;
-	font-weight: bold;
 	border-radius: 12px;
 	border: 1px solid #01273C;
 	width: 7em;
 	font-size: 15px;
 	text-align: center;
 	line-height: 20px;
+	font-weight: bold;
 }
 
 .bt-hover:hover, .on, .bt-on {
@@ -61,21 +61,6 @@ body {
 
 .bt-item:active {
 	border: none;
-}
-
-.bt-normal {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 0 5px;
-	font-weight: bold;
-	height: 33px;
-	border-radius: 12px;
-	border: 1px solid #01273C;
-	width: 7em;
-	font-size: 15px;
-	text-align: center;
-	line-height: 20px;
 }
 
 .info_button {
@@ -113,11 +98,19 @@ td>a {
 .home_img {
 	width: 220px;
 	height: 240px;
-	margin-right: 30px;
+	margin-bottom: 30px
 }
 
 .content {
 	margin-left: 35;
+}
+
+.recent-write {
+    font-size: 18px;
+    /* text-align: inherit; */
+    line-height: 20px;
+    font-weight: 500;
+}
 }
 </style>
 <script>
@@ -133,6 +126,11 @@ function setButtonClickEvents() {
     $(".bt-item").click(function() {
         $(".bt-item.on").removeClass('on');
         $(this).addClass('on').css("box-shadow", "none");
+        if ($(this).text() === "홈") {
+            setInnerHTML1();
+        } else if ($(this).text() === "카테고리") {
+            setInnerHTML2();
+        }
     });
 }
 
@@ -141,10 +139,16 @@ function setInnerHTML1() {
     const element = document.getElementById('my_div');
     element.innerHTML = `
         <div class="background-wrap">
-            <div class="content">
-                  <c:forEach var="c" items="${channelhome}">
-                       <img class="home_img" src="../image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}">
-                  </c:forEach>
+            <div class="row">
+                <c:forEach var="c" items="${channelhome}" varStatus="loop">
+                    <div class="col-md-4">
+                        <img class="home_img" src="../image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}">
+                    </div>
+                    <c:if test="${(loop.index + 1) % 3 == 0 || loop.last}">
+                        </div>
+                        <div class="row">
+                    </c:if>
+                </c:forEach>
             </div>
         </div>`;
 }
@@ -195,26 +199,12 @@ function setInnerHTML2() {
 
 // 초기 내용을 "홈" 섹션으로 설정하는 함수
 function initializeDefaultContent() {
-    const element = document.getElementById('my_div');
-    element.innerHTML = `
-        <div class="background-wrap">
-            <div class="content">
-                <c:forEach var="c" items="${channelhome}">
-                    <img class="home_img" src="../image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}"></a>
-                </c:forEach>
-            </div>
-        </div>`;
-
+	setInnerHTML1();
     // "홈" 버튼을 활성화 상태로 설정
-    const homeButton = document.querySelector('.bt-item[value="홈"]');
+    const homeButton = document.querySelector('.bt-item[value="인기글"]');
     homeButton.classList.add('on');
 }
 
-
-	// 페이지 로드될 때 함수 호출하여 초기 내용 및 버튼 설정
-	window.onload = function() {
-		initializeDefaultContent();
-};
 	
 	
 </script>
@@ -233,6 +223,7 @@ function initializeDefaultContent() {
 						style="padding: 35; padding: 35; height: 220px;">${channel.chinfo}</div>
 					<div class="info_button">
 						<button class="btn bt-item bt-hover" id="profiledetail"
+							name="${channel.chnum}"
 							onClick="location.href='${pageContext.request.contextPath}/channel/${channel.chnum}/ChannelDetail.chl'">자세히보기</button>
 					</div>
 
@@ -254,7 +245,7 @@ function initializeDefaultContent() {
 		<br>
 
 		<div class="category" style="padding: 0 235">
-			<input class="btn bt-item bt-hover" type='button' value='홈'
+			<input class="btn bt-item bt-hover" type='button' value='인기글'
 				onclick='setInnerHTML1()' /> <input class="btn bt-item bt-hover"
 				type='button' value='카테고리' onclick='setInnerHTML2()' />
 		</div>
@@ -265,7 +256,9 @@ function initializeDefaultContent() {
 
 		<div class="category2">
 			<br> <br> <br>
-			<div class="bt-normal">최신글</div>
+			<div class="recent-write">
+				최신글
+			</div>
 			<br> <br>
 		</div>
 		<div class="container">

@@ -49,7 +49,7 @@ public class MemberJoinProcessAction implements Action {
 			
 			forward.setRedirect(false);
 			request.setAttribute("message", "회원가입 실패");
-			forward.setPath("main/protomain.jsp");				//실패하면 그냥 메인페이지로 이동?
+			forward.setPath("/main");				//실패하면 그냥 메인페이지로 이동?
 			
 			return forward;
 		
@@ -61,7 +61,7 @@ public class MemberJoinProcessAction implements Action {
 		
 		if (result == 1) {										//DB삽입 성공
 			out.println("alert('회원가입을 축하합니다.');");
-			out.println("location.href='main/protomain.jsp';");	//회원가입 후 메인 페이지로 이동?
+			out.println("location.href='/main';");	//회원가입 후 메인 페이지로 이동?
 		}
 		out.println("</script>");
 		out.close();

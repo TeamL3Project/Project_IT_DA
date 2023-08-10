@@ -58,6 +58,9 @@ public class MemberFrontController extends HttpServlet {
 			case "/search.me":
 				action = new SearchAction();
 				break;
+			case "/myPage.me":
+				action = new MyPageAction();
+				break;
 		}
 		
 		forward = action.execute(request, response);

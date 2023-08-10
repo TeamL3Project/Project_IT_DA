@@ -248,7 +248,7 @@ public class ContentDAO {
 	}
 
 	public List<ContentBean> channelhomeSelect() {
-		String query = "select * from (select * from chboard order by boardvisit desc) where rownum <= 3";
+		String query = "select * from (select * from chboard order by boardvisit desc) where rownum <= 6";
 		List<ContentBean> contentList = new ArrayList<>();
 
 		try (Connection conn = ds.getConnection();
@@ -280,7 +280,7 @@ public class ContentDAO {
 				+ "from (SELECT * from chboard "
 				+ "	     where chnum = ?"
 				+ "	     order by boardnum desc)"
-				+ "		 where rownum <= 3";
+				+ "		 where rownum <= 5";
 		
 		try (Connection conn = ds.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
