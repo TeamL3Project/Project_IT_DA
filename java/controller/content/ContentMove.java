@@ -22,7 +22,7 @@ public class ContentMove implements Action {
         ContentDAO dao = new ContentDAO();
         ContentBean co = dao.contentSelect(boardNum);
         request.setAttribute("co", co);
-        forward.setPath("/content/contentView.jsp");
+        forward.setPath("/content/content_detail.jsp");
         forward.setRedirect(false);
         return forward;
     }
