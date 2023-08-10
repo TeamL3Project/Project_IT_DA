@@ -38,7 +38,6 @@ function loadChannelList(categoryNum) {
                      + '<a href="/channels/' + this.chNum + '">'
                      + '<div class="card d-flex justify-content-center">'
                      + '<img src="image/channel/' + this.chprofile + '" class="card-img-top rounded-circle mx-auto d-block" alt="...">'
-
                      + '<div class="card-body">'
                      + '<h5 class="card-title">' + this.chName + '</h5>'
                      + '<p class="card-text">' + this.chinfo + '</p>'

@@ -1,5 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<head>
+<script>
+	$(document).ready(function(){
+		$("#join_seller").click(function(e){
+			var id = `<%= session.getAttribute("userId") %>`;
+			console.log(typeof(id));
+			console.log(id == null);
+			console.log(id == 'null');
+			if (id == 'null') {
+				e.preventDefault();
+				alert("로그인이 필요합니다.");
+				
+			}else {
+				location.href = "sellerjoin.me";
+			}
+			
+		});//click end
+		
+	});//ready end
+</script>
+</head>
 <body>
 	<div class="backyard2">
 		<div class="intro" style="margin:20px auto; background: rgb(1, 39, 60);">
@@ -14,20 +35,4 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		$(document).ready(function(){
-			$("#join_seller").click(function(e){
-				var id = `<%= (String) session.getAttribute("userId") %>`
-				if (id == null) {
-					e.preventDefault();
-					alert("로그인이 필요합니다.");
-					
-				}else {
-					location.href = "sellerjoin.me";
-				}
-				
-			});//click end
-			
-		});//ready end
-	</script>
 </body>
