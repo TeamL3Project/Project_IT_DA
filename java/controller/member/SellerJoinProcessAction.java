@@ -18,11 +18,13 @@ import Member.DB.Seller;
 import Member.DB.SellerDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
+import util.messeage;
 
 public class SellerJoinProcessAction implements Action {
 	private static final int Join_Fail = 0;
 	private static final int Join_Success = 1;
-
+	private HttpSession session;
+	
 	private Seller setSellerFromRequest(MultipartRequest multi) {
 		Seller s = new Seller();
 		s.setSellerPhone(multi.getParameter("phone"));
@@ -48,7 +50,7 @@ public class SellerJoinProcessAction implements Action {
 																throws ServletException, IOException {
 		
 		ActionForward forward = new ActionForward();
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		
 		String saveFolder = "image/MemberUpload";
@@ -60,7 +62,6 @@ public class SellerJoinProcessAction implements Action {
 		
 		//userid별 디렉토리 생성
 		String userFolder = realFolder + File.separator + userId;
-		
 		
 		File directory =  new File(userFolder);
 		if (!directory.exists()) {
@@ -82,15 +83,15 @@ public class SellerJoinProcessAction implements Action {
 			
 			
 			if (SellerResult == Join_Fail || ChannelResult == Join_Fail) {				//DB에 삽입되지 않은 경우
-				System.out.println("판매회원가입 실패");
+				System.out.println(messeage.Join.FAIL);
 				
 				forward.setRedirect(true);
-				request.setAttribute("message", "판매회원가입 실패");
+				request.setAttribute("message", messeage.Join.FAIL);
 				forward.setPath("/project");
 			
 			}else if (SellerResult == Join_Success && ChannelResult == Join_Success) {	//DB에 삽입된 경우
-				forward.setRedirect(true);
-				request.setAttribute("message", "판매회원가입 성공");
+				forward.setRedirect(true); 
+				request.setAttribute("message", messeage.Join.SUCCESS);
 	            forward.setPath("/project");
 	            
 			}

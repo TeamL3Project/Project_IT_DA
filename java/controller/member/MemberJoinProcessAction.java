@@ -2,7 +2,6 @@ package controller.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.time.LocalDate;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import controller.action.Action;
 import controller.action.ActionForward;
 
 public class MemberJoinProcessAction implements Action {
-
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 public class ChannelDAO {
 
 	private DataSource ds;
-
+	private int result = 0;
 	public ChannelDAO() {
 		try {
 			Context init = new InitialContext();
@@ -198,5 +198,29 @@ public class ChannelDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	public int insertChOwner(ChannelBean ch, String userId) {	//판매회원 가입시 판매자 정보를 채널리스트 db에 삽입
+		String sql = "insert into channelList "
+				   + "values((select nvl(max(chNum), 0)+1 from channelList), ?, "
+				   + "?, ?, ?, ?, 0, sysdate, 0) ";
+		
+		try(Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+					
+			pre.setString(1, userId);					//소유자 id
+			pre.setString(2, ch.getChname());			//채널 이름
+			pre.setString(3, ch.getChprofile());		//채널 프로필
+			pre.setString(4, ch.getChinfo());			//채널소개
+			pre.setInt(5, ch.getCate_id());				//카테고리 id
+			
+					
+			result = pre.executeUpdate();									//삽입 성공시 1
+			System.out.println("채널리스트 DB 삽입 성공");
+		}catch (Exception e) {
+			e.printStackTrace();
+				
+		}
+			
+		return result;
+	}
 }
