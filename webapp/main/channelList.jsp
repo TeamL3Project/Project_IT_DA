@@ -17,7 +17,7 @@ $(document).ready(function () {
 	loadChannelList(); //화면 켰을땐 없음
 });
 
-function loadChannelList(category) {
+/*function loadChannelList(category) {
 	$.ajax({
 		type: "GET",
 		url: "ChannelListAction.chl", // 서버에서 채널 목록을 가져오는 URL
@@ -39,7 +39,7 @@ function loadChannelList(category) {
 			alert("채널 목록을 불러오는 데 실패했습니다.");
 		}
 	});
-}
+}*/
 </script>
 	<div style="display: flex; justify-content: center;">
 		<h1>잇다 추천 채널</h1>
