@@ -74,3 +74,5 @@ function initializeDefaultContent() {
 window.onload = function() {
 	initializeDefaultContent();
 };
+
+

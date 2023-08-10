@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/common.css">
 <style>
 * {
 	box-sizing: border-box;
@@ -7,6 +12,7 @@
 #searchyard {
 	width: 100%;
 	text-align: center;
+	margin-top: 10px;
 }
 
 #searchInput {
@@ -25,7 +31,7 @@
 
 #searchUL li a {
 	border: 1px solid #ddd;
-	margin-top: -1px; 					/* 테두리 중복 방지 */
+	margin-top: -1px; /* 테두리 중복 방지 */
 	background-color: #f6f6f6;
 	padding: 12px;
 	text-decoration: none;
@@ -41,6 +47,7 @@
 </style>
 </head>
 <body>
+	<jsp:include page="header.jsp" />
 	<div id="searchyard">
 		<input type="text" id="searchInput" onkeyup="myFunction()"
 			placeholder="검색어를 입력하세요" title="Type in category">

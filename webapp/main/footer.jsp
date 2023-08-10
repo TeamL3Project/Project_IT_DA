@@ -26,6 +26,6 @@
           </tr>
         </table><br>
         <span class="footer-span footer-color">네이버(주)는 통신판매중개시스템의 제공자로서 통신판매의 당사자가 아닙니다. 콘텐츠 판매, 환불 등과 관련한 의무와 책임은 판매자에게 있습니다.</span>
-        <br><img src="image/common/itda_logo2.png" style="width: 100px; height: auto; margin: 0px;" alt="흰색 로고">
+        <br><img src="${pageContext.request.contextPath}/image/common/itda_logo2.png" style="width: 100px; height: auto; margin: 0px;" alt="흰색 로고">
       </div>
   </footer>

@@ -1,6 +1,7 @@
 package Member.DB;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -80,17 +81,18 @@ public class MemberDAO {
 				   + "(userId, userPw, userName, userBirth, userGender, userPhone, "
 				   + "userAddress1, userAddress2, userPost, userEmail, userCategory, "
 				   + "userJoindate, statusId) "
-				   + "values(?,?,?,?,?,? "
+				   + "values(?,?,?,?,?,?, "
 				   + "?,?,?,?,?,"
 				   + "sysdate, 1)";
 		
+		Date userBirth = Date.valueOf(m.getDateOfBirth());
 		try(Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
 			
 			pre.setString(1, m.getUserId());			//userId
 			pre.setString(2, m.getUserPw());			//userPw
 			pre.setString(3, m.getUserName());			//userName
-			pre.setInt(4, m.getUserBirth());			//userBirth
+			pre.setDate(4, userBirth);					//userBirth
 			pre.setString(5, m.getUserGender());		//userGender
 			pre.setString(6, m.getUserPhone());			//userPhone
 			pre.setString(7, m.getUserAddress1());		//userAddress1
@@ -98,7 +100,6 @@ public class MemberDAO {
 			pre.setString(9, m.getUserPost());			//userPost
 			pre.setString(10, m.getUserEmail());		//userEmail
 			pre.setString(11, m.getUserCategory());		//userCategory
-			pre.setInt(12, m.getUserJoindate());		//userJoindate
 			
 			result = pre.executeUpdate();
 			if (result == 1) {

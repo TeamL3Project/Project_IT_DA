@@ -17,7 +17,7 @@ public class MemberJoinAction implements Action {
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
-		forward.setPath("member/joinForm.jsp");
+		forward.setPath("./member/joinForm.jsp");
 		return forward;
 	}
 

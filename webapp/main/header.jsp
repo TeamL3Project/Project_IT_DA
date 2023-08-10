@@ -20,11 +20,13 @@
 <div class="backyard">
 <nav id="navbody">
 	<!-- 왼쪽 상단 로고 링크 -->
-	<a id="logo-brand" href="/project"><img src="image/common/itda_logo.png" style="width: 100px; height: auto;"></a>
+	<a id="logo-brand" href="/project"><img src="${pageContext.request.contextPath}/image/common/itda_logo.png" style="width: 100px; height: auto;"></a>
 	<ul id="right_btns">
     	<li id="search">
 	      	<a id="search_btn" onclick="location.href='search.me'">
-		  		<img src="image/common/search.png" style="width: 30px; height: auto;">
+
+		  		<img src="${pageContext.request.contextPath}/image/common/search.png" style="width: 30px; height: auto;">
+
 		  	</a>
 		</li>
 		
@@ -37,7 +39,7 @@
 		<div class="dropdown">
 		  <button class="dropbtn"><img src="./image/common/profile.png" style="width: 30px; height: auto;"></button>
 		  <div class="dropdown-content">
-		    <a href="mypage.jsp">마이페이지</a>
+		    <a href="myPage.me">마이페이지</a>
 		    <a href="logout.me">로그아웃</a>
 		  </div>
 		</div>
@@ -70,7 +72,7 @@
 				    			placeholder="아이디"><br>
 				    	</p>
 						<p><br>
-							<input type="text" name="userPw" style="width:100%; height: 40px;
+							<input type="password" name="userPw" style="width:100%; height: 40px;
 				    			border: none; background: rgb(204, 204, 204);
 				    			border-bottom: 1px solid rgb(1, 39, 60) !important;
 				    			outline: none;"
