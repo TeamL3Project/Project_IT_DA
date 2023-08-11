@@ -4,6 +4,19 @@ select * from CHBOARD;
 SELECT * FROM chboard
 ORDER BY boardNum DESC;
 
+SELECT s.*
+FROM channellist c
+INNER JOIN seller s ON c.ownerid = s.userid
+WHERE c.chNum = 21;
+
+
+select * from seller;
+select * from ITDA_USER;
+select * from chboardcategory;
+
+
+select * from chboardcategory 
+where chnum = 21 order by chcate_name;
 
 desc CHANNELLIST;
 
@@ -64,7 +77,12 @@ SET boardTitle='안녕하세요 반갑습니다!'
 WHERE boardNum=29;
 
 
+
 INSERT INTO chboard (writer, boardNum, boardTitle) VALUES ('itda', 29, '안녕하세요 반갑습니다!');
 INSERT INTO chboard (writer, boardNum, boardTitle) VALUES ('itda', 30, '안녕하세요 반갑습니다!');
+INSERT INTO chboard (writer, boardNum, chNum, boardTitle) VALUES ('itda', 1, 29, '안녕하세요 반갑습니다!');
 
 
+SELECT *
+FROM channellist
+WHERE chNum = 21;
