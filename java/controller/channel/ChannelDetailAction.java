@@ -2,6 +2,8 @@ package controller.channel;
 
 import Channel.DB.ChannelBean;
 import Channel.DB.ChannelDAO;
+import Member.DB.Seller;
+import Member.DB.SellerDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
 
@@ -17,11 +19,15 @@ public class ChannelDetailAction implements Action {
 
 		ChannelDAO channeldao = new ChannelDAO();
 		ChannelBean channeldata = new ChannelBean();
-
+		SellerDAO sellerdao = new SellerDAO();
+		ChannelBean sellergraph = new ChannelBean();
+		
 		// 글 번호 파라미터 값을 num변수에 저장
 		int num = Integer.parseInt(request.getParameter("channelnum"));
-		System.out.println(num);
+
 		channeldata = channeldao.getChannelDetail(num);
+		Seller sellerdata = sellerdao.getSellerdata(num);
+		sellergraph = channeldao.getSellergraph(num);
 
 		if (channeldata == null) {
 			System.out.println("상세보기 실패");
@@ -36,6 +42,8 @@ public class ChannelDetailAction implements Action {
 
 		// channeldata 객체를 request객체에 저장
 		request.setAttribute("channeldata", channeldata);
+		request.setAttribute("sellerdata", sellerdata);
+		request.setAttribute("sellergraph", sellergraph);
 
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);

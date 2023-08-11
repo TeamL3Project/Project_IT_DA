@@ -27,7 +27,7 @@ public class MainEntrance implements Action {
         request.setAttribute("popcontentList",popcontentList);
         request.setAttribute("contentSelectBycategory",contentSelectBycategory);
         request.setAttribute("channelCategory",channelCategoryBeanList);
-
+//        System.out.println(channelCategoryBeanList.);
         forward.setRedirect(false);
         forward.setPath("main/protomain.jsp");
         return forward;

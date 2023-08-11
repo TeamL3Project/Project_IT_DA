@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import Channel.DB.ChannelBean;
+import ContentCategory.DB.ContentCategoryBean;
 
 public class ContentDAO {
 	private int result = 0;
@@ -227,8 +228,9 @@ public class ContentDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println("getContentList() 에러: " + ex);
-		}return list;
-	// getContentList() end
+		}
+		return list;
+		// getContentList() end
 
 	}
 
@@ -261,10 +263,14 @@ public class ContentDAO {
 	public List<ContentBean> getBoardListByBoardNum(int chnum) {
 		List<ContentBean> contentList = new ArrayList<>();
 
-		String sql = "select * " + "from (SELECT * from chboard " + "	     where chnum = ?"
-				+ "	     order by boardnum desc)" + "		 where rownum <= 5";
+		String sql = "select * " 
+					+ "from (SELECT * from chboard " 
+					+ "	     where chnum = ?"
+					+ "	     order by boardnum desc)" 
+					+ "		 where rownum <= 5";
 
-		try (Connection conn = ds.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+		try (Connection conn = ds.getConnection(); 
+			 PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
 			pstmt.setInt(1, chnum);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -299,7 +305,9 @@ public class ContentDAO {
 	public ContentBean getDetail(int num) {
 		ContentBean co = null;
 		String sql = "select * from chboard where BOARDNUM = ?";
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+		try (Connection con = ds.getConnection(); 
+			 PreparedStatement pstmt = con.prepareStatement(sql);) {
+			
 			pstmt.setInt(1, num);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
@@ -322,20 +330,17 @@ public class ContentDAO {
 		}
 		return co;
 	} // getDetail() 메서드 end
-	
+
 	public boolean contentInset(ContentBean co) {
 
 		int result = 0; // 초기값
-		
+
 		ChannelBean chdata = new ChannelBean();
-		
-		String sql = "INSERT INTO chboard " 
-				+ " (boardNum, chNum, chCate_id, writer,"
-				+ " boardTitle, boardContent, boardOpen, boardNore, thumbNail)"
-				+ "	VALUES(bo_seq.nextval, ?, ?, ?," 
+
+		String sql = "INSERT INTO chboard " + " (boardNum, chNum, chCate_id, writer,"
+				+ " boardTitle, boardContent, boardOpen, boardNore, thumbNail)" + "	VALUES(bo_seq.nextval, ?, ?, ?,"
 				+ "			?, Y, Y, ?, ?)";
-		try (Connection con = ds.getConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(sql);) {
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 
 			// 새로운 글을 등록하는 부분입니다.
 			pstmt.setString(1, co.getBoardTitle());
@@ -356,5 +361,35 @@ public class ContentDAO {
 		}
 		return false;
 	} // boardInset()메서드 end
+
+	public List<ContentBean> getContentByBoardNum(int chnum) {
+		List<ContentBean> contentList = new ArrayList<>();
+
+		String sql = "select * "
+					+ "from chboard "
+					+ "where boardNum = ?";
+
+		try (Connection conn = ds.getConnection(); 
+			 PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
+			pstmt.setInt(1, chnum);
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					ContentBean co = new ContentBean();
+					co.setBoardNum(rs.getInt(1));
+					co.setChNum(rs.getInt(2));
+					co.setWriter(rs.getString(3));
+					co.setBoardTitle(rs.getString(4));
+					co.setBoardContent(rs.getString(5));
+					co.setThumbNail(rs.getString(13));
+					contentList.add(co);
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return contentList;
+	}
 
 }

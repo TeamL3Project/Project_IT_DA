@@ -26,6 +26,8 @@ public class ChannelCategoryDAO {
 				category.setCategoryId(rs.getInt("cate_id"));
 				category.setCategoryName(rs.getString("cate_name"));
 				ChannelCategoryList.add(category);
+				System.out.println(category.getCategoryName());
+
 			}
 
 		}catch (Exception ex){

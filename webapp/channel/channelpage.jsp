@@ -1,21 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="../css/common.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<html lang="ko">
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<html lang="ko">
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <title>channel Page</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -76,11 +76,6 @@ td {
 	text-align: left;
 }
 
-.container {
-	width: 100%;
-	padding: 5;
-}
-
 a.test:hover {
 	text-decoration: underline;
 	color: inherit;
@@ -92,25 +87,55 @@ td>a {
 }
 
 .category-content {
-	width: 100%;
-}
-
-.home_img {
-	width: 220px;
-	height: 240px;
-	margin-bottom: 30px
-}
-
-.content {
-	margin-left: 35;
+	display: flex;
+	max-width: 756px;
+	padding-left: 29px
 }
 
 .recent-write {
-    font-size: 18px;
-    /* text-align: inherit; */
-    line-height: 20px;
-    font-weight: 500;
+	font-size: 18px;
+	line-height: 20px;
+	font-weight: 500;
+	margin-left: -330;
 }
+
+.home_img {
+	height: 50%;
+	width: 100%;
+	margin-top: 10;
+	border-radius: 10px;
+}
+
+.col-md-4 {
+	border: 1px solid #01273C;
+	width: 192px;
+	height: 290px;
+	margin-bottom: 25px;
+	margin-right: 25px;
+	border-radius: 10px;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.background-wrap {
+	display: flex;
+	flex-direction: column;
+}
+
+.row {
+	display: flex;
+	flex-wrap: nowrap;
+	margin-left: -50;
+}
+
+.card-body {
+	text-align: center;
+}
+
+.container {
+	display: flex;
+	max-width: 770px;
+	padding-left: 43px;
 }
 </style>
 <script>
@@ -118,7 +143,8 @@ $(document).ready(function() {
     initializeDefaultContent();
     setButtonClickEvents();
     $("#subscribeBtn").on("click", function() {
-        alert("구독되었습니다.");
+        alert("[${channel.chname}] 구독되었습니다.");
+        $(this).removeClass('bt-hover').addClass('bt-on').prop('disabled', true);
     });
 });
 
@@ -126,7 +152,7 @@ function setButtonClickEvents() {
     $(".bt-item").click(function() {
         $(".bt-item.on").removeClass('on');
         $(this).addClass('on').css("box-shadow", "none");
-        if ($(this).text() === "홈") {
+        if ($(this).text() === "인기글") {
             setInnerHTML1();
         } else if ($(this).text() === "카테고리") {
             setInnerHTML2();
@@ -141,17 +167,34 @@ function setInnerHTML1() {
         <div class="background-wrap">
             <div class="row">
                 <c:forEach var="c" items="${channelhome}" varStatus="loop">
+                <a href="BoardDetailAction.bo?num=${b.board_num}">
                     <div class="col-md-4">
                         <img class="home_img" src="../image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}">
+                        <div class="card-body card-body-font">
+                            <h5 class="card-title">
+                                <c:out value="${c.boardTitle}" />
+                            </h5>
+                            <p class="card-text">
+                                <c:out value="${c.boardContent}" />
+                                <c:if test="${c.boardContent.length() >= 20}">
+                                    <c:out value="${c.boardContent.substring(0,20)}..." />
+                                </c:if>
+                                <c:if test="${c.boardContent.length() < 20}">
+                                    <c:out value="${c.boardContent}" />
+                                </c:if>
+                            </p>
+                        </div>
                     </div>
+                    </a>
                     <c:if test="${(loop.index + 1) % 3 == 0 || loop.last}">
                         </div>
                         <div class="row">
-                    </c:if>
+                    </c:if> 
                 </c:forEach>
             </div>
         </div>`;
 }
+
 
 
 function setInnerHTML2() {
@@ -162,58 +205,35 @@ function setInnerHTML2() {
 		        <tr>
 		          <td><a> 전체 </a></td>
 		        </tr>
-			    <tr>
-			          <td><a href="https://www.naver.com/" class='test'> 김시운 </a></td>
-			    </tr>
-		        <tr>
-		          <td><a href="https://www.naver.com/" class='test'> 김민섭 </a></td>
-		        </tr>
-		        <tr>
-		          <td><a href="https://www.naver.com/" class='test'> 책장위고양이 에세이 </a></td>
-		        </tr>
-		        <tr>
-		          <td><a href="https://www.naver.com/" class='test'> 고양이 성격 </a></td>
-		        </tr>
-		        <tr>
-		          <td><a href="https://www.naver.com/" class='test'> 고양이 간식 </a></td>
-		        </tr>
-		        <tr>
-		          <td><a href="https://www.naver.com/" class='test'> 고양이상품 신상소개 </a></td>
-		        </tr>
-		        <tr>
-		          <td><a href="https://www.naver.com/" class='test'> 간식만드는법 </a></td>
-		        </tr>
-		        <tr>
-		          <td><a href="https://www.naver.com/" class='test'> 고양이 장난감 언박싱 </a></td>
-		        </tr>
-		        <tr>
-		          <td><a href="https://www.naver.com/" class='test'> 츄르 소개 </a></td>
-		        </tr>
-		        <tr>
-		          <td><a href="https://www.naver.com/" class='test'> 뚱냥이 관리법 </a></td>
-		        </tr>
-		        
+				<c:forEach var="c" items="${chcategory}">
+					<tr>
+						<td>${c.chcate_Name}</td>
+					</tr>
+				</c:forEach>
 	       </table>
 	    </div>`;
 }
 
-// 초기 내용을 "홈" 섹션으로 설정하는 함수
+// 초기 내용을 "인기글" 섹션으로 설정하는 함수
 function initializeDefaultContent() {
 	setInnerHTML1();
-    // "홈" 버튼을 활성화 상태로 설정
+    // "인기글" 버튼을 활성화 상태로 설정
     const homeButton = document.querySelector('.bt-item[value="인기글"]');
     homeButton.classList.add('on');
 }
 
-	
-	
 </script>
 </head>
 <body>
 	<div class="wrapper">
 		<br> <br>
 		<div class="info">
-			<h3 style="margin: 0 10; padding: 10;">[${channel.chname}]</h3>
+			<div class="head"
+				style="display: flex; justify-content: space-between;">
+				<h3 style="margin-left: 25;">[${channel.chname}]</h3>
+				<button class="btn bt-item bt-hover" style="margin: 9;"
+					onclick="location.href='${pageContext.request.contextPath}/channel/contentwrite.co'">글쓰기</button>
+			</div>
 
 			<div id="profile1" style="width: 735px;">
 				<div id="profile"
@@ -244,7 +264,7 @@ function initializeDefaultContent() {
 		<hr style="border: 1px bold silver;" width="100%">
 		<br>
 
-		<div class="category" style="padding: 0 235">
+		<div class="category" style="padding: 0 235 display: flex;">
 			<input class="btn bt-item bt-hover" type='button' value='인기글'
 				onclick='setInnerHTML1()' /> <input class="btn bt-item bt-hover"
 				type='button' value='카테고리' onclick='setInnerHTML2()' />
@@ -256,14 +276,11 @@ function initializeDefaultContent() {
 
 		<div class="category2">
 			<br> <br> <br>
-			<div class="recent-write">
-				최신글
-			</div>
-			<br> <br>
+			<div class="recent-write">최신글</div>
+			<br>
 		</div>
 		<div class="container">
-			<table class="table table-bordered"
-				style="width: 65%; margin: 0 203;">
+			<table class="table table-bordered">
 				<c:forEach var="c" items="${channeldetail}">
 					<tr>
 						<td><a href="https://www.naver.com/" class='test'>${c.boardTitle}</a></td>

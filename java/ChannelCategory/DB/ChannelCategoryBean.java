@@ -5,7 +5,7 @@ public class ChannelCategoryBean {
 	private String categoryName;
 
 
-	public int getCategoryId(int cateId) {
+	public int getCategoryId() {
 		return categoryId;
 	}
 
@@ -13,7 +13,7 @@ public class ChannelCategoryBean {
 		this.categoryId = categoryId;
 	}
 
-	public String getCategoryName(String cateName) {
+	public String getCategoryName() {
 		return categoryName;
 	}
 
