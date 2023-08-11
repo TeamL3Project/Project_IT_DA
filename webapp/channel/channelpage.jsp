@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
@@ -231,8 +232,10 @@ function initializeDefaultContent() {
 			<div class="head"
 				style="display: flex; justify-content: space-between;">
 				<h3 style="margin-left: 25;">[${channel.chname}]</h3>
-				<button class="btn bt-item bt-hover" style="margin: 9;"
-					onclick="location.href='${pageContext.request.contextPath}/channel/contentwrite.co'">글쓰기</button>
+				<form action='${pageContext.request.contextPath}/content/contentwrite.co' method="get">
+				<input type="hidden" name="chnum" value="${channel.chnum}">
+				<button class="btn bt-item bt-hover" style="margin: 9;">글쓰기</button>
+				</form>
 			</div>
 
 			<div id="profile1" style="width: 735px;">

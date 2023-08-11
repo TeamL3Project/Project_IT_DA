@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>  
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     
     <!DOCTYPE html>
     <html>
@@ -18,7 +19,7 @@
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <head>
     <meta charset="utf-8">
-    <title>카테고리명{$cate_name}:채널명${chname}</title>
+    <title>카테고리명{chcate_name}:채널명${chname}</title>
     <link rel="stylesheet" href="../css/content_list.css">
     <script src = "../js/contetn_list.js"></script>
     <jsp:include page="../main/header.jsp"/>
@@ -33,15 +34,15 @@
             <div class="head_content">
                 <div class="head_service">
                     <div class="head_back">
-                        <a class=back_content href=""><!-- 채널메인페이지로 이동 --><img src="../image/content/errow_left.png" width="20"></a>
+                        <a class=back_content href="javascript:history.back();"><img src="../image/content/errow_left.png" width="20"></a>
                     </div>
                 </div>
-                    <h2 class="head_title">채널명 입니다 ${chName}</h2>
+                    <h2 class="head_title">${chName}</h2>
             </div>
             <hr>
             <div class="content_line">
                 <div class="content_tap_wrap">
-                    <h3 class="content_head"><a href><!-- 채널카테고리로 이동 --><span>전체 콘텐츠<em>${listcount }</em><img src="../image/content/errow_down.png" width="15"></span></a></h3>
+                    <h3 class="content_head"><span>${chcate_name }<em>${listcount }</em></span></h3>
                 </div>
                 <div class="category_sorting_wrap">
                     <div class="sorting_wrap">
@@ -65,7 +66,7 @@
                     <li class="content_item">
                            <div class="content_item_line">
 
-                            <a href><img src class="content_thumb">
+                            <a href><img src="${pageContext.request.contextPath}/image/content/${chnum }/${b.boardNum }/${b.thumbNail}" class="content_thumb">
                             </a>
                             <div class="content_text">
                                 <a class="content_text_link" href="content_detail.co?num=${b.boardNum }">
@@ -80,7 +81,7 @@
 								</a>
                                 <div class="content_info">
                                     <span class="content_comment_wrap">
-                                        <span class="content_info_text">${b.boardDate}</span>
+                                        <span class="content_info_text"><fmt:formatDate pattern="yyyy.MM.dd" value="${b.boardDate}"/></span>
                                         <a><img class="content_comment_img" src= "../image/content/heart.png">
                                             <span class="content_comment_count">${b.boardHeart}</span>
                                         </a>
@@ -148,7 +149,6 @@
 		<h3 style="text-align:center">등록된 글이 없습니다.</h3>
 	</c:if>
 	
-	<button type="button" class="btn btn-info float-right">글 쓰 기</button>
 	</div> <%-- <div class="container"> end --%>
         </div>
  <jsp:include page="../main/footer.jsp" />
