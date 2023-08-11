@@ -1,21 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
- 	<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<html lang="ko">
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="${pageContext.request.contextPath}/css/common.css"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<html lang="ko">
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <title>channel Page</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -167,7 +168,6 @@ function setInnerHTML1() {
         <div class="background-wrap">
             <div class="row">
                 <c:forEach var="c" items="${channelhome}" varStatus="loop">
-                <a href="BoardDetailAction.bo?num=${b.board_num}">
                     <div class="col-md-4">
                         <img class="home_img" src="../image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}">
                         <div class="card-body card-body-font">
@@ -184,8 +184,8 @@ function setInnerHTML1() {
                                 </c:if>
                             </p>
                         </div>
+                     
                     </div>
-                    </a>
                     <c:if test="${(loop.index + 1) % 3 == 0 || loop.last}">
                         </div>
                         <div class="row">
@@ -231,8 +231,12 @@ function initializeDefaultContent() {
 			<div class="head"
 				style="display: flex; justify-content: space-between;">
 				<h3 style="margin-left: 25;">[${channel.chname}]</h3>
-				<button class="btn bt-item bt-hover" style="margin: 9;"
-					onclick="location.href='${pageContext.request.contextPath}/channel/contentwrite.co'">글쓰기</button>
+				<form
+					action='${pageContext.request.contextPath}/content/contentwrite.co'
+					method="get">
+					<input type="hidden" name="chnum" value="${channel.chnum}">
+					<button class="btn bt-item bt-hover" style="margin: 9;">글쓰기</button>
+				</form>
 			</div>
 
 			<div id="profile1" style="width: 735px;">

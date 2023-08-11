@@ -379,10 +379,17 @@ public class ContentDAO {
 					ContentBean co = new ContentBean();
 					co.setBoardNum(rs.getInt(1));
 					co.setChNum(rs.getInt(2));
-					co.setWriter(rs.getString(3));
-					co.setBoardTitle(rs.getString(4));
-					co.setBoardContent(rs.getString(5));
-					co.setThumbNail(rs.getString(13));
+					co.setBoardHeart(rs.getInt(3));
+					co.setChcate_id(rs.getInt(4));
+					co.setBoardVisit(rs.getInt(5));
+					co.setWriter(rs.getString(6));
+					co.setBoardTitle(rs.getString(7));
+					co.setBoardContent(rs.getString(8));
+					co.setBoardOpen(rs.getString(9));
+					co.setBoardNore(rs.getString(10));
+					co.setThumbNail(rs.getString(11));
+					co.setBoardDate(rs.getTimestamp(12));
+					co.setBoardUpdate(rs.getTimestamp(13));
 					contentList.add(co);
 				}
 			}

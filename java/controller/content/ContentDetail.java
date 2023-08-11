@@ -21,7 +21,7 @@ public class ContentDetail implements Action {
 
 		// 글번호 파라미터 값을 num 변수에 저장합니다.
 		int num = Integer.parseInt(request.getParameter("num"));
-
+		
 		// 내용을 확인할 글의 조회수를 증가시킵니다.
 		contentdao.setReadCountUpdate(num);
 
