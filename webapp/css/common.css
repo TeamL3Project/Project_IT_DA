@@ -88,18 +88,28 @@ a {
 
 #right_btns li {
 	margin-left: 15px;
-	margin-bottom: 2px;
+	margin-bottom: 18px;
+}
+
+#search {
+	width: 30px;
+	height: 30px;
 }
 
 #search_btn {
-	width: 100px;
-	height: 50px;
+	width: 30px;
+	height: auto;
 	cursor: pointer;
 }
 
+#login_modal {
+	width: 30px;
+	height: 30px;	
+}
+
 .login_btn {
-	width: 70px;
-	height: 50px;
+	width: 48px;
+	height: 25px;
 	padding: 0px;
 }
 

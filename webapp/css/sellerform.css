@@ -4,7 +4,7 @@
 	display: flex;
 	justify-content: center;
 	text-align: center;
-	background: rgb(204, 204, 204);
+	background: white;
 }
 
 #sellerform {
@@ -86,15 +86,14 @@ label {
 .num2 {
 	text-align: center;
 	margin: 15px;
-	display: flex;
 }
 
 #profile_select {
-	
+	display: inline-block;
 }
 
 #profile_preview {
-	
+	display: inline-block;
 }
 
 #phone {

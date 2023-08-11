@@ -24,6 +24,7 @@
 <title>${co.boardTitle }게시글 제목</title>
 </head>
 <body>
+<input type="hidden" id="LoginId" value="${userId}" name="LoginId"><%-- Reply.js에서 사용하기 위해 추가 --%>
 <div class="board_detail_wrap">
 	<div class="board_detail_all_group">
 	<div class="board_detail_title_group">
@@ -57,7 +58,8 @@
 	<div class="viewer_main_text_group">
 		<div class="content_main_text">
 			${co.boardContent }
-			<p>p로 글 내용 작성 입니다</p>
+			<p>p로 글 내용 작성 입니다</p>		<%-- ContentDetail에서 가져옴 --%>
+			<input type="hidden" name="num" value="${param.num}" id="Reply_board_num">
 		</div>
 	</div>
 	<div class="viewer_bottom_warp">
@@ -106,34 +108,33 @@
 		</div>
 	</div>
 </div>
-	<div class="bottom_comment_warp">
-		<div class="bottom_comment_group">
-			<div class="bottom_commnet_inline">
-				<div class="bottom_comment_head">
-					<h5 class="comment_title">댓글</h5>
-					<span class="bottom_comment_cnt">00</span>
-				</div>
-				<div class="commnet_write_wrap">
-					<div class="comment_write_box">
-						<form>
-									<div class="comment-write">
-										<div class="comment-write-area">
-											<b class="comment-write-area-name" >${id}</b> 
-											<span class="comment-write-area-count">0/200</span>
-												<textarea placeholder="댓글을 남겨보세요" rows="1"
-												class="comment-write-area-text" maxLength="200"></textarea>
-					
-										</div>
-				<div class="register-box" >
-					<div class="button btn-cancel" >취소</div><%-- 댓글의 취소는 display:none, 등록만 보이도록 합니다.--%>
-					<div class="button btn-register" >등록</div>
-				</div>
-				</div>
-						</form>
+	<div class="bottom_reply_warp">
+		<div class="bottom_reply_group">
+			<div class="bottom_reply_area">
+				<div class="bottom_reply_head">
+					<h5 class="reply_title">
+						댓글 <sup class="reply_count"></sup>
+					</h5>
+					<div class="reply_order">
+						<ul class="reply_order_list">
+						</ul>
 					</div>
-				</div>
+				</div>	<%-- comment_head end --%>
+				<ul class="reply_list">	<%-- 댓글 목록 --%>
+				</ul>
+				<div class="reply_write">
+					<div class="reply_write_area">
+						<b class="reply_write_area_name">${userId}</b> 
+						<span class="reply_write_area_count">0/200</span>
+						<textarea placeholder="댓글을 남겨보세요" rows="1"
+						class="reply_write-area_text" maxLength="200"></textarea>
+					</div>
+					<div class="register_box" >
+						<div class="button btn-cancel" >취소</div><%-- 댓글의 취소는 display:none, 등록만 보이도록 합니다.--%>
+						<div class="button btn-register" >등록</div>
+					</div>
+				</div>	<%-- reply_write end --%>
 			</div>
-			
 		</div>
 	</div>
 </div>

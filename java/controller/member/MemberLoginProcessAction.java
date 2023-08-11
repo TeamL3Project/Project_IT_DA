@@ -51,7 +51,7 @@ public class MemberLoginProcessAction implements Action {
 			}
 		
 			forward.setRedirect(true);
-			forward.setPath("/Project");				//로그인 성공 후 id값을 세션으로 들고감
+			forward.setPath(request.getContextPath()+"/main");				//로그인 성공 후 id값을 세션으로 들고감
 			
 			return forward;
 			
@@ -66,7 +66,7 @@ public class MemberLoginProcessAction implements Action {
 			PrintWriter out = response.getWriter();
 			out.println("<script>"
 					  + "alert('" + message + "');"
-					  + "location.href='/Project';"				//메인페이지로 이동, 비로그인 상태
+					  + "location.href='/main';"				//메인페이지로 이동, 비로그인 상태
 					  + "</script>");							//컨트롤러에서 protomain.me로 설정해야하는지?
 			
 			out.close();
