@@ -4,23 +4,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<meta charset="utf-8">
- <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<meta charset="utf-8">
+	<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">
     <jsp:include page="../main/header.jsp"/>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<link href="${pageContext.request.contextPath}/css/content_detail.css" type="text/css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link href="${pageContext.request.contextPath}/css/content_detail.css" type="text/css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="${pageContext.request.contextPath}/js/Reply.js"></script>
+	<link href='${pageContext.request.contextPath}/css/Reply.css' type='text/css' rel='stylesheet'>
 <title>${boardlist.boardTitle }게시글 제목</title>
 </head>
 <body>
@@ -59,7 +55,7 @@
 		<div class="content_main_text">
 			${co.boardContent }
 			<p>p로 글 내용 작성 입니다</p>		<%-- ContentDetail에서 가져옴 --%>
-			<input type="hidden" name="num" value="${param.num}" id="Reply_board_num">
+			<input type="hidden" name="num" value="${co.boardNum}" id="Reply_board_num">
 		</div>
 	</div>
 	<div class="viewer_bottom_warp">
@@ -108,10 +104,10 @@
 		</div>
 	</div>
 </div>
-	<div class="bottom_reply_warp">
-		<div class="bottom_reply_group">
-			<div class="bottom_reply_area">
-				<div class="bottom_reply_head">
+	<div class="reply_warp">
+		<div class="reply_group">
+			<div class="reply_area">
+				<div class="reply_head">
 					<h5 class="reply_title">
 						댓글 <sup class="reply_count"></sup>
 					</h5>
@@ -127,7 +123,7 @@
 						<b class="reply_write_area_name">${userId}</b> 
 						<span class="reply_write_area_count">0/200</span>
 						<textarea placeholder="댓글을 남겨보세요" rows="1"
-						class="reply_write-area_text" maxLength="200"></textarea>
+						class="reply_write_area_text" maxLength="200"></textarea>
 					</div>
 					<div class="register_box" >
 						<div class="button btn-cancel" >취소</div><%-- 댓글의 취소는 display:none, 등록만 보이도록 합니다.--%>

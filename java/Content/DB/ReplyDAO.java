@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 
 public class ReplyDAO {
 	private DataSource ds;
+	private int result = 0;
 	
 	public ReplyDAO() {
 		try {
@@ -94,11 +95,10 @@ public class ReplyDAO {
 		
 	}
 
-	public int replyDelete(int num) {
+	public int replyDelete(int num) {					//댓글 삭제
 		String sql = "delete boardreply "
 				   + "where boardNum = ?";
-		int result = 0;
-		
+	
 		try (Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
 			
@@ -119,12 +119,11 @@ public class ReplyDAO {
 		
 	}
 
-	public int replyInsert(Reply re) {
+	public int replyInsert(Reply re) {					//댓글 작성
 		String sql = "insert into boardreply "
 				   + "values(RE_SEQ.nextval,?,?,?, "
 				   + "RE_SEQ.nextval, 0, sysdate, NULL, 0) ";
 		
-		int result = 0;
 		
 		try(Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
@@ -142,12 +141,11 @@ public class ReplyDAO {
 		return result;
 	}
 
-	public int replyUpdate(Reply re) {
+	
+	public int replyUpdate(Reply re) {					//댓글 수정
 		String sql = "update boardreply "
 				   + "set replycontent = ? "
 				   + "where replynum = ?";
-		
-		int result = 0;
 		
 		try(Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
@@ -155,7 +153,7 @@ public class ReplyDAO {
 			pre.setString(1, re.getReplyContent());
 			pre.setInt(2, re.getReplyNum());
 					
-			result = pre.executeUpdate();						//삽입 성공시 1
+			result = pre.executeUpdate();				//삽입 성공시 1
 				
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -164,9 +162,73 @@ public class ReplyDAO {
 		return result;
 	}
 
-	public int ReplyReply(Reply re) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int ReplyReply(Reply re) {					//대댓글
+		try (Connection con = ds.getConnection();){
+			
+			con.setAutoCommit(false);
+			
+			try {
+				reply_update(con, re.getReplyref(), re.getReplyseq());
+				result = reply_insert(con, re);
+				con.commit();
+				con.setAutoCommit(true);
+			
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	private int reply_insert(Connection con, Reply re) {		//대댓글 작성
+		String sql = "insert into boardreply "
+				   + "values(re_seq.nextval, ?, ?, ?, "
+				   + "?, ?, sysdate, NULL, ?)";
+		
+		try (PreparedStatement pre = con.prepareStatement(sql);) {
+			pre.setInt(1, re.getBoardNum());
+			pre.setString(2, re.getReplyWriter());
+			pre.setString(3, re.getReplyContent());
+			pre.setInt(4, re.getReplylev() + 1);
+			pre.setInt(5, re.getReplyseq() + 1);
+			pre.setInt(6, re.getReplyref());
+			
+			result = pre.executeUpdate();
+			
+			if (result == 1) {
+				System.out.println("답글이 성공적으로 작성되었습니다.");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+	
+	
+	private void reply_update(Connection con, int replyref, int replyseq) {		//대댓글 수정
+		String sql = "update boardreply "
+				   + "set replyseq = replyseq + 1 "
+				   + "where replyref = ? "
+				   + "and replyseq > ? ";
+		
+		try (PreparedStatement pre = con.prepareStatement(sql);) {
+				
+			pre.setInt(1, replyref);
+			pre.setInt(2, replyseq);
+			
+			pre.executeUpdate();
+			
+		}catch (Exception e) {
+				e.printStackTrace();
+		}
+		
+		
 	}
 	
 }

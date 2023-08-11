@@ -1,11 +1,11 @@
 let option=1;
-
+var contextPath = "<%= request.getContextPath() %>";
 function getList(state){
 	console.log(state)
 	option = state;
 	$.ajax({
 		type : "post",
-		url : "ReplyList.co",
+		url : contextPath + "/ReplyList.co",
 		data : {"replyNum" : $("#Reply_board_num").val(), state:state},
 		datetype : "json",
 		success : function(rdata){
@@ -136,7 +136,7 @@ function del(num){
 	}
 
 	$.ajax({
-		url : 'ReplyDelete.co',
+		url : contextPath + '/ReplyDelete.co',
 		data : {num : num},
 		success : function(rdata) {
 			if (rdata == 1) {
@@ -188,8 +188,8 @@ $(function() {getList(option);
 		}
 		
 		$.ajax({
-			url : 'ReplyAdd.co',  //댓글 등록
-			data : {id : $('#LoginId').val(),
+			url : contextPath + '/ReplyAdd.co',  //댓글 등록
+			data : {replywriter : $('#LoginId').val(),
 					replycontent : replycontent,
 					Reply_board_num : $('#Reply_board_num').val()	
 			},
@@ -227,7 +227,7 @@ $(function() {getList(option);
 		const num = $(this).attr('data-id');
 		
 		$.ajax({
-			url : 'ReplyUpdate.co',
+			url : contextPath + '/ReplyUpdate.co',
 			data : {num : num,
 					replycontent : replycontent},
 			success : function(rdata){
@@ -269,8 +269,8 @@ $(function() {getList(option);
 		const replyseq = $(this).attr('data-seq');
 		
 		$.ajax({
-			url : 'ReplyReply.co',  
-			data : {id : $("#LoginId").val(),
+			url : contextPath + '/ReplyReply.co',  
+			data : {replywriter : $("#LoginId").val(),
 					replycontent : replycontent,
 					Reply_board_num : $('#Reply_board_num').val(),
 					replylev : replylev,

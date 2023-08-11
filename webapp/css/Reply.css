@@ -1,0 +1,295 @@
+.reply_write-area_text {
+	resize: none
+}
+
+.reply_area .reply_head .reply_count {
+	float: left;
+	margin-top: 3px;
+	margin-right: 12px;
+	font-size: 17px;
+}
+
+.reply_area .reply_head .reply_order .reply_order_list {
+	display: inline-block;
+	margin-top: 4px;
+	font-size: 13px;
+	vertical-align: top;
+}
+
+dl, ol, ul {
+	list-style: none;
+}
+
+.reply_area .reply_head .reply_order .reply_order_item:first-child {
+	margin-left: 0;
+}
+
+.reply_area .reply_head .reply_order .reply_order_item {
+	
+	margin-left: 8px;
+}
+
+body, button, li, ol, textarea, ul {
+	margin: 0;
+	padding: 0;
+}
+
+
+.reply_order_button {
+	color: #b7b7b7;
+	font-weight: 700;
+}
+
+a {
+	text-decoration: none;
+}
+
+
+
+
+button {
+	cursor: pointer;
+	border: 0;
+	background: none;
+}
+
+img {
+	vertical-align: middle;
+}
+
+fieldset, img {
+	border: 0;
+}
+
+.reply_area {
+	margin-top: -17px;
+	border-top: 1px solid #ebecef;
+}
+
+.reply_area .reply_head {
+	position: relative;
+	padding-top: 16px;
+	margin-bottom: 11px;
+}
+
+textarea.reply_write_area_text {
+	max-height: 500px;
+}
+
+.reply_area .reply_list .reply_nick_box, .reply_list_item__reply {
+	margin-bottom: 4px;
+}
+
+.reply_area .reply_list .reply_nick_area {
+	position: relative;
+	padding: 12px 23px 10px 0;
+}
+
+.reply_list_item__reply.lev1 {
+	margin-left: 46px;
+}
+
+.reply_list_item__reply.lev2 {
+	margin-left: 92px;
+}
+
+.reply_area .reply_list .reply_list_item {
+	position: relative;
+	border-top: 1px solid #f2f2f2;
+}
+
+.reply_area .reply_list .reply_nick_box .reply_nickname {
+	font-weight: 700;
+}
+
+.reply_area a {
+	color: inherit;
+}
+
+.reply_area .reply_list .reply_info_box {
+	margin-top: 7px;
+	font-size: 12px;
+	color: #979797;
+}
+
+.reply_area .reply_list .reply_tool .reply_tool_button {
+	display: block;
+	width: 16px;
+	height: 16px;
+	text-align: right;
+	cursor: pointer;
+}
+
+.reply_area .reply_list .reply_tool {
+	position: absolute;
+	top: 12px;
+	right: 0;
+}
+
+.reply_tool_button div {
+	transform: rotate(90deg);
+	color: #979797
+}
+
+.reply_area .reply_list+.comment_write {
+	margin-top: 30px;
+}
+
+.reply_write {
+	margin: 12px 0 29px;
+	padding: 16px 10px 10px 18px;
+	border: 2px solid rgba(0, 0, 0, 0.1);
+	border-radius: 6px;
+	box-sizing: border-box;
+	background: #ffffff;
+	width: 70%;
+}
+
+.reply_write .reply_write_area {
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.reply_write .reply_write_area_text {
+	overflow-x: hidden;
+	overflow-y: auto;
+	display: block;
+	width: 100%;
+	min-height: 17px;
+	padding-right: 1px;
+	border: 0;
+	font-size: 13px;
+	-webkit-appearance: none;
+	resize: none;
+	box-sizing: border-box;
+	background: transparent;
+	color: #000000;
+	outline: 0;
+}
+
+button, textarea {
+	font-family: Apple SD Gothic Neo, ���� ���, Malgun Gothic, ����, dotum,
+		sans-serif;
+}
+
+textarea {
+	font-weight: 400;
+}
+
+.reply_write .register-box .button {
+	display: inline-block;
+	min-width: 46px;
+	height: 34px;
+	line-height: 36px;
+	font-size: 13px;
+	color: #b7b7b7;
+	border-radius: 6px;
+	box-sizing: border-box;
+	font-weight: 700;
+	text-align: center;
+	vertical-align: top;
+}
+
+.reply_area .reply_list .reply_tool .LayerMore {
+	left: auto;
+	right: 0;
+	margin-top: 7px;
+}
+
+.LayerMore {
+	/*   overflow-y: auto; */
+	position: absolute;
+	top: auto;
+	left: 0;
+	z-index: 1;
+	max-height: 416px;
+	padding: 10px 0 10px 10px;
+	border: 1px solid rgba(0, 0, 0, .06);
+	border-radius: 6px;
+	box-shadow: 0 1px 12px 0 rgb(0 0 0/ 6%);
+	background-color: #fff;
+	box-sizing: border-box;
+	color: #000;
+	width: 100px;
+	/* height:36px; */
+}
+
+.LayerMore a {
+	font-size: small;
+	text-decoration: none;
+}
+
+.LayerMore {
+	display: none;
+}
+
+.reply_tool_button:focus, .reply_tool_button:visited {
+	outline: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.btn-register, .btn-cancel, .reply {
+	cursor: pointer;
+	float: right;
+}
+
+.red {
+	color: red;
+}
+
+.gray {
+	color: gray;
+}
+
+.reply_list_item .reply_nick_area img {
+	border-radius: 50%;
+	border: 1px solid #ccc;
+	float: left;
+	margin-right: 20px;
+}
+
+.reply_write_area_text {
+	overflow: hidden;
+	overflow-wrap: break-word;
+	height: 17px;
+}
+
+.reply_write_area_count {
+	font-size: small;
+	color: #b7b7b7;
+	float: right
+}
+
+.reply_write_area_name {
+	font-size: small;
+}
+
+.register-box {
+	height: 20px;
+}
+
+.reply_write .register-box .btn-cancel {
+	display: none;
+}
+
+.show{
+	display:block;
+}
+
+.hide{
+	display:none;
+}
+.reply_warp{
+	width: 100%;
+	margin-left: 100px;
+}
+.reply_area{
+	width: 70%;
+	margin-left: 200px;
+}
+.reply_head, .reply_write{
+	margin-left: 200px;
+}

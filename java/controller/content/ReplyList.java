@@ -21,7 +21,10 @@ public class ReplyList implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		String requestURI = request.getRequestURI();
+        System.out.println("RequestURI = " + requestURI);
+        String contextPath = request.getContextPath();
+        System.out.println("contextPath = " + contextPath);
 		ReplyDAO cdao = new ReplyDAO();
 		
 		//{"replyNum" : $("#Reply_board_num").val(), state:state}
