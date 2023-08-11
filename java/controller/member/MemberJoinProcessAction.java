@@ -1,11 +1,14 @@
 package controller.member;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import Member.DB.Member;
 import Member.DB.MemberDAO;
@@ -32,11 +35,25 @@ public class MemberJoinProcessAction implements Action {
 
 		String userGender = request.getParameter("gender"); // 성별
 		String userPhone = request.getParameter("phone"); // 전화번호
-		String userAddress1 = request.getParameter("address1"); // 주소 1
-		String userAddress2 = request.getParameter("address2"); // 주소 2
+		String userAddress1 = request.getParameter("address1"); // 주소 
+		String userAddress2 = request.getParameter("address2"); // 상세주소
 		String userPost = request.getParameter("zip_code"); // 우편번호
 		String userEmail = request.getParameter("email"); // 이메일
 		String userCategory = request.getParameter("category"); // 관심 카테고리
+		
+		Part filePart = request.getPart("profile_image");
+		String userProfile = null;
+		if (filePart != null && filePart.getSize() > 0) {
+			String fileName = getFileName(filePart);
+			String directory = request.getServletContext().getRealPath("/uploads");
+			String filePath = directory + File.separator + fileName;
+			File file = new File(directory);
+			if (!file.exists()) {
+				file.mkdir();
+			}
+			filePart.write(filePath);
+			userProfile = fileName;
+		}
 
 		// 가입일 문자열 확인 및 파싱
 		String userJoindateStr = request.getParameter("joindate");
@@ -67,6 +84,7 @@ public class MemberJoinProcessAction implements Action {
 		m.setUserPost(userPost);
 		m.setUserEmail(userEmail);
 		m.setUserCategory(userCategory);
+		m.setUserProfile(userProfile);
 		m.setStatusId(statusId);
 
 		MemberDAO mdao = new MemberDAO();
@@ -94,6 +112,17 @@ public class MemberJoinProcessAction implements Action {
 		out.println("</script>");
 		out.close();
 
+		return null;
+	}
+
+	private String getFileName(Part part) {
+		String contentDispositionHeader = part.getHeader("content-disposition");
+		String[] elements = contentDispositionHeader.split(";");
+		for (String element : elements) {
+			if (element.trim().startsWith("filename")) {
+				return element.substring(element.indexOf('=') + 1).trim().replace("\"", "");
+			}
+		}
 		return null;
 	}
 }

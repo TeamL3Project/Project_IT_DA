@@ -25,7 +25,20 @@
 		margin: 15px;
 	}
 	
-	#name, #date_birth, #address, #detail_address, 
+	.num12 {
+	text-align: center;
+	margin: 15px;
+	display: flex;
+    }
+    
+    .center-div {
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  min-height: 100vh;
+	}
+	
+	#name, #date_birth, #address1, #address2,
 	#zip_code, #password, #password_confirm {
 		width: 100%;
 		height: 40px;
