@@ -3,8 +3,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -165,10 +165,11 @@ public class ChannelDAO {
 	}
 
 	public ChannelBean getChannelDetail(int chnum) {
-		ChannelBean channel = null;
+		ChannelBean channel = new ChannelBean();
 		String sql = "SELECT * FROM CHANNELLIST WHERE CHNUM = ?";
 
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+		try (Connection con = ds.getConnection(); 
+			 PreparedStatement pstmt = con.prepareStatement(sql);) {
 
 			pstmt.setInt(1, chnum);
 
@@ -257,4 +258,37 @@ public class ChannelDAO {
 			
 		return result;
 	}
+
+	public ChannelBean getSellergraph(int chnum) {
+		ChannelBean channel = new ChannelBean();
+        String sql = "SELECT * "
+	        		+ "FROM channellist "
+	        		+ "WHERE chNum = ?";
+
+        try (Connection con = ds.getConnection(); 
+   			 PreparedStatement pstmt = con.prepareStatement(sql);) {
+
+   			pstmt.setInt(1, chnum);
+
+   			try (ResultSet rs = pstmt.executeQuery()) {
+   				if (rs.next()) {
+   					channel.setChnum(rs.getInt("CHNUM"));
+   					channel.setOwnerid(rs.getString("OWNERID"));
+   					channel.setChname(rs.getString("CHNAME"));
+   					channel.setChprofile(rs.getString("CHPROFILE"));
+   					channel.setChinfo(rs.getString("CHINFO"));
+   					channel.setCate_id(rs.getInt("CATE_ID"));
+   					channel.setChfollow(rs.getInt("CHFOLLOW"));
+   					channel.setChopendate(rs.getTimestamp("CHOPENDATE"));
+   					channel.setChvisit(rs.getInt("CHVISIT"));
+
+   				}
+   			}
+   		} catch (SQLException se) {
+   			se.printStackTrace();
+   		} catch (Exception e) {
+   			System.out.println("getDeatil() 에러 :" + e);
+   		}
+   		return channel;
+   	}
 }

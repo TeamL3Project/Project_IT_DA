@@ -1,9 +1,12 @@
 package Content.DB;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import Channel.DB.ChannelBean;
+import ContentCategory.DB.ContentCategoryBean;
 
 public class ContentDAO {
 	private int result = 0;
@@ -31,9 +35,15 @@ public class ContentDAO {
 	}
 
 	public ContentBean contentSelect(int boardNum) {
-		String query = "select * from chboard where boardnum = ?";
+		//String query = "select * from chboard where boardnum = ?";
+		String query ="select chboard.*, chboardcategory.chcate_name "
+				+ "from chboard   join chboardcategory "
+				+ "on   chboard.chnum  =  chboardcategory.chnum "
+				+ "where boardnum = ?  "
+				+ "and chboard.chcate_id = chboardcategory.chcate_id ";
 		ContentBean co = new ContentBean();
-		try (Connection con = ds.getConnection(); PreparedStatement pst = con.prepareStatement(query);) {
+		try (Connection con = ds.getConnection(); 
+				PreparedStatement pst = con.prepareStatement(query);) {
 
 			pst.setInt(1, boardNum);
 			try (ResultSet rs = pst.executeQuery();) {
@@ -46,8 +56,13 @@ public class ContentDAO {
 					co.setBoardContent(rs.getString(5));
 					co.setBoardHeart(rs.getInt(6));
 					co.setChcate_id(rs.getInt(7));
+					co.setBoardDate(rs.getTimestamp(10));
 					co.setThumbNail(rs.getString(13));
+					co.setChcate_name(rs.getString(14));
 				}
+				
+			}catch (SQLException ex) {
+				ex.printStackTrace();
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -196,20 +211,29 @@ public class ContentDAO {
 		// board_re_ref desc, board_re_seq asc에 의해 정렬한 것을
 		// 조건절에 맞는 rnum의 범위 만큼 가져오는 쿼리문입니다.
 
-		String sql = "select * " + "from chboard ";
+		String sql = "select * "
+				+ "from channellist "
+				+ "	join chboard "
+				+ "	on	c.chnum = b.chnum "
+				+ "	join chboardcategory "
+				+ "	on	b.chnum = t.chnum "
+				+ "	where t.chcate_name = ? "
+				+ "	and b.chcate_id = t.chcate_id;";
 
 		List<ContentBean> list = new ArrayList<ContentBean>();
 		// 한 페이지당 10개씩 목록인 경우 1페이지, 2페이지, 3페이지, 4페이지 ...
-		int startrow = (page - 1) * limit + 1; // 읽기 시작할 row 번호(1 11 21 31 ...
-		int endrow = startrow + limit - 1; // 읽을 마지막 row 번호(10 20 30 40 ...
+//		int startrow = (page - 1) * limit + 1; // 읽기 시작할 row 번호(1 11 21 31 ...
+//		int endrow = startrow + limit - 1; // 읽을 마지막 row 번호(10 20 30 40 ...
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 //					
 			try (ResultSet rs = pstmt.executeQuery()) {
-
+				pstmt.setString(1, "CHCATE_NAME");
 				// DB에서 가져온 데이터를 BoardBean에 담습니다.
 				while (rs.next()) {
 					ContentBean co = new ContentBean();
+					co.setChNum(rs.getInt("CHNUM"));
+					co.setChname(rs.getString("CHNAME"));
 					co.setBoardNum(rs.getInt("BOARDNUM"));
 					co.setChNum(rs.getInt("CHNUM"));
 					co.setWriter(rs.getString("WRITER"));
@@ -219,6 +243,8 @@ public class ContentDAO {
 					co.setBoardOpen(rs.getString("BOARDOPEN"));
 					co.setBoardNore(rs.getString("BOARDNORE"));
 					co.setBoardDate(rs.getTimestamp("BOARDDATE"));
+					co.setThumbNail(rs.getString("THUMBNAIL"));
+					co.setChcate_name(rs.getString("CHBOARD_NAME"));
 					list.add(co); // 값을 담은 객체를 리스트에 저장합니다.
 				}
 			} catch (SQLException e) {
@@ -227,8 +253,9 @@ public class ContentDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println("getContentList() 에러: " + ex);
-		}return list;
-	// getContentList() end
+		}
+		return list;
+		// getContentList() end
 
 	}
 
@@ -261,10 +288,14 @@ public class ContentDAO {
 	public List<ContentBean> getBoardListByBoardNum(int chnum) {
 		List<ContentBean> contentList = new ArrayList<>();
 
-		String sql = "select * " + "from (SELECT * from chboard " + "	     where chnum = ?"
-				+ "	     order by boardnum desc)" + "		 where rownum <= 5";
+		String sql = "select * " 
+					+ "from (SELECT * from chboard " 
+					+ "	     where chnum = ?"
+					+ "	     order by boardnum desc)" 
+					+ "		 where rownum <= 5";
 
-		try (Connection conn = ds.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+		try (Connection conn = ds.getConnection(); 
+			 PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
 			pstmt.setInt(1, chnum);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -299,7 +330,9 @@ public class ContentDAO {
 	public ContentBean getDetail(int num) {
 		ContentBean co = null;
 		String sql = "select * from chboard where BOARDNUM = ?";
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+		try (Connection con = ds.getConnection(); 
+			 PreparedStatement pstmt = con.prepareStatement(sql);) {
+			
 			pstmt.setInt(1, num);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
@@ -322,20 +355,17 @@ public class ContentDAO {
 		}
 		return co;
 	} // getDetail() 메서드 end
-	
+
 	public boolean contentInset(ContentBean co) {
 
 		int result = 0; // 초기값
-		
+
 		ChannelBean chdata = new ChannelBean();
-		
-		String sql = "INSERT INTO chboard " 
-				+ " (boardNum, chNum, chCate_id, writer,"
-				+ " boardTitle, boardContent, boardOpen, boardNore, thumbNail)"
-				+ "	VALUES(bo_seq.nextval, ?, ?, ?," 
+
+		String sql = "INSERT INTO chboard " + " (boardNum, chNum, chCate_id, writer,"
+				+ " boardTitle, boardContent, boardOpen, boardNore, thumbNail)" + "	VALUES(bo_seq.nextval, ?, ?, ?,"
 				+ "			?, Y, Y, ?, ?)";
-		try (Connection con = ds.getConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(sql);) {
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 
 			// 새로운 글을 등록하는 부분입니다.
 			pstmt.setString(1, co.getBoardTitle());
@@ -356,5 +386,35 @@ public class ContentDAO {
 		}
 		return false;
 	} // boardInset()메서드 end
+
+	public List<ContentBean> getContentByBoardNum(int chnum) {
+		List<ContentBean> contentList = new ArrayList<>();
+
+		String sql = "select * "
+					+ "from chboard "
+					+ "where boardNum = ?";
+
+		try (Connection conn = ds.getConnection(); 
+			 PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
+			pstmt.setInt(1, chnum);
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					ContentBean co = new ContentBean();
+					co.setBoardNum(rs.getInt(1));
+					co.setChNum(rs.getInt(2));
+					co.setWriter(rs.getString(3));
+					co.setBoardTitle(rs.getString(4));
+					co.setBoardContent(rs.getString(5));
+					co.setThumbNail(rs.getString(13));
+					contentList.add(co);
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return contentList;
+	}
 
 }

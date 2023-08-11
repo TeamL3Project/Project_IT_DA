@@ -1,7 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="../css/common.css" rel="stylesheet" type="text/css">
+<link href="css/common.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script
@@ -13,10 +16,7 @@
 <html lang="ko">
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>채널정보 자세히보기</title>
+<title>channel Page</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <jsp:include page="../main/header.jsp" />
@@ -64,87 +64,138 @@ body {
 }
 
 .channel_info1 {
-	width: 900px;
+	width: 450px;
 	height: 200px;
 	border: 1px solid black;
 	border-radius: 15px;
-	padding: 20;
+	padding: 25;
 	margin: 0 30;
 }
 
 .channel_info2 {
-	width: 900px;
+	width: 450px;
 	height: 200px;
 	border: 1px solid black;
 	border-radius: 15px;
-	padding: 20;
+	padding: 25;
 }
 
 .channel_data {
-	width: 1170px;
-	height: 200px;
-	border: 1px solid black;
-	border-radius: 15px;
-	padding: 20;
-	margin-left: 50;
+	width: 934px;
+    height: 220px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 25;
+    margin-left: -188;
+    margin-bottom: 18;
+}
+
+tr>td:nth-child(odd) {
+	font-weight: normal;
+	width: 88px;
+}
+
+td {
+	text-align: left;
+}
+
+.table-borderless {
+	border: none;
+}
+
+.infotitle {
+	font-weight: bolder;
+	font-size: 17px;
+}
+
+.sellerinfo {
+	margin-left: -10;
+}
+
+.channel_name {
+	height: 130;
 }
 </style>
 </head>
 <body>
-	<div class="wrapper">
-		<br> <br>
-		<div class="channel_name">
-			<h1 style="margin-left: -560;">[${channeldata.chname}]</h1>
-			<br>
-			<div class="sub_alram_btn"
-				style="padding: 30; margin-top: -38; padding-left: 15; margin-left: -580;">
-				<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
-				<img src="../image/channel/alram_white.png"
-					style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
+	<div class="total-content">
+		<div class="wrapper">
+
+			<div class="channel_name">
+				<div class="chname">
+					<h1 style="margin-left: -560; margin-top: 40; margin-bottom: 30;">[${channeldata.chname}]</h1>
+				</div>
+				<div class="sub_alram_btn"
+					style="padding: 30; margin-top: -38; padding-left: 15; margin-left: -580;">
+					<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
+					<img src="image/channel/alram_white.png"
+						style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
+				</div>
 			</div>
-		</div>
-		<hr style="border: 1px bold silver;" width="100%">
-		<br>
-		<div class="channel_info">
-			<div class="channel_info1">
-				<h2>채널 소개</h2>
+			<hr style="border: 1px bold silver; margin: 40px;" width="100%">
+			<div class="channel_data">
+				<p class="infotitle">채널 소개</p>
 				<p>${channeldata.chinfo}</p>
 
 			</div>
-			<br>
-			<div class="channel_info2">
-				<h2>판매자 정보</h2>
+
+			<div class="channel_info">
+				<div class="channel_info1">
+					<p class="infotitle">구독자 통계</p>
+					<div class="sellerinfo">
+						<table class="table table-bordered table-borderless">
+							<tr>
+								<td>구독자수</td>
+								<td>${sellergraph.chfollow}명</td>
+							</tr>
+							<tr>
+								<td>방문자</td>
+								<td>${sellergraph.chvisit}만명</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				
+				<div class="channel_info2">
+					<p class="infotitle" style="margin-bottom: 0;">판매자 정보</p>
+					<div class="sellerinfo">
+						<table class="table table-bordered table-borderless">
+							<tr>
+								<td>대표자</td>
+								<td>${sellerdata.userId}</td>
+							</tr>
+							<tr>
+								<td>전화번호</td>
+								<td>${sellerdata.sellerPhone}</td>
+							</tr>
+							<tr>
+								<td>이메일</td>
+								<td>${sellerdata.sellerEmail}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
+
 		</div>
-
-		<br>
-
-		<div class="channel_data">
-			<h2>구독자 통계</h2>
-			<p>고양이</p>
-		</div>
-		<br>
-
 	</div>
 	<br>
 	<br>
 	<script>
 	document.addEventListener("DOMContentLoaded", function() {
-	  $(".bt-item").click(function() {
-	    $(".bt-item.on").removeClass('on');
-	    console.log('test');
-	    $(this).addClass('on').css("box-shadow", "none");
-	  });
-	
-	  const subscribeBtn = document.getElementById("subscribeBtn");
-	
-	  subscribeBtn.addEventListener("click", () => {
-	    alert("구독되었습니다");
-	  });
+		  $(".bt-item").click(function() {
+		    $(".bt-item.on").removeClass('on');
+		    console.log('test');
+		    $(this).addClass('on').css("box-shadow", "none");
+		  });
+
+		  const subscribeBtn = document.getElementById("subscribeBtn");
+
+		  subscribeBtn.addEventListener("click", () => {
+		    alert("[${channel.chname}] 구독되었습니다.");
+		  });
 	});
 </script>
-</body>
-<jsp:include page="../main/footer.jsp" />
+	<jsp:include page="../main/footer.jsp" />
 </body>
 </html>
-

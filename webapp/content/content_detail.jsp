@@ -55,7 +55,7 @@
 		<div class="content_main_text">
 			${co.boardContent }
 			<p>p로 글 내용 작성 입니다</p>		<%-- ContentDetail에서 가져옴 --%>
-			<input type="hidden" name="num" value="${co.boardNum}" id="Reply_board_num">
+			<input type="hidden" name="num" value="${param.num}" id="Reply_board_num">
 		</div>
 	</div>
 	<div class="viewer_bottom_warp">
@@ -104,10 +104,10 @@
 		</div>
 	</div>
 </div>
-	<div class="reply_warp">
-		<div class="reply_group">
-			<div class="reply_area">
-				<div class="reply_head">
+	<div class="bottom_reply_warp">
+		<div class="bottom_reply_group">
+			<div class="bottom_reply_area">
+				<div class="bottom_reply_head">
 					<h5 class="reply_title">
 						댓글 <sup class="reply_count"></sup>
 					</h5>
