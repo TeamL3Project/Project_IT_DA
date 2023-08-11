@@ -184,7 +184,6 @@ function setInnerHTML1() {
                                 </c:if>
                             </p>
                         </div>
-                     
                     </div>
                     <c:if test="${(loop.index + 1) % 3 == 0 || loop.last}">
                         </div>
@@ -238,7 +237,6 @@ function initializeDefaultContent() {
 					<button class="btn bt-item bt-hover" style="margin: 9;">글쓰기</button>
 				</form>
 			</div>
-
 			<div id="profile1" style="width: 735px;">
 				<div id="profile"
 					style="padding: 20; border-radius: 2px; border: 1.8px solid #01273c; float: left;">

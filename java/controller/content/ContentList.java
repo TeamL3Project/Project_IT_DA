@@ -78,7 +78,7 @@ public class ContentList implements Action {
 			forward.setRedirect(false);
 			
 			// 글 목록 페이지로 이동하기 위해 경로를 설정합니다.
-			forward.setPath("../content/content_list.jsp");
+			forward.setPath("/content/content_list.jsp");
 			return forward; // BoardFrontController.java로 리턴합니다.
 			
 		}else {
