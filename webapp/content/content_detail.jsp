@@ -21,17 +21,17 @@
 
 <link href="${pageContext.request.contextPath}/css/content_detail.css" type="text/css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-<title>${boardlist.boardTitle }게시글 제목</title>
+<title>${co.boardTitle }게시글 제목</title>
 </head>
 <body>
 <div class="board_detail_wrap">
 	<div class="board_detail_all_group">
 	<div class="board_detail_title_group">
 	<div class="board_detail_category">
-		<a href class="viewer_category_link">${ cate_id}카테고리 이름</a>
+		<a href class="viewer_category_link">${cclist.chcate_Name}카테고리 이름</a>
 	</div>
 	<div class="board_detail_title_inline">
-		<span class="board_detail_title">${co.boardTitle }제목제목제목입니다제목입니다</span>
+		<span class="board_detail_title">${co.boardTitle }</span>
 	</div>
 	<div class="viewer_title_content">
 		<div class="viewer_date">${co.boardDate }2023.08.05. 오후 12:04
