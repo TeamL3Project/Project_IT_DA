@@ -2,8 +2,6 @@ $(function () {
     card = $('.reco_card')
     count = 1;
 
-    console.log($(document).getAttribute(contextPath));
-
     function card_translate(){
         for (let i = 0; i < card.length; i++) {
             rate = (i + count) % card.length;
@@ -30,7 +28,6 @@ $(function () {
         $(".bt-item.on").removeClass('on');
         $(this).addClass('on').css("box-shadow", "none");
     });
-
 
     var contextPath = '<%= request.getContextPath() %>';
     $(function () {
