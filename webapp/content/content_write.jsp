@@ -18,7 +18,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
  <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">
     <jsp:include page="../main/header.jsp"/>
-<link rel="stylesheet" href="../css/content_write.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/content_write.css">
 <script
    src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
@@ -31,10 +31,9 @@
 	<div class="text_form board_head_wrap">
 	<select class="category_select_from" >
 		<option disabled selected>카테고리를 선택하세요</option>
-		<option value="category_title">김겨울</option>
-		<option value="category_title">이가을</option>
-		<option value="category_title">박여름</option>
-		<option value="category_title">최겨울</option>
+		<c:forEach var="item" items="${cbctlist}">
+		<option value="category_title">${item.chcate_Name}</option>
+		</c:forEach>
 	</select>
 	</div>
 		<br>
@@ -77,7 +76,7 @@
 	</div>
 	<br>
 	<div class="board_button_wrap">
-		<button  class="board_write_button">작성취소</button>
+		<button class="board_write_button">작성취소</button>
 		<button type=submit class="board_write_button">작성완료</button>
 	</div>	
 	</form>

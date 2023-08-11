@@ -58,9 +58,11 @@ public class ContentFrontController extends HttpServlet {
             case "/contentlist.co":
             	action = new ContentList();
             	break;
+            	/*
             case "/contentdetail.co":
             	action = new ContentDetail();
             	break;
+            	*/
             case "/contentwrite.co":
             	action = new ContentWrite();
             	break;

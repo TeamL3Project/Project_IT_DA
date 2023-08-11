@@ -1,6 +1,7 @@
  <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,21 +22,20 @@
 
 <link href="${pageContext.request.contextPath}/css/content_detail.css" type="text/css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-<title>${boardlist.boardTitle }게시글 제목</title>
+<title>${co.boardTitle }</title>
 </head>
 <body>
-<input type="hidden" id="LoginId" value="${userId}" name="LoginId"><%-- Reply.js에서 사용하기 위해 추가 --%>
 <div class="board_detail_wrap">
 	<div class="board_detail_all_group">
 	<div class="board_detail_title_group">
 	<div class="board_detail_category">
-		<a href class="viewer_category_link">${ cate_id}카테고리 이름</a>
+		<a href class="viewer_category_link">${co.chcate_name}</a>
 	</div>
 	<div class="board_detail_title_inline">
-		<span class="board_detail_title">${co.boardTitle }제목제목제목입니다제목입니다</span>
+		<span class="board_detail_title">${co.boardTitle }</span>
 	</div>
 	<div class="viewer_title_content">
-		<div class="viewer_date">${co.boardDate }2023.08.05. 오후 12:04
+		<div class="viewer_date"><fmt:formatDate pattern="yyyy.MM.dd a HH:mm" value="${co.boardDate}"/>
 		</div>
 		<div class="viewer_count">
 			<div class="viewer_count_func_wrap">
@@ -58,8 +58,6 @@
 	<div class="viewer_main_text_group">
 		<div class="content_main_text">
 			${co.boardContent }
-			<p>p로 글 내용 작성 입니다</p>		<%-- ContentDetail에서 가져옴 --%>
-			<input type="hidden" name="num" value="${param.num}" id="Reply_board_num">
 		</div>
 	</div>
 	<div class="viewer_bottom_warp">
@@ -84,7 +82,7 @@
 			<div class="viewer_tag">
 				<ul class="viewer_tag_list">
 					<li class="viewer_tag_item">
-						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그1</a>
+						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그1${tagname }</a>
 					</li>
 					<li class="viewer_tag_item">
 						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그2</a>
@@ -99,8 +97,8 @@
                            		<em class="u_heart_count">${co.boardHeart}</em>
                             </a>
                             <a href><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/comment.png'>
-                                <span class="content_comment_count">${boardComment}</span>
-                                <em class="u_cnt_count">00</em>
+                                <span class="content_comment_count"></span>
+                                <em class="u_cnt_count">${boardComment}</em>
                             </a>
                       </span>
 				</div>
@@ -108,33 +106,34 @@
 		</div>
 	</div>
 </div>
-	<div class="bottom_reply_warp">
-		<div class="bottom_reply_group">
-			<div class="bottom_reply_area">
-				<div class="bottom_reply_head">
-					<h5 class="reply_title">
-						댓글 <sup class="reply_count"></sup>
-					</h5>
-					<div class="reply_order">
-						<ul class="reply_order_list">
-						</ul>
+	<div class="bottom_comment_warp">
+		<div class="bottom_comment_group">
+			<div class="bottom_commnet_inline">
+				<div class="bottom_comment_head">
+					<h5 class="comment_title">댓글</h5>
+					<span class="bottom_comment_cnt">00</span>
+				</div>
+				<div class="commnet_write_wrap">
+					<div class="comment_write_box">
+						<form>
+									<div class="comment-write">
+										<div class="comment-write-area">
+											<b class="comment-write-area-name" >${id}</b> 
+											<span class="comment-write-area-count">0/200</span>
+												<textarea placeholder="댓글을 남겨보세요" rows="1"
+												class="comment-write-area-text" maxLength="200"></textarea>
+					
+										</div>
+				<div class="register-box" >
+					<div class="button btn-cancel" >취소</div><%-- 댓글의 취소는 display:none, 등록만 보이도록 합니다.--%>
+					<div class="button btn-register" >등록</div>
+				</div>
+				</div>
+						</form>
 					</div>
-				</div>	<%-- comment_head end --%>
-				<ul class="reply_list">	<%-- 댓글 목록 --%>
-				</ul>
-				<div class="reply_write">
-					<div class="reply_write_area">
-						<b class="reply_write_area_name">${userId}</b> 
-						<span class="reply_write_area_count">0/200</span>
-						<textarea placeholder="댓글을 남겨보세요" rows="1"
-						class="reply_write-area_text" maxLength="200"></textarea>
-					</div>
-					<div class="register_box" >
-						<div class="button btn-cancel" >취소</div><%-- 댓글의 취소는 display:none, 등록만 보이도록 합니다.--%>
-						<div class="button btn-register" >등록</div>
-					</div>
-				</div>	<%-- reply_write end --%>
+				</div>
 			</div>
+			
 		</div>
 	</div>
 </div>

@@ -11,8 +11,29 @@ public class ContentBean {
     private String boardNore;
     private String thumbNail;
     private Timestamp boardDate, boardUpdate;
+    
+    private String chcate_name;
+    private String chname;
+    
+    
+    
+    public String getChname() {
+		return chname;
+	}
 
-    public int getChCate_id() {
+	public void setChname(String chname) {
+		this.chname = chname;
+	}
+
+    public String getChcate_name() {
+		return chcate_name;
+	}
+
+	public void setChcate_name(String chcate_name) {
+		this.chcate_name = chcate_name;
+	}
+
+	public int getChCate_id() {
         return chCate_id;
     }
 
@@ -29,11 +50,12 @@ public class ContentBean {
     }
 
     public Timestamp getBoardDate() {
-        return boardDate;
+    	return boardDate;
     }
 
     public void setBoardDate(Timestamp boardDate) {
-        this.boardDate = boardDate;
+
+    	this.boardDate = boardDate;
     }
 
     public Timestamp getBoardUpdate() {
