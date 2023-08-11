@@ -18,6 +18,7 @@ public class Member {
 	private Timestamp userJoindate; // 가입일시
 	private int statusId; // 유저 상태값
 	private Timestamp updateDate; // 정보 수정일
+	private String userProfile; // 프로필 사진
 
 	public String getUserId() {
 		return userId;
@@ -129,5 +130,13 @@ public class Member {
 
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public String getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
 	}
 }

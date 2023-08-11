@@ -362,4 +362,34 @@ public class ContentDAO {
 		return false;
 	} // boardInset()메서드 end
 
+	public List<ContentBean> getContentByBoardNum(int chnum) {
+		List<ContentBean> contentList = new ArrayList<>();
+
+		String sql = "select * "
+					+ "from chboard "
+					+ "where boardNum = ?";
+
+		try (Connection conn = ds.getConnection(); 
+			 PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
+			pstmt.setInt(1, chnum);
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					ContentBean co = new ContentBean();
+					co.setBoardNum(rs.getInt(1));
+					co.setChNum(rs.getInt(2));
+					co.setWriter(rs.getString(3));
+					co.setBoardTitle(rs.getString(4));
+					co.setBoardContent(rs.getString(5));
+					co.setThumbNail(rs.getString(13));
+					contentList.add(co);
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return contentList;
+	}
+
 }

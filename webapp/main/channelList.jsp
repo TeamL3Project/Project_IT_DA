@@ -3,25 +3,24 @@
 <script>
 
 $(document).ready(function () {
-
-    loadChannelList(0);
+    // 초기 카테고리 값을 설정합니다.
+    var selectedCategoryId = 0;
+    loadChannelList(selectedCategoryId);
 
     $(".channel_category").click(function () {
-        if ($(this).hasClass("on")) {
+        var categoryId = $(this).attr("id");
 
-            var categoryId = $(this).attr("id");
-            if (categoryId != "0") {
-                loadChannelList(categoryId);
-            }
+        // 현재 선택된 카테고리와 클릭된 카테고리가 다를 때만 실행합니다.
+        if (selectedCategoryId != categoryId) {
+            selectedCategoryId = categoryId; // 선택된 카테고리 값을 업데이트합니다.
+            loadChannelList(categoryId);
         }
     });
 });
 
+
 function loadChannelList(categoryNum) {
-   
 
-
-    // AJAX 요청을 시작합니다.
     $.ajax({
         type: "GET", 
         url: "ChannelListAction.chl",  
@@ -31,11 +30,9 @@ function loadChannelList(categoryNum) {
             var channelTable = $(".row.area");
             channelTable.empty();
             
-
-             
             $(data).each(function () {
             	 var appendData = '<div class="col-md-4">'
-                     + '<a href="/channels/' + this.chNum + '">'
+                     + '<a href="channel/channelpage.jsp?chNum=' + this.chNum + '">'
                      + '<div class="card d-flex justify-content-center">'
                      + '<img src="image/channel/' + this.chprofile + '" class="card-img-top rounded-circle mx-auto d-block" alt="...">'
                      + '<div class="card-body">'
@@ -51,13 +48,10 @@ function loadChannelList(categoryNum) {
                     })
         },         
         error: function () {   
-            
             alert("채널 목록을 불러오는 데 실패했습니다.");
         }
     });
 }
-
-
 
 </script>
 <div style="display: flex; justify-content: center;">
