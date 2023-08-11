@@ -4,11 +4,14 @@ import Content.DB.ContentBean;
 import Content.DB.ContentDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
+import util.visitService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static util.visitService.contentVisitUp;
 
 public class ContentMove implements Action {
     @Override
@@ -21,6 +24,7 @@ public class ContentMove implements Action {
         int boardNum = Integer.parseInt(chInfo.substring(lastURI+1));
         ContentDAO dao = new ContentDAO();
         ContentBean co = dao.contentSelect(boardNum);
+        contentVisitUp(co);
         request.setAttribute("co", co);
         forward.setPath("/content/content_detail.jsp");
         forward.setRedirect(false);

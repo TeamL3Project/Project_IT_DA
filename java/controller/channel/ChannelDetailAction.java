@@ -1,15 +1,14 @@
 package controller.channel;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import Channel.DB.ChannelBean;
 import Channel.DB.ChannelDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class ChannelDetailAction implements Action {
 	@Override
@@ -20,8 +19,8 @@ public class ChannelDetailAction implements Action {
 		ChannelBean channeldata = new ChannelBean();
 
 		// 글 번호 파라미터 값을 num변수에 저장
-		int num = Integer.parseInt(request.getParameter("num"));
-
+		int num = Integer.parseInt(request.getParameter("channelnum"));
+		System.out.println(num);
 		channeldata = channeldao.getChannelDetail(num);
 
 		if (channeldata == null) {

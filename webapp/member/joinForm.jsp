@@ -148,7 +148,6 @@ $(function() {
 								return false;
 							}
 
-
 							// 전화번호 유효성 검사
 							var phone = $('#phone').val();
 							if (phone.trim().length == 13 || phone.trim().length == 14) {
@@ -164,8 +163,6 @@ $(function() {
 
 		let channelcheck = '';
 
-		
-
 	});//ready end
 </script>
 <div id="sellerback">
@@ -175,10 +172,12 @@ $(function() {
                 <label for='id' style="float: left;"><span style="color: red">*</span>아이디</label>
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                     <input type="text" id="showid" name="id" placeholder="아이디를 입력하세요" maxLength="10" required> 
+                    
                     <div id="message" style="color: red;"></div>
                     <input type='button' id="id_butt" value='중복확인' style="width: 20%;">
                 </div>
             </div>
+            
 	 <div class='num1 clearfix'>
                 <label for='password' style="float: left;"><span style="color: red">*</span>비밀번호</label><br>
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
@@ -207,8 +206,8 @@ $(function() {
 	<label for='channel' style="float: left;"><span style="color: red">*</span>성별</label>
 	</div>
 		<div>
-			<input type="radio" name="gender" value="남" checked><span>남자</span>
-			<input type="radio" name="gender" value="여"><span>여자</span>
+			<label><input type="radio" name="gender" value="남" checked>남자</label>
+			<label><input type="radio" name="gender" value="여">여자</label>
 		</div>
 	<div class='num6'>
 		<label for='phone' style="float: left;"><span style="color: red">*</span>휴대폰번호</label>
@@ -217,13 +216,13 @@ $(function() {
 	<div class='num7 clearfix'>
 		<label for='channel' style="float: left;"><span style="color: red">*</span>주소</label><br>
 	    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-	        <input type='text' name=address id='address' style="width: 100%;" required>
+	        <input type='text' name=address1 id='address1' style="width: 100%;" required>
 	    </div>    
 	</div>
 	<div class='num8 clearfix'>
 		<label for='channel' style="float: left;"><span style="color: red">*</span>상세주소</label><br>
 	    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-	        <input type='text' name='detail_address' id='detail_address' style="width: 100%;" required>
+	        <input type='text' name='address2' id='address2' style="width: 100%;" required>
 	    </div>    
 	</div>
 	<div class='num9 clearfix'>
@@ -232,8 +231,6 @@ $(function() {
 	        <input type='text' name='zip_code' id='zip_code' style="width: 100%;" required>
 	    </div>    
 	</div>
-	
-	
 	<div class='num10'>
 		<label for='email' style="float: left;"><span style="color: red">*</span>이메일</label>
 			<input type='text' name='email' id='email' placeholder='예:itda@itda.com' required>
@@ -241,17 +238,19 @@ $(function() {
 	<div id="categories clearfix">
 		<label for='category' style="float: left; margin-left: 15px;"><span style="color: red">*</span>관심 카테고리</label><br>
 			<div id="section1">
-			<input type='radio' name='category' id='category1' value="경제/시사"> 경제/시사
-			<input type='radio' name='category' id='category2' value="문화예술"> 문화예술
-			<input type='radio' name='category' id='category3' value="IT트렌드"> IT트렌드
-			<input type='radio' name='category' id='category4' value="역사"> 역사
-			<input type='radio' name='category' id='category5' value="과학"> 과학</div>
+			<label><input type='radio' name='category' id='category1' value="경제/시사"> 경제/시사</label>
+			<label><input type='radio' name='category' id='category2' value="문화예술"> 문화예술</label>
+			<label><input type='radio' name='category' id='category3' value="IT트렌드"> IT트렌드</label>
+			<label><input type='radio' name='category' id='category4' value="역사"> 역사</label>
+			<label><input type='radio' name='category' id='category5' value="과학"> 과학</label>
+			</div>
 			<div id="section2">
-			<input type='radio' name='category' id='category6' value="건강"> 건강
-			<input type='radio' name='category' id='category7' value="요리"> 요리
-			<input type='radio' name='category' id='category8' value="스포츠"> 스포츠
-			<input type='radio' name='category' id='category9' value="재태크"> 재태크
-			<input type='radio' name='category' id='category10' value="취미"> 취미</div>
+			<label><input type='radio' name='category' id='category6' value="건강"> 건강</label>
+			<label><input type='radio' name='category' id='category7' value="요리"> 요리</label>
+			<label><input type='radio' name='category' id='category8' value="스포츠"> 스포츠</label>
+			<label><input type='radio' name='category' id='category9' value="재태크"> 재태크</label>
+			<label><input type='radio' name='category' id='category10' value="취미"> 취미</label>
+			</div>
 	</div>
 	
 	 <div class='num11 clearfix'>

@@ -1,62 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="t" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
-    var contextPath = '<%= request.getContextPath() %>';
-    $(function () {
-        function callContents_ajax(categoryNum) {
-            $.ajax({
-                type: "GET",
-                url: contextPath + "/contentByCategory.co",
-                data: {categoryNum: categoryNum ,
-                        pageCount : pageCount },
-                dataType: "json",
-                success: function (data) {
-                    if (isCategoryButtonOn != categoryNum) {
-                        pageCount = FIRST_PAGE;
-                        isCategoryButtonOn = categoryNum;
-                        $(".popular-list-ul").html("");
-                    }
-                    $(data).each(function () {
-                        const appendData = '<a href="/contents/' + this.chNum + '/' + this.boardNum + '" class="popular-list-card">'
-                            + '<li class="popular-list-content"><span class="popular-list-title">' + this.boardTitle + '</span><br>'
-                            + '<span>' + this.boardContent + '</span></li>'
-                            + '<li class="popular-list-imgframe">'
-                            + '<img src="image/content/' + this.chNum + '/' + this.boardNum + '/' + this.thumbNail + '" class="popular-list-img"></li>'
-                            + '</a>'
-                        $(".popular-list-ul").append(appendData);
-                    })
-                }
-            })
-        }
-
-        let isCategoryButtonOn = $('.contents_category.on').prop('id')
-
-        $('.contents_category').click(function () {
-            if (isCategoryButtonOn == $(this).prop('id')) return;
-            const categoryNum = $(this).prop('id');
-            callContents_ajax(categoryNum);
-        })
-        const FIRST_PAGE = 1;
-        let pageCount = FIRST_PAGE;
-        let isExecuted = false;
-        $(window).scroll(function () {
-            const totalHeight = $(document).height();
-            const currentScrollPosition = $(window).scrollTop();
-            if (!isExecuted && currentScrollPosition + 1188 >= totalHeight - 1) {
-                isExecuted = true;
-                setTimeout(() => {
-                    callContents_ajax(isCategoryButtonOn);
-                    console.log(pageCount);
-                    pageCount++;
-                    isExecuted = false;
-                }, 700);
-            }
-        });
-        let firstEntrance = 0;
-        callContents_ajax(firstEntrance);
-    });
-</script>
 <div class="popular-list-view-wrap">
     <div class="popular-list-area">
         <div class="popular-list-top" style="padding-left: 20px">
@@ -65,8 +9,10 @@
         <div class="popular-list-bar">
             <button class="contents_category btn bt-item bt-hover bt-2  on" id="0"><span>전체</span>
             </button>
-            <button class="contents_category btn bt-item bt-hover bt-5" id="1"><span>경제/시사</span>
-            </button>
+            <t:forEach var="c" items="${channelCategory}">
+                <button class="contents_category btn bt-item bt-hover bt-5" id="1"><t:out value="${c.categoryName}"/>
+                </button>
+            </t:forEach>
             <button class="contents_category btn bt-item bt-hover bt-5" id="2"><span>문화/예술</span>
             </button>
             <button class="contents_category btn bt-item bt-hover bt-5" id="3"><span>IT트렌트</span>
@@ -88,41 +34,58 @@
         </div>
         <div class="popular-list-cards">
             <ul class="popular-list-ul" style=" display: flex; width: 1080px; flex-wrap: wrap; padding: 0">
-                <t:forEach var="c" items="${contentSelect_per_cate}">
-                    <a href="/contents/${c.chNum}/${c.boardNum}" class="popular-list-card">
-                        <li class="popular-list-content"><span class="popular-list-title">${c.boardTitle}</span><br>
-                            <span>${c.boardContent}</span>
-                        </li>
-                        <li class="popular-list-imgframe">
-                            <img src="image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}" class="popular-list-img">
-                        </li>
-                    </a>
-                </t:forEach>
             </ul>
         </div>
     </div>
     <div class="loading">
         <div class="loader" style="display:flex; justify-content:center;">
-            <div class="dot" style="background-color: black; border-radius: 50%; width: 10px; height: 10px;"></div>
-            <div class="dot" style="background-color: black; border-radius: 50%; width: 10px; height: 10px;"></div>
-            <div class="dot" style="background-color: black; border-radius: 50%; width: 10px; height: 10px;"></div>
-            <div class="dot" style="background-color: black; border-radius: 50%; width: 10px; height: 10px;"></div>
-            <div class="dot" style="background-color: black; border-radius: 50%; width: 10px; height: 10px;"></div>
-            <div class="dot" style="background-color: black; border-radius: 50%; width: 10px; height: 10px;"></div>
+            <div class="dot"></div>
         </div>
+        <br>
     </div>
 </div>
 <style>
-    @keyframes dot1 {
+    :root {
+        --dot1: #0359AE;
+        --dot2: #14B09B;
+        --dot3: #EBE5D9;
+    }
+
+    .dot:before {
+        margin: 15px;
+        content: "";
+        width: 10px;
+        height: 10px;
+        display: block;
+        border-radius: 100%;
+        animation: palette 2s infinite cubic-bezier(0.25, 0.46, 0.09, 0.32);
+    }
+
+    @keyframes palette {
         0% {
+            color: var(--dot1);
+            box-shadow: 20px 0px 0 0 var(--dot2), 6.18034px 19.02113px 0 0 var(--dot3), -16.18034px 11.75571px 0 0 var(--dot1), -16.18034px -11.75571px 0 0 var(--dot2), 6.18034px -19.02113px 0 0 var(--dot3);
         }
-        25% {
+        20% {
+            color: var(--dot2);
+            box-shadow: 20px 0px 0 0 var(--dot3), 6.18034px 19.02113px 0 0 var(--dot1), -16.18034px 11.75571px 0 0 var(--dot2), -16.18034px -11.75571px 0 0 var(--dot3), 6.18034px -19.02113px 0 0 var(--dot1);
         }
-        50% {
+        40% {
+            color: var(--dot3);
+            box-shadow: 20px 0px 0 0 var(--dot1), 6.18034px 19.02113px 0 0 var(--dot2), -16.18034px 11.75571px 0 0 var(--dot3), -16.18034px -11.75571px 0 0 var(--dot1), 6.18034px -19.02113px 0 0 var(--dot2);
         }
-        75% {
+        60% {
+            color: var(--dot1);
+            box-shadow: 20px 0px 0 0 var(--dot2), 6.18034px 19.02113px 0 0 var(--dot3), -16.18034px 11.75571px 0 0 var(--dot1), -16.18034px -11.75571px 0 0 var(--dot2), 6.18034px -19.02113px 0 0 var(--dot3);
+        }
+        80% {
+            color: var(--dot2);
+            box-shadow: 20px 0px 0 0 var(--dot3), 6.18034px 19.02113px 0 0 var(--dot1), -16.18034px 11.75571px 0 0 var(--dot2), -16.18034px -11.75571px 0 0 var(--dot3), 6.18034px -19.02113px 0 0 var(--dot1);
         }
         100% {
+            color: var(--dot3);
+            box-shadow: 20px 0px 0 0 var(--dot1), 6.18034px 19.02113px 0 0 var(--dot2), -16.18034px 11.75571px 0 0 var(--dot3), -16.18034px -11.75571px 0 0 var(--dot1), 6.18034px -19.02113px 0 0 var(--dot2);
+            transform: rotate(360deg);
         }
     }
 </style>

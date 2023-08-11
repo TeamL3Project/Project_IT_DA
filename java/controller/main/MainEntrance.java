@@ -1,5 +1,7 @@
 package controller.main;
 
+import ChannelCategory.DB.ChannelCategoryBean;
+import ChannelCategory.DB.ChannelCategoryDAO;
 import Content.DB.ContentBean;
 import Content.DB.ContentDAO;
 import controller.action.Action;
@@ -17,13 +19,14 @@ public class MainEntrance implements Action {
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ActionForward forward = new ActionForward();
         ContentDAO dao = new ContentDAO();
+        ChannelCategoryDAO channelCategoryDao = new ChannelCategoryDAO();
         int firstConnect = 0;
         List<ContentBean> popcontentList = dao.popcontentSelect();
         List<ContentBean> contentSelectBycategory = dao.contentSelectBycategory(firstConnect);
-
+        List<ChannelCategoryBean> channelCategoryBeanList = channelCategoryDao.selectInfo();
         request.setAttribute("popcontentList",popcontentList);
         request.setAttribute("contentSelectBycategory",contentSelectBycategory);
-
+        request.setAttribute("channelCategory",channelCategoryBeanList);
 
         forward.setRedirect(false);
         forward.setPath("main/protomain.jsp");

@@ -1,14 +1,13 @@
 package controller.channel;
 
-import java.io.IOException;
-import controller.action.*;
+import controller.action.Action;
+import controller.action.ActionForward;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
+import java.io.IOException;
 
 
 @WebServlet(urlPatterns = { "*.chl", "/channels/*" })
@@ -48,14 +47,12 @@ public class ChannelFrontController extends HttpServlet {
 		case "/ChannelDetail.chl":
 			action = new ChannelDetailAction();
 			break;
-		case "/ChannelListAction":
+		case "/ChannelListAction.chl":
 			action = new ChannelListAction();
 			break;
-			
 		case "/idcheck.chl":
 			action = new IdCheckAction();
 			break;
-		
 		}
 
 		forward = action.execute(request, response);

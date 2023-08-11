@@ -224,7 +224,7 @@ function initializeDefaultContent() {
 					<div class="info_button">
 						<button class="btn bt-item bt-hover" id="profiledetail"
 							name="${channel.chnum}"
-							onClick="location.href='${pageContext.request.contextPath}/channel/${channel.chnum}/ChannelDetail.chl'">자세히보기</button>
+							onClick="location.href='${pageContext.request.contextPath}/ChannelDetail.chl?channelnum=${channel.chnum}'">자세히보기</button>
 					</div>
 
 				</div>
