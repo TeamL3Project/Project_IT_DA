@@ -52,7 +52,7 @@ public class MemberLoginProcessAction implements Action {
 		
 			forward.setRedirect(true);
 			forward.setPath(request.getContextPath()+"/main");				//로그인 성공 후 id값을 세션으로 들고감
-			
+
 			return forward;
 			
 		}else {													//로그인 실패시
