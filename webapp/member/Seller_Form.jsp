@@ -3,8 +3,8 @@
 <head>
 <title>판매회원가입 페이지</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./css/sellerform.css">
 	<link rel="stylesheet" href="css/common.css">
@@ -97,12 +97,6 @@ $(function() {
 		
 		
 	});//submit end
-
-	
-	
-	
-	
-	
 	
 	
 	let channelcheck = '';
@@ -169,7 +163,9 @@ $(function() {
 	});//change end
 	
 	
-	
+	$(".cancel_butt").click(function(){
+		location.href="${pageContext.request.contextPath}/main";
+	})
 	
 	
 });//ready end
@@ -190,7 +186,8 @@ $(function() {
 	    </div>
 	</div>
 	<div class='num2 clearfix'>
-	<label for='profile' style="float: left;">채널 프로필<span style="font-size: 12px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label><br>
+	<label for='profile'>채널 프로필<span style="font-size: 12px; display: felx;
+	 padding-right: 130px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label><br>
 		<div id="profile_select">
 			<label for="inputFile">
 				<div class="btn-Upload">파일 선택</div>
@@ -243,7 +240,7 @@ $(function() {
 	</div>
 	<div class='num6 clearfix'>
 		<button type='submit' value="판매회원가입" class='signup_butt'>판매회원가입</button>
-		<button type='reset' value="취소" class='cancel_butt'>취소</button>
+		<button type='button' class='cancel_butt'>취소</button>
 	</div>
 		
 </form>

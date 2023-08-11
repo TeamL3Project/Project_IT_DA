@@ -68,3 +68,19 @@ INSERT INTO chboard (writer, boardNum, boardTitle) VALUES ('itda', 29, '안녕�
 INSERT INTO chboard (writer, boardNum, boardTitle) VALUES ('itda', 30, '안녕하세요 반갑습니다!');
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

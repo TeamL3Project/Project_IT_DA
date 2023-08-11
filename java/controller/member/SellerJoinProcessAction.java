@@ -87,12 +87,12 @@ public class SellerJoinProcessAction implements Action {
 				
 				forward.setRedirect(true);
 				request.setAttribute("message", messeage.Join.FAIL);
-				forward.setPath("/project");
+				forward.setPath(request.getContextPath()+"/main");
 			
 			}else if (SellerResult == Join_Success && ChannelResult == Join_Success) {	//DB에 삽입된 경우
 				forward.setRedirect(true); 
 				request.setAttribute("message", messeage.Join.SUCCESS);
-	            forward.setPath("/project");
+	            forward.setPath(request.getContextPath()+"/main");
 	            
 			}
 			
