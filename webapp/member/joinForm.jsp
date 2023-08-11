@@ -26,7 +26,7 @@ $(function() {
          const input_id = $("#showid").val();
 
          if (!pattern.test(input_id)) {
-             $("#message").css('color', 'red').html("영문자 숫자 _로 5 ~ 12자 가능합니다.");
+             $("#message").css('color', 'red').html("영문자 숫자로 5 ~ 12자 가능합니다.");
              checkid = false;
              return;
          }
@@ -160,6 +160,26 @@ $(function() {
 							}
 							
 						});//submit end
+						
+					    $('input[type=file]').change(function(e){
+				            const inputfile = $(this).val().split('\\');
+				            const profileName = inputfile[inputfile.length - 1];
+				            const pattern = /(gif|jpg|jpeg|png)$/i;
+
+				            if (pattern.test(profileName)) {
+				                $('#profileName').text(profileName);
+
+				                const reader = new FileReader();
+				                reader.readAsDataURL(event.target.files[0]);
+
+				                reader.onload = function(){
+				                    $('#previewImage > img').attr('src', this.result);
+				                };
+				            } else {
+				                alert('이미지 파일(gif, jpg, jpeg, png)가 아닌 경우 업로드되지 않습니다.');
+				                $(this).val('');
+				            }
+				        });//change end
 
 		let channelcheck = '';
 
@@ -168,16 +188,15 @@ $(function() {
 <div id="sellerback">
     <form name="sellerform" id="sellerform" method="post" action="joinProcess.me">
         <h1 style="margin: 30px 50px;">Sign in it-da</h1>
+   
         <div class='num0 clearfix'>
                 <label for='id' style="float: left;"><span style="color: red">*</span>아이디</label>
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                     <input type="text" id="showid" name="id" placeholder="아이디를 입력하세요" maxLength="10" required> 
-                    
-                    <div id="message" style="color: red;"></div>
                     <input type='button' id="id_butt" value='중복확인' style="width: 20%;">
                 </div>
             </div>
-            
+            <div id="message" style="color: red; margin-top: 5px;"></div>
 	 <div class='num1 clearfix'>
                 <label for='password' style="float: left;"><span style="color: red">*</span>비밀번호</label><br>
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
@@ -251,7 +270,16 @@ $(function() {
 			<label><input type='radio' name='category' id='category9' value="재태크"> 재태크</label>
 			<label><input type='radio' name='category' id='category10' value="취미"> 취미</label>
 			</div>
-	</div>
+	</div><br>
+	     <div class='num12 clearfix'>
+	<label for='profile' style="float: left;">프로필사진<span style="font-size: 12px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label><br>
+		<div id="profile_select">
+			<label for="inputFile">
+				<div class="center-div btn-Upload">파일 선택</div>
+			</label>
+			<input type='file' name='profile' id='profile' style="margin-top: 20px;" accept="image/*">
+		</div>
+		</div>
 	
 	 <div class='num11 clearfix'>
                 <button type='submit' value="일반회원가입" class='signup_butt'>일반회원가입</button>

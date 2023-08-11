@@ -38,13 +38,10 @@ public class ChannelListAction implements Action {
 	        for (ChannelBean channel : channelList) {
 	            JsonObject j = new JsonObject();
 	            j.addProperty("chNum", channel.getChnum());
-	            j.addProperty("ownerid", channel.getOwnerid());
 	            j.addProperty("chName", channel.getChname());
 	            j.addProperty("chprofile", channel.getChprofile());
 	            j.addProperty("chinfo", channel.getChinfo());
 	            j.addProperty("cate_id", channel.getCate_id());
-	            j.addProperty("chFollow", channel.getChfollow());
-	            j.addProperty("chOpendate", String.valueOf(channel.getChopendate()));
 	            j.addProperty("chvisit", channel.getChvisit());
 	            jsonArray.add(j);
 	            System.out.println(j);

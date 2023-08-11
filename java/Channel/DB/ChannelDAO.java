@@ -29,7 +29,7 @@ public class ChannelDAO {
 
         try {
             conn = ds.getConnection();
-            String sql = "SELECT * FROM channellist where rownum <= 6 order by chvisit desc";
+            String sql = "select * from (SELECT * FROM channellist order by chvisit desc) where rownum <= 6";
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
 
@@ -76,7 +76,7 @@ public class ChannelDAO {
 
         try {
             conn = ds.getConnection();
-            String sql = "SELECT * FROM channellist where CATE_ID = ? and rownum <= 6 order by chvisit desc";
+            String sql = "select * from (SELECT * FROM channellist WHERE cate_id = ? order by chvisit desc) where rownum <= 6";
             pstmt = conn.prepareStatement(sql);
             
             pstmt.setInt(1, category_id);
@@ -192,9 +192,43 @@ public class ChannelDAO {
 	}
 
 	public int getUserCountById(String input_id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+		   int userCount = 0;
+		    Connection conn = null;
+		    PreparedStatement pstmt = null;
+		    ResultSet rs = null;
+
+		    try {
+		        conn = ds.getConnection();
+		        String sql = "SELECT COUNT(*) as count FROM itda_user WHERE userid = ?";
+		        pstmt = conn.prepareStatement(sql);
+
+		        pstmt.setString(1, input_id);
+		        rs = pstmt.executeQuery();
+
+		        if (rs.next()) {
+		            userCount = rs.getInt("count");
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            if (rs != null) {
+		                rs.close();
+		            }
+		            if (pstmt != null) {
+		                pstmt.close();
+		            }
+		            if (conn != null) {
+		                conn.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+
+		    return userCount;
+		}
 	
 	public int insertChOwner(ChannelBean ch, String userId) {	//판매회원 가입시 판매자 정보를 채널리스트 db에 삽입
 		String sql = "insert into channelList "
