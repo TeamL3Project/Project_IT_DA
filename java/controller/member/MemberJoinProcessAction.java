@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +19,19 @@ import controller.action.Action;
 import controller.action.ActionForward;
 
 public class MemberJoinProcessAction implements Action {
+	
+	 private void createFolder(String folderPath) {
+	        File folder = new File(folderPath);
+	        if (!folder.exists()) {
+	            folder.mkdirs();
+	        }
+	    }
+
+	    private String toDay() {
+	        LocalDateTime now = LocalDateTime.now();
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+	        return now.format(formatter);
+	    }
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -25,6 +41,34 @@ public class MemberJoinProcessAction implements Action {
 		String userId = request.getParameter("id");
 		String userPw = request.getParameter("password");
 		String userName = request.getParameter("name");
+		
+		   // 프로필 사진을 저장할 기본 경로 설정
+        String saveFolder = "/image/members/";
+        String realFolder = "";
+        ServletContext sc = request.getServletContext();
+        realFolder = sc.getRealPath(saveFolder);
+
+        // 회원 ID 폴더 생성
+        realFolder += userId + '/';
+        createFolder(realFolder);
+
+        // 업로드 날짜 폴더 생성
+        realFolder += toDay() + '/';
+        createFolder(realFolder);
+
+        // 프로필 사진 파일을 받아 저장하기
+        Part profilePart = request.getPart("profilePicture");
+        String originalProfileName = profilePart.getSubmittedFileName();
+        String userProfile = null;
+        if (originalProfileName != null && !originalProfileName.isEmpty()) {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+            String currentTime = now.format(formatter);
+            String uniqueProfileName = currentTime + "_" + originalProfileName;
+            userProfile = realFolder + uniqueProfileName;
+            profilePart.write(userProfile);
+        }
+        
 
 		// 날짜 문자열 확인 및 파싱
 		String dateOfBirthStr = request.getParameter("date_birth");
@@ -41,20 +85,9 @@ public class MemberJoinProcessAction implements Action {
 		String userEmail = request.getParameter("email"); // 이메일
 		String userCategory = request.getParameter("category"); // 관심 카테고리
 		
-		Part filePart = request.getPart("profile_image");
-		String userProfile = null;
-		if (filePart != null && filePart.getSize() > 0) {
-			String fileName = getFileName(filePart);
-			String directory = request.getServletContext().getRealPath("/uploads");
-			String filePath = directory + File.separator + fileName;
-			File file = new File(directory);
-			if (!file.exists()) {
-				file.mkdir();
-			}
-			filePart.write(filePath);
-			userProfile = fileName;
-		}
+		
 
+		
 		// 가입일 문자열 확인 및 파싱
 		String userJoindateStr = request.getParameter("joindate");
 		LocalDate userJoindate = null;
@@ -84,8 +117,8 @@ public class MemberJoinProcessAction implements Action {
 		m.setUserPost(userPost);
 		m.setUserEmail(userEmail);
 		m.setUserCategory(userCategory);
-		m.setUserProfile(userProfile);
 		m.setStatusId(statusId);
+		m.setUserProfile(userProfile); // 프로필 사진 주소 설정
 
 		MemberDAO mdao = new MemberDAO();
 		int result = mdao.insert(m);
@@ -115,7 +148,8 @@ public class MemberJoinProcessAction implements Action {
 		return null;
 	}
 
-	private String getFileName(Part part) {
+
+	public String getFileName(Part part) {
 		String contentDispositionHeader = part.getHeader("content-disposition");
 		String[] elements = contentDispositionHeader.split(";");
 		for (String element : elements) {
