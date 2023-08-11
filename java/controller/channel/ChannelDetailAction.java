@@ -1,17 +1,16 @@
 package controller.channel;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import Channel.DB.ChannelBean;
 import Channel.DB.ChannelDAO;
 import Member.DB.Seller;
 import Member.DB.SellerDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class ChannelDetailAction implements Action {
 	@Override
@@ -30,7 +29,6 @@ public class ChannelDetailAction implements Action {
 		Seller sellerdata = sellerdao.getSellerdata(num);
 		sellergraph = channeldao.getSellergraph(num);
 
-		
 		if (channeldata == null) {
 			System.out.println("상세보기 실패");
 			ActionForward forward = new ActionForward();
