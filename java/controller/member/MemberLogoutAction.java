@@ -20,7 +20,7 @@ public class MemberLogoutAction implements Action {
 		session.invalidate();
 		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/project");
+		forward.setPath(request.getContextPath()+"/main");
 		forward.setRedirect(true);
 		
 		return forward;

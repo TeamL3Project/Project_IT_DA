@@ -17,7 +17,7 @@ public class ContentCategoryDAO {
 		}
 	}
 	public ContentCategoryBean getCategoryList() {
-		
+
 		return null;
 	}
 	
