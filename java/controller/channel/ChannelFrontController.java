@@ -54,7 +54,6 @@ public class ChannelFrontController extends HttpServlet {
 		case "/idcheck.chl":
 			action = new IdCheckAction();
 			break;
-		
 		}
 
 		forward = action.execute(request, response);

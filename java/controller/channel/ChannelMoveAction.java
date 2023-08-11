@@ -11,6 +11,8 @@ import Channel.DB.ChannelBean;
 import Channel.DB.ChannelDAO;
 import Content.DB.ContentBean;
 import Content.DB.ContentDAO;
+import ContentCategory.DB.ContentCategoryBean;
+import ContentCategory.DB.ContentCategoryDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
 
@@ -20,7 +22,7 @@ public class ChannelMoveAction implements Action {
 			throws ServletException, IOException {
 
 		ActionForward forward = new ActionForward();
-		
+
 		String chInfo = (String) request.getAttribute("chInfo");
 		int lastURI = chInfo.lastIndexOf('/');
 		System.out.println(chInfo);
@@ -30,16 +32,18 @@ public class ChannelMoveAction implements Action {
 
 		ChannelDAO channeldao = new ChannelDAO();
 		ContentDAO dao = new ContentDAO();
-		
+		ContentCategoryDAO category = new ContentCategoryDAO();
+
 		ChannelBean channel = channeldao.getChannellist(chnum);
-		
+
 		List<ContentBean> channelhome = dao.channelhomeSelect();
 		List<ContentBean> channeldetail = dao.getBoardListByBoardNum(chnum);
+		List<ContentCategoryBean> chcategory = category.chcategorySelect(chnum);
 
 		request.setAttribute("channel", channel);
 		request.setAttribute("channelhome", channelhome);
 		request.setAttribute("channeldetail", channeldetail);
- 
+		request.setAttribute("chcategory", chcategory);
 
 		forward.setPath("/channel/channelpage.jsp");
 		forward.setRedirect(false);
