@@ -52,7 +52,7 @@ public class MemberFrontController extends HttpServlet {
 			case "/sellerjoin.me":
 				action = new SellerJoinAction();
 				break;
-			case "/sellerjoinprocess.me":
+			case "/sellerjoinprocess.me":	
 				action = new SellerJoinProcessAction();
 				break;
 			case "/search.me":

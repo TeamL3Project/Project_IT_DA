@@ -64,15 +64,21 @@ public class ContentFrontController extends HttpServlet {
             case "/contentwrite.co":
             	action = new ContentWrite();
             	break;
-            	
-            	/* 
-            case "/contentwritePreocess.co":
-            	action = new contentwritePreocess();
-            	break;
-            case "/contentAdd.co":
-            	action = new ContentAdd();
-            	break;
-            	 * */
+            case "/ReplyList.co":
+				action = new ReplyList();
+				break;
+			case "/ReplyDelete.co":
+				action = new ReplyDelete();
+				break;
+			case "/ReplyUpdate.co":
+				action = new ReplyUpdate();
+				break;
+			case "/ReplyReply.co":
+				action = new ReplyReply();
+				break;
+			case "/ReplyAdd.co":
+				action = new ReplyAdd();
+				break;
 
 
         }
