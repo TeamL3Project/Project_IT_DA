@@ -15,14 +15,15 @@ public class ReplyUpdate implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+													throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		ReplyDAO redao = new ReplyDAO();
 		Reply re = new Reply();
 		
 		re.setReplyContent(request.getParameter("replycontent"));
 		System.out.println("replycontent=" + re.getReplyContent());
 		
-		re.setReplyNum(Integer.parseInt(request.getParameter("num")));
+		re.setReplyNum(Integer.parseInt(request.getParameter("replyNum")));
 		
 		int ok = redao.replyUpdate(re);
 		response.getWriter().print(ok);
