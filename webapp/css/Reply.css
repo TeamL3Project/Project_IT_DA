@@ -25,7 +25,6 @@ dl, ol, ul {
 }
 
 .reply_area .reply_head .reply_order .reply_order_item {
-	
 	margin-left: 8px;
 }
 
@@ -282,6 +281,7 @@ a:hover {
 .hide{
 	display:none;
 }
+
 .reply_warp{
 	width: 100%;
 	margin-left: 100px;

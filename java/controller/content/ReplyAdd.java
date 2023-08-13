@@ -16,10 +16,7 @@ public class ReplyAdd implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String requestURI = request.getRequestURI();
-        System.out.println("RequestURI = " + requestURI);
-        String contextPath = request.getContextPath();
-        System.out.println("contextPath = " + contextPath);
+		
 		ReplyDAO redao = new ReplyDAO();
 		
 		Reply re = new Reply();

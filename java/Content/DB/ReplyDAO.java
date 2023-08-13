@@ -25,7 +25,7 @@ public class ReplyDAO {
 		}
 	}
 	
-	public int getListCount(int replyNum) {
+	public int getListCount(int boardNum) {
 		String sql = "select count(*) from boardreply "
 				   + "where boardNum = ?";
 		int c = 0;
@@ -33,7 +33,7 @@ public class ReplyDAO {
 		try (Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
 			
-			pre.setInt(1, replyNum);
+			pre.setInt(1, boardNum);
 			
 			try (ResultSet rs = pre.executeQuery()) {
 				if (rs.next()) {
@@ -52,16 +52,16 @@ public class ReplyDAO {
 
 	
 	
-	public JsonArray getReplyList(int replyNum, int state) {
+	public JsonArray getReplyList(int boardNum, int state) {
 		String sort = "asc";
 		
 		if (state == 2) {
 			sort = "desc";
 		}
 		
-		String sql = "select replynum, replywriter, replycontent, replydate, replylev, replyseq, replyref "
+		String sql = "select replynum, replywriter, replycontent, replyref, replylev, replyseq, replydate "
 				+ "from boardreply "
-				+ "where replynum = ? "
+				+ "where boardnum = ? "
 				+ "order by replyref " + sort + ", replyseq asc ";
 		
 		JsonArray array = new JsonArray();
@@ -69,7 +69,7 @@ public class ReplyDAO {
 		try (Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql)) {
 			
-			pre.setInt(1, replyNum);
+			pre.setInt(1, boardNum);
 			
 			try (ResultSet rs = pre.executeQuery()) {
 				while (rs.next()) {
@@ -78,11 +78,12 @@ public class ReplyDAO {
 					obj.addProperty("replyNum", rs.getInt(1));
 					obj.addProperty("replywriter", rs.getString(2));
 					obj.addProperty("replycontent", rs.getString(3));
-					obj.addProperty("replydate", rs.getString(4));
+					obj.addProperty("replyref", rs.getInt(4));
 					obj.addProperty("replylev", rs.getInt(5));
 					obj.addProperty("replyseq", rs.getInt(6));
-					obj.addProperty("replyref", rs.getInt(7));
+					obj.addProperty("replydate", rs.getString(7));
 					
+					array.add(obj);
 				}
 			}
 		
@@ -121,8 +122,8 @@ public class ReplyDAO {
 
 	public int replyInsert(Reply re) {					//댓글 작성
 		String sql = "insert into boardreply "
-				   + "values(RE_SEQ.nextval,?,?,?, "
-				   + "RE_SEQ.nextval, 0, sysdate, NULL, 0) ";
+				   + "values(re_seq.nextval, ?, ?, ?, "
+				   + "re_seq.nextval, 0, 0, sysdate, NULL) ";
 		
 		
 		try(Connection con = ds.getConnection();
@@ -187,15 +188,16 @@ public class ReplyDAO {
 	private int reply_insert(Connection con, Reply re) {		//대댓글 작성
 		String sql = "insert into boardreply "
 				   + "values(re_seq.nextval, ?, ?, ?, "
-				   + "?, ?, sysdate, NULL, ?)";
+				   + "?, ?, ?, sysdate, NULL)";
 		
 		try (PreparedStatement pre = con.prepareStatement(sql);) {
 			pre.setInt(1, re.getBoardNum());
 			pre.setString(2, re.getReplyWriter());
 			pre.setString(3, re.getReplyContent());
-			pre.setInt(4, re.getReplylev() + 1);
-			pre.setInt(5, re.getReplyseq() + 1);
-			pre.setInt(6, re.getReplyref());
+			pre.setInt(4, re.getReplyref());
+			pre.setInt(5, re.getReplylev() + 1);
+			pre.setInt(6, re.getReplyseq() + 1);
+			
 			
 			result = pre.executeUpdate();
 			

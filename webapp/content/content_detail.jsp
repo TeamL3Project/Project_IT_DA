@@ -15,9 +15,11 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link href="${pageContext.request.contextPath}/css/content_detail.css" type="text/css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script> var contextPath = "<%= request.getContextPath() %>"; </script>
     <script src="${pageContext.request.contextPath}/js/Reply.js"></script>
 	<link href='${pageContext.request.contextPath}/css/Reply.css' type='text/css' rel='stylesheet'>
 <title>${boardlist.boardTitle }게시글 제목</title>
+
 </head>
 <body>
 <input type="hidden" id="LoginId" value="${userId}" name="LoginId"><%-- Reply.js에서 사용하기 위해 추가 --%>
@@ -55,7 +57,7 @@
 		<div class="content_main_text">
 			${co.boardContent }
 			<p>p로 글 내용 작성 입니다</p>		<%-- ContentDetail에서 가져옴 --%>
-			<input type="hidden" name="num" value="${param.num}" id="Reply_board_num">
+			<input type="hidden" name="num" value="${co.boardNum}" id="Reply_board_num">
 		</div>
 	</div>
 	<div class="viewer_bottom_warp">
@@ -104,15 +106,15 @@
 		</div>
 	</div>
 </div>
-	<div class="bottom_reply_warp">
-		<div class="bottom_reply_group">
-			<div class="bottom_reply_area">
-				<div class="bottom_reply_head">
+	<div class="reply_warp">
+		<div class="reply_group">
+			<div class="reply_area">
+				<div class="reply_head">
 					<h5 class="reply_title">
 						댓글 <sup class="reply_count"></sup>
 					</h5>
-					<div class="reply_order">
-						<ul class="reply_order_list">
+					<div class="reply_order">			
+						<ul class="reply_order_list">	<%-- 등록순 최신순 목록 --%>	
 						</ul>
 					</div>
 				</div>	<%-- comment_head end --%>
