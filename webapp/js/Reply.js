@@ -5,10 +5,10 @@ function getList(state){
 	option = state;
 	$.ajax({
 		type : "post",
-		url : "ReplyList.co",
-		data : {"replyNum" : $("#Reply_board_num").val(), state:state},
+		url : contextPath + "/ReplyList.co",
+		data : {"boardNum" : $("#Reply_board_num").val(), state:state},
 		datetype : "json",
-		success : function(rdata){
+		success : function(rdata){		//ReplyList에서 가져옴
 			$(".reply_count").text(rdata.listcount).css('font-family', 'Lucida Console')
 			let red1 = 'red';
 			let red2 = 'red';
@@ -20,18 +20,18 @@ function getList(state){
 			}
 			
 			let output = "";
-			
-			if (rdata.contentlist.length > 0) {		//contentlist 맞나?
-				output += '<li class="Reply-order-item ' + red1 + '" >'
-				   		+ '		<a href="javascript:getList(1)" class="Reply-order-button">등록순 </a>'
+					//ReplyList에서 가져옴
+			if (rdata.replylist.length > 0) {
+				output += '<li class="Reply_order_item ' + red1 + '" >'
+				   		+ '		<a href="javascript:getList(1)" class="Reply_order_button">등록순 </a>'
 				   		+ '</li>'
-				   		+ '<li class="Reply-order-item ' + red2 + '" >'
-				   		+ '		<a href="javascript:getList(2)" class="Reply-order-button">최신순 </a>'
+				   		+ '<li class="Reply_order_item ' + red2 + '" >'
+				   		+ '		<a href="javascript:getList(2)" class="Reply_order_button">최신순 </a>'
 				   		+ '</li>';
 				$('.reply_order_list').html(output);		//등록순, 최신순 버튼을 붙여준다
 				
 				output = '';
-				$(rdata.contentlist).each(function(){
+				$(rdata.replylist).each(function(){
 					const lev = this.replylev;
 					let reply_reply = '';
 					
@@ -69,7 +69,7 @@ function getList(state){
 														
 					output += '  </div>'
 					
-					if($("#LoginId").val() == this.replyWriter){		//글 작성자와 로그인한 사람이 일치하는지??
+					if ($("#LoginId").val() == this.replyWriter){		//글 작성자와 로그인한 사람이 일치하는지
 						output += '<div class="reply_tool">'
 							    + '		<div title="더보기" class="reply_tool_button">'
 							    + '     	<div>&#46;&#46;&#46;</div>' 
@@ -106,38 +106,38 @@ function getList(state){
 }//function(getList) end
 
 
-function updateForm(num){
+function updateForm(replyNum){
 	$('.reply_tool').hide();
 	
 	$('.LayerMore').hide();
 	
-	let $num = $('#'+num);
+	let $replyNum = $('#'+replyNum);
 	
-	const replycontent = $num.find('.text_reply').text();
-	const selector = '#'+num + '> .reply_nick_area'
+	const replycontent = $replyNum.find('.text_reply').text();
+	const selector = '#'+replyNum + '> .reply_nick_area'
 	
 	$(selector).hide();
 	
-	$num.append($('.reply_list+.reply_write').clone());
-	$num.find('textarea').val(replycontent);
-	$num.find('.btn-register').attr('data-id', num).addClass('update').text('수정완료');
-	$num.find('.btn-cancel').css('display', 'block');
+	$replyNum.append($('.reply_list+.reply_write').clone());
+	$replyNum.find('textarea').val(replycontent);
+	$replyNum.find('.btn-register').attr('data-id', replyNum).addClass('update').text('수정완료');
+	$replyNum.find('.btn-cancel').css('display', 'block');
 	const count = replycontent.length;
-	$num.find('.reply_write_area_count').text(count+"/200");
+	$replyNum.find('.reply_write_area_count').text(count+"/200");
 	
 }//fucntion(updateForm) end
 
 
 
-function del(num){
+function del(replyNum){
 	if (!confirm('정말 삭제하시겠습니까?')){
-		$('#reply_list_item_layer' + num).hide();
+		$('#reply_list_item_layer' + replyNum).hide();
 		return;
 	}
 
 	$.ajax({
-		url : 'ReplyDelete.co',
-		data : {num : num},
+		url : contextPath + '/ReplyDelete.co',
+		data : {replyNum : replyNum},
 		success : function(rdata) {
 			if (rdata == 1) {
 				getList(option);
@@ -150,21 +150,21 @@ function del(num){
 
 
 
-function replyform(num, lev, seq, ref) {
+function replyform(replyNum, lev, seq, ref) {
 	$(".LayerMore").hide();
 	
 	let output = '<li class="reply_list_item reply_list_item__reply lev'  +  lev + '"></li>'
-    const $num = $('#'+num);
+    const $replyNum = $('#'+replyNum);
 
-	$num.after(output);
+	$replyNum.after(output);
 	output=$('.reply_list+.reply_write').clone();
 	
-	const $num_next = $num.next();
+	const $replyNum_next = $replyNum.next();
 
-	$num_next.html(output);
-	$num_next.find('textarea').attr('placeholder', '답글을 남겨보세요');
-	$num_next.find('.btn-cancel').css('display','block').addClass('reply-cancel');
-	$num_next.find('.btn-register').addClass('reply')
+	$replyNum_next.html(output);
+	$replyNum_next.find('textarea').attr('placeholder', '답글을 남겨보세요');
+	$replyNum_next.find('.btn-cancel').css('display','block').addClass('reply-cancel');
+	$replyNum_next.find('.btn-register').addClass('reply')
 			 .attr('data-ref', ref).attr('data-lev', lev).attr('data-seq', seq).text('답글완료');
 	
 }//function(replyform) end
@@ -188,8 +188,8 @@ $(function() {getList(option);
 		}
 		
 		$.ajax({
-			url : 'ReplyAdd.co',  //댓글 등록
-			data : {id : $('#LoginId').val(),
+			url : contextPath + '/ReplyAdd.co',  //댓글 등록
+			data : {replywriter : $('#LoginId').val(),
 					replycontent : replycontent,
 					Reply_board_num : $('#Reply_board_num').val()	
 			},
@@ -224,11 +224,11 @@ $(function() {getList(option);
 			return;
 		}
 		
-		const num = $(this).attr('data-id');
+		const replyNum = $(this).attr('data-id');
 		
 		$.ajax({
-			url : 'ReplyUpdate.co',
-			data : {num : num,
+			url : contextPath + '/ReplyUpdate.co',
+			data : {replyNum : replyNum,
 					replycontent : replycontent},
 			success : function(rdata){
 				if(rdata == 1){
@@ -269,8 +269,8 @@ $(function() {getList(option);
 		const replyseq = $(this).attr('data-seq');
 		
 		$.ajax({
-			url : 'ReplyReply.co',  
-			data : {id : $("#LoginId").val(),
+			url : contextPath + '/ReplyReply.co',  
+			data : {replywriter : $("#LoginId").val(),
 					replycontent : replycontent,
 					Reply_board_num : $('#Reply_board_num').val(),
 					replylev : replylev,

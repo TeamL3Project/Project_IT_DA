@@ -7,11 +7,12 @@ public class Reply {
 	private int boardNum;
 	private String replyWriter;
 	private String replyContent;
+	private int replyref;
 	private int replylev;
 	private int replyseq;
 	private Timestamp replyDate;
 	private Timestamp replyUpdate;
-	private int replyref;
+	
 	
 	
 	
