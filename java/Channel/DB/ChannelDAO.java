@@ -346,7 +346,7 @@ public class ChannelDAO {
 			pre.setString(1, userId);					
 			pre.setInt(2, chnum);			
 				
-			result = pre.executeUpdate();									//삽입 성공시 1
+			result = pre.executeUpdate();	//삽입 성공시 1
 			System.out.println("구독 DB 삽입 성공");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -378,4 +378,34 @@ public class ChannelDAO {
    		}
    		return result;
    	}
+
+	
+	public List<ChannelBean> goMyChannelList(String id) {
+		String sql = "SELECT chnum "
+				+ "FROM channellist "
+				+ "WHERE ownerid = ? ";
+		List<ChannelBean> chlist = new ArrayList<>();
+		
+		try (Connection con = ds.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			
+			pstmt.setString(1, id);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					ChannelBean channel = new ChannelBean();
+					channel.setChnum(rs.getInt("CHNUM"));
+					chlist.add(channel);
+				}
+				
+			} catch (NumberFormatException ex) {
+				ex.printStackTrace();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return chlist;
+	}
+
 }
