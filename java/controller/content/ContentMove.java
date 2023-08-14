@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static util.visitService.contentVisitUp;
+import static util.countUpService.contentVisitUp;
 
 public class ContentMove implements Action {
     @Override
