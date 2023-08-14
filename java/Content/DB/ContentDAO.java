@@ -18,7 +18,6 @@ public class ContentDAO {
 	private DataSource ds;
 	private final int PAGE_LIMIT = 10;
 	private final int FIRST_START_PAGE = 1;
-	private final int POPULAR_CONTENT_NUM = 7;
 
 	public ContentDAO() {
 		try {
@@ -406,5 +405,71 @@ public class ContentDAO {
 
 			return contentList;
 		}
+
+	
+	public int plusheartCount(int boardNum) {
+		String sql = "update chboard "
+				   + "set boardheart = boardheart + 1 "
+				   + "where boardNum = ? ";
+		
+		try (Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+			
+			pre.setInt(1, boardNum);
+			int rowsUpdated = pre.executeUpdate();
+			
+			if (rowsUpdated > 0) {
+		            return getUpdatedHeartCount(con, boardNum);
+		    }
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
+	
+	private int getUpdatedHeartCount(Connection con, int boardNum) {
+		String sql = "select boardheart "
+				   + "from chboard "
+				   + "where boardNum = ?";
+		
+		try (PreparedStatement pre = con.prepareStatement(sql)) {
+			pre.setInt(1, boardNum);
+			
+			try (ResultSet rs = pre.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("boardheart");
+				}
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	public int previousValue(int boardNum) {
+		String sql = "update chboard "
+				   + "set boardheart = boardheart - 1 "
+				   + "where boardNum = ? ";
+		
+		try (Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+			
+			pre.setInt(1, boardNum);
+			int rowsUpdated = pre.executeUpdate();
+			
+			if (rowsUpdated > 0) {
+		            return getUpdatedHeartCount(con, boardNum);
+		    }
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
 }
 

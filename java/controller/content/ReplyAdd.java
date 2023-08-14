@@ -23,7 +23,6 @@ public class ReplyAdd implements Action {
 		
 		re.setReplyWriter(request.getParameter("replywriter"));
 		re.setReplyContent(request.getParameter("replycontent"));
-		System.out.println("replycontent=" + re.getReplyContent());
 		
 		re.setBoardNum(Integer.parseInt(request.getParameter("Reply_board_num")));
 		

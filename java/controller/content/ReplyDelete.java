@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonArray;
+
 import Content.DB.ReplyDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
@@ -20,12 +22,14 @@ public class ReplyDelete implements Action {
 		int replyNum = Integer.parseInt(request.getParameter("num"));
 		
 		ReplyDAO redao = new ReplyDAO();
+		boolean result = false;
+		result = redao.replyDelete(replyNum);
 		
-		int result = redao.replyDelete(replyNum);
+		JsonArray JsonArray = new JsonArray();
+		JsonArray.add(result);
 		
 		PrintWriter out = response.getWriter();
-		
-		out.println(result);
+		out.println(JsonArray);
 		out.close();
 		
 		return null;
