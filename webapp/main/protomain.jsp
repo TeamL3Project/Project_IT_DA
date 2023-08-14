@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/mainpage.css">
+    <script>
+        var contextPath = '<%= request.getContextPath() %>';
+    </script>
     <script src="js/mainpage.js"></script>
 </head>
 <body>
