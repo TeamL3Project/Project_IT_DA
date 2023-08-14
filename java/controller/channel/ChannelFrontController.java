@@ -54,9 +54,6 @@ public class ChannelFrontController extends HttpServlet {
 		case "/idcheck.chl":
 			action = new IdCheckAction();
 			break;
-		case "/ChannelPageAction.chl": 
-            action = new ChannelpageAction();
-            break;	
 		case "/Channelsub.chl": 
             action = new ChannelsubAction();
             break;
