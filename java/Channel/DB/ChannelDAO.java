@@ -408,4 +408,30 @@ public class ChannelDAO {
 		return chlist;
 	}
 
+	public int subdelete(String userId, int chnum) {
+		String sql = "delete from sub where userid = ? and subchnum = ?";
+	
+		try(Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+					
+			pre.setString(1, userId);					
+			pre.setInt(2, chnum);			
+				
+			result = pre.executeUpdate();	
+			
+			if(result == 0 ) {
+				System.out.println("삭제 실패");
+			}else {
+				System.out.println("삭제 성공");
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+				
+		}
+			
+		return result;
+	
+	}
+
 }

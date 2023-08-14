@@ -56,11 +56,11 @@ body {
 .bt-hover:hover {
 	background: #FBD1A7;
 	color: #01273C;
-	opacity: 0.2;
+	opacity: 0.8;
 	border: 1px solid #FBD1A7;
 }
 
- .on, .bt-on {
+.on, .bt-on {
 	background: #FBD1A7;
 	color: #01273C;
 	opacity: 0.8;
@@ -145,92 +145,92 @@ td>a {
 	max-width: 770px;
 	padding-left: 43px;
 }
+
+.bt-hover2 {
+	background: #ccccc;
+	color: #01273C;
+	opacity: 0.8;
+	border: 1px solid #ccccc;
+}
+
+
 </style>
 <script>
 $(document).ready(function() {
     setButtonClickEvents();
     initializeDefaultContent();
 
-    checkSubscription();
-
-    $("#subscribeBtn").click(function() {
-        toggleSubscription();
-    });
-});
-
-function checkSubscription() {
-    id = '${userId}';
-    if (id) {
-        $.ajax({
-            url : "../Channelissub.chl",
-            type: "POST",
-            data: { userId : id, chnum :  '${channel.chnum}' },
-            success: function(data) {
-                if (data == 1) {
-                    $("#subscribeBtn").removeClass('bt-hover').addClass('bt-on').prop('disabled', true);
-                } else {
-                    $("#subscribeBtn").removeClass('bt-on').addClass('bt-hover').prop('disabled', false);
-                }
-            }
-        });
-    } else {
-        alert("로그인 후 이용하세요.");
-    }
-}
-
-function toggleSubscription() {
-    id = '${userId}';
-    if (id) {
-        $.ajax({
-            url : "../Channelissub.chl",
-            type: "POST",
-            data: { userId : id, chnum : '${channel.chnum}' },
-            success: function(data) {
-                if (data == 1) {
-                    cancelSubscription();
-                } else {
-                    subscribe();
-                }
-            }
-        });
-    } else {
-        alert("로그인 후 이용하세요.");
-    }
-}
-
-function subscribe() {
-    id = '${userId}';
-    $.ajax({
-        url : "../Channelsub.chl",
-        type: "POST",
-        data: { userId : id, chnum : '${channel.chnum}' },
-        success: function(data) {
-            if (data == 1) {
-                alert("[${channel.chname}] 구독되었습니다.");
-                $("#subscribeBtn").removeClass('bt-hover').addClass('bt-on').prop('disabled', true);
-            } else {
-                alert("구독 DB insert 오류입니다.");
-            }
-        }
-    });
-}
-
-function cancelSubscription() {
-    id = '${userId}';
-    $.ajax({
-        url : "../ChannelUnsub.chl",
-        type: "POST",
-        data: { userId : id, chnum : '${channel.chnum}' },
-        success: function(data) {
-            if (data == 1) {
-                alert("[${channel.chname}] 구독이 취소되었습니다.");
-                $("#subscribeBtn").removeClass('bt-on').addClass('bt-hover').prop('disabled', false);
-            } else {
-                alert("구독 취소 DB 처리 오류입니다.");
-            }
-        }
-    });
-}
+       id = '${userId}'
+    	
+    	if(id){ //로그인 한 경우
+    		//구독 유무 확인 select하기
+    		//select * from sub where userid =? and chnum=?
+    
+	    $.ajax({
+			url : "../Channelissub.chl",
+			type: "POST",
+			data: { userId : id, chnum :  '${channel.chnum}' },
+			success: function(data) {
+				if(data==1) {				
+					$("#subscribeBtn").removeClass('bt-hover').addClass('bt-on');
+					//.prop('disabled', true);
+				}
+			}
+		});	
+   	}
+    
+    
+    $(document).on('click', '#subscribeBtn', function() {
+    	//세션 아이디값이 있는지 확인 
+    	//yes인 경우
+    	//ajax로 
+    	//insert into sub (userid, subchnum, subdate) 
+    	//values(${userId},${channel.chnum},timestamp);
+    	// 1 ? : 세션 아이디
+    	// 2 ? : 파라미터 
+    			//channelsub.ch?userId=admin
+    	id = '${userId}'
+    	console.log("test12");
+    		if (id) {
+                if ($("#subscribeBtn").hasClass('bt-on')) { // 이미 구독한 경우 (unsubscribe)
+                    // 구독 삭제
+                    $.ajax({
+                        url: "../Canclechsub.chl",
+                        type: "POST",
+                        data: { userId: id, chnum: '${channel.chnum}' },
+                        success: function(data) {
+                        	
+                            if (data == 1) {
+                                alert("[${channel.chname}] 구독이 취소되었습니다.");
+                                $("#subscribeBtn").removeClass('bt-on').addClass('bt-hover');
+                            } else {
+                                alert("구독 취소 오류입니다.");
+                            }
+                        }
+                    });
+                } else { // 구독하지 않은 경우 (subscribe)
+                    // 구독 추가
+	    		//구독 안한 사람 insert하기
+	    		$.ajax({
+	    			url : "../Channelsub.chl",
+	    			type: "POST",
+	    			data: { userId : id, chnum :  '${channel.chnum}' },
+	    			success: function(data) {
+		    				if(data==1) {
+		    					alert("[${channel.chname}] 구독되었습니다.");
+		        				$("#subscribeBtn").removeClass('bt-hover').addClass('bt-on');
+		
+		    				} else {
+		                        alert("구독 오류입니다.");
+		                    }
+		                }
+		            });
+		        }
+		    } else {
+		        alert("로그인 후 이용하세요.");
+		    }
+		});
+	});
 
 function setButtonClickEvents() {
     $(".category .bt-item").click(function() {
@@ -288,13 +288,13 @@ function setInnerHTML2() {
 	       <table class="table table-bordered" style="margin: 0 8;">
 		        <tr>
 		          <td>
-		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channelCategoryData.chnum}">전체 </a>
+		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=0">전체</a>
 		          </td>
 		        </tr>
 				<c:forEach var="c" items="${chcategory}">
 				  <tr>
 		          <td>
-		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${channelCategoryData.categoryName}&chcate_id=${channelCategoryData.categoryId}">
+		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${c.chcate_Name}&chcate_id=${c.chcate_id}">
 		          ${c.chcate_Name}
 		      	  </a>
 		          </td>
@@ -344,7 +344,7 @@ function initializeDefaultContent() {
 			<br>
 			<div class="sub_alram_btn"
 				style="padding: 30px; margin-top: -38px; padding-left: 15px;">
-				<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
+				<button class="btn bt-item bt-hover2" id="subscribeBtn">구독하기</button>
 				<img src="../image/channel/alram_white.png"
 					style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
 			</div>
@@ -358,8 +358,7 @@ function initializeDefaultContent() {
 		<div class="category" style="padding: 0 235 display: flex;">
 
 			<input class="btn bt-item bt-hover" type='button' value='인기글'
-				onclick='setInnerHTML1()' /> 
-				<input class="btn bt-item bt-hover"
+				onclick='setInnerHTML1()' /> <input class="btn bt-item bt-hover"
 				type='button' value='카테고리' onclick='setInnerHTML2()' />
 		</div>
 

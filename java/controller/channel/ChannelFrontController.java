@@ -63,11 +63,9 @@ public class ChannelFrontController extends HttpServlet {
 		case "/Channelissub.chl": 
             action = new ChannelissubAction();
             break;	
-            
-            
-            
-            
-            
+		case "/Canclechsub.chl": 
+            action = new CanclechsubAction();
+            break;	
 		}
 
 		forward = action.execute(request, response);
