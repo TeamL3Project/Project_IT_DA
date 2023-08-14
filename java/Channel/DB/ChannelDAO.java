@@ -335,4 +335,47 @@ public class ChannelDAO {
 
 	    return channelDetails;
 	}
+
+	public int subinsert(String userId, int chnum) {
+		String sql = "insert into sub (subsnum, userid, subchnum, subdate) "
+					+ "    values(sub_seq.nextval,?, ?, sysdate)";
+		
+		try(Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+					
+			pre.setString(1, userId);					
+			pre.setInt(2, chnum);			
+				
+			result = pre.executeUpdate();									//삽입 성공시 1
+			System.out.println("구독 DB 삽입 성공");
+		}catch (Exception e) {
+			e.printStackTrace();
+				
+		}
+			
+		return result;
+		
+	}
+
+	public int subselect(String userId, int chnum) {
+        String sql = "select * from sub where userid =? and subchNum=?";
+        int result=0;
+        try (Connection con = ds.getConnection(); 
+   			 PreparedStatement pstmt = con.prepareStatement(sql);) {
+
+   			pstmt.setString(1, userId);
+   			pstmt.setInt(2, chnum);
+   			
+   			try (ResultSet rs = pstmt.executeQuery()) {
+   				if (rs.next()) {
+   					result = 1;
+   				}
+   			}
+   		} catch (SQLException se) {
+   			se.printStackTrace();
+   		} catch (Exception e) {
+   			System.out.println("getDeatil() 에러 :" + e);
+   		}
+   		return result;
+   	}
 }
