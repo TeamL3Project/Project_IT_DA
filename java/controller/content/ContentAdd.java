@@ -1,11 +1,14 @@
 package controller.content;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -13,82 +16,111 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import Content.DB.ContentBean;
 import Content.DB.ContentDAO;
 import ContentCategory.DB.ContentCategoryBean;
+import ContentCategory.DB.ContentCategoryDAO;
 import Tag.DB.TagBean;
 import Tag.DB.TagDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
+import util.messeage;
 
 public class ContentAdd implements Action {
+		private static final int Join_Fail = 0;
+		private static final int Join_Success = 1;
+		private HttpSession session;
 
-	public ActionForward execute(HttpServletRequest request, 
-			HttpServletResponse response) throws ServletException, IOException {
-		
-		ContentDAO contnetdao = new ContentDAO();
-		ContentBean contentdata = new ContentBean();
-		ContentCategoryBean catedata = new ContentCategoryBean();
-		TagBean tdata = new TagBean();
-		TagDAO tdao = new TagDAO();
-		ActionForward forward = new ActionForward();
-		
-		String realFolder="";
-		
-		//webapp 아래에 꼭 폴더 생성하세요
-		String saveFolder="contentupload";
-		
-		int fileSize=5*1024*1024;
-		// 업로드할 파일의 최대 사이즈 입니다. 5MB
-		
-		// 실제 저장 경로를 지정합니다.
-		ServletContext sc = request.getServletContext();
-		realFolder = sc.getRealPath(saveFolder);
-		System.out.println("realFolder= " + realFolder);
-		boolean result = false;
-		try {
-			MultipartRequest multi = new MultipartRequest(
-					request,
-					realFolder,
-					fileSize,
-					"utf-8",
-					new DefaultFileRenamePolicy());
-			
-			//BoardBean 객체에 글 등록 폼에서 입력받은 정보들을 저장합니다.
+		private ContentBean setContentFromRequest(MultipartRequest multi) {
+			ContentBean content = new ContentBean();
+
+			content.setBoardTitle(multi.getParameter("boardTitle"));
+			content.setBoardContent(multi.getParameter("boardContent"));
+			content.setThumbNail(multi.getParameter("thumbNail"));
+
+
+
+
+			return content;
+
+		}
+
+		private ContentCategoryBean setContentCategoryFromRequest(MultipartRequest multi) {
+			ContentCategoryBean catedata = new ContentCategoryBean();
+
 			catedata.setChcate_Name(multi.getParameter("chcate_Name"));
-			contentdata.setBoardTitle(multi.getParameter("boardTitle"));
-			contentdata.setBoardContent(multi.getParameter("boardContent"));
+
+			return catedata;
+
+		}
+		private TagBean setTagFromRequest(MultipartRequest multi) {
+			TagBean tdata = new TagBean();
+
 			tdata.setTagname(multi.getParameter("tagname"));
-			
-			// 시스템 상에 업로드된 실제 파일명을 얻어 옵니다.
-			String filename = multi.getFilesystemName("thumbNail");
-			contentdata.setThumbNail(filename);
-			
-			// 글 등록 처리를 위해 DAO의 boardInsert() 메서드를 호출합니다.
-			// 글 등록 폼에서 입력한 정보가 저장되어 있는 boarddata 객체를 전달합니다.
-			result = contnetdao.contentInset(contentdata);
-			result = tdao.tagInsert(tdata);
-			
-			// 글 등록에 실패할 경우 false를 반환합니다.
-			if(result==false) {
-				System.out.println("게시판 등록 실패");
-				forward.setPath("error/error.jsp");
-				request.setAttribute("message", "게시판 등록 실패입니다.");
-				forward.setRedirect(false);
-				return forward;
+
+			return tdata;
+
+		}
+
+	public ActionForward execute(HttpServletRequest request,
+				HttpServletResponse response) throws ServletException, IOException {
+
+		ActionForward forward = new ActionForward();
+		session = request.getSession();
+		int chnum = (int) session.getAttribute("chnum");
+		String userId = (String) session.getAttribute("userId");
+		int chcate_id = (int) session.getAttribute("chcate_id");
+		String saveFolder = "image/ContentUpload";
+		int fileSize = 5*1024*1024;
+
+		ServletContext sc = request.getServletContext();		//실제 저장 경로를 지정
+		String realFolder = sc.getRealPath(saveFolder);
+		System.out.println("realFolder = " + realFolder);
+
+		//userid별 디렉토리 생성
+		String chFolder = realFolder + File.separator + chnum;
+
+		File directory =  new File(chFolder);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+
+		try {MultipartRequest multi = new MultipartRequest(
+			request,chFolder,fileSize,"UTF-8",new DefaultFileRenamePolicy());
+
+
+			ContentBean condata = setContentFromRequest(multi);
+			ContentCategoryBean catedata = setContentCategoryFromRequest(multi);
+			TagBean tdata = setTagFromRequest(multi);
+
+			ContentDAO condao = new ContentDAO();
+			ContentCategoryDAO catedao = new ContentCategoryDAO();
+			TagDAO tdao = new TagDAO();
+
+//			int contentResult = condao.InsertContent(chnum, chcate_id);
+			List<ContentCategoryBean> cateResult = catedao.chcategorySelect(chnum);
+			boolean tagResult = tdao.tagInsert(tdata);
+
+
+			if (contentResult == Join_Fail  || tagResult == false) {				//DB에 삽입되지 않은 경우
+				System.out.println(messeage.Join.FAIL);
+
+				forward.setRedirect(true);
+				request.setAttribute("message", messeage.Join.FAIL);
+				forward.setPath(request.getContextPath()+"/main");
+
+			}else if (contentResult == Join_Fail  && tagResult == true) {	//DB에 삽입된 경우
+				forward.setRedirect(true);
+				request.setAttribute("message", messeage.Join.SUCCESS);
+	            forward.setPath(request.getContextPath()+"/main");
+
 			}
-			
-			System.out.println("게시판 등록 완료");
-			
-			// 글 등록이 완료되면 글 목록을 보여주기 위해 "BoardList.bo"로 이동합니다.
-			// Redirect 여부를 true로 설정합니다.
-			forward.setRedirect(true);
-			forward.setPath("/content/contentlist.co"); // 이동할 경로를 지정합니다.
-			return forward;
-			
-		}catch(IOException ex) {
-			ex.printStackTrace();
-			forward.setPath("error/error.jsp");
-			request.setAttribute("message", "게시판 등록 실패입니다.");
-			forward.setRedirect(false);
-			return forward;
-		} // catch end
-	} // execute end
+
+
+		}catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+		return forward;
+
+	}
+
 }
