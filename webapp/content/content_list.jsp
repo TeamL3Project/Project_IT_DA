@@ -37,7 +37,7 @@
                         <a class=back_content href="javascript:history.back();"><img src="../image/content/errow_left.png" width="20"></a>
                     </div>
                 </div>
-                    <h2 class="head_title">${chName}</h2>
+                    <h2 class="head_title">jjjj${chName}</h2>
             </div>
             <hr>
             <div class="content_line">

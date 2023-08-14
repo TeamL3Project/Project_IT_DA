@@ -1,15 +1,16 @@
 package controller.channel;
 
-import Channel.DB.ChannelBean;
-import Channel.DB.ChannelDAO;
-import controller.action.Action;
-import controller.action.ActionForward;
+import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
+
+import Channel.DB.ChannelBean;
+import Channel.DB.ChannelDAO;
+import controller.action.Action;
+import controller.action.ActionForward;
 
 public class ChannelpageAction implements Action {
 
