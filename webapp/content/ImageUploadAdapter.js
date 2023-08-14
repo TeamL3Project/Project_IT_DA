@@ -13,7 +13,7 @@ class UploadAdapter {
     _initRequest() {
         const xhr = this.xhr = new XMLHttpRequest();
         xhr.open('POST', 'upload.co', true);
-        xhr.setRequestHeader("channelNum", req.getParameter("chnum")); // 여기 필수 원복 할것
+        xhr.setRequestHeader("channelNum", request.getParameter("chnum")); // 여기 필수 원복 할것
         xhr.responseType = 'json';
     }
 

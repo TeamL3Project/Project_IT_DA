@@ -4,6 +4,7 @@ public class TagBean {
 	int tagid;
 	int boardnum;
 	String tagname;
+
 	
 	
 	public int getTagid() {
