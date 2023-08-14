@@ -35,9 +35,8 @@ public class MemberLoginProcessAction implements Action {
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", userId);
 			
-			int chNum = mdao.getChNum(userId);
+			int chNum = mdao.getChNum(userId);					//유저가 판매회원인 경우 채널번호를 세션에 저장
 			session.setAttribute("chNum", chNum);
-			System.out.println("채널번호는" + chNum);
 			
 			String IDStore = request.getParameter("remember");
 			Cookie cookie = new Cookie("userId", userId);

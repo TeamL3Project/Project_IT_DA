@@ -22,7 +22,19 @@ public class visitService {
 		}
 
 	}
-
+	
+	public static void ContentLikeUp(ContentBean content) { //좋아요 수 증감 메소드
+		dbConntect();
+		String query = "update chboard set boardheart = " + (content.getBoardHeart() + 1) + " where chnum = " + content.getBoardNum();
+		dbUpdateProcess(query);
+	}
+	
+	public static void ContentLikeDown(ContentBean content) { //좋아요 수 증감 메소드
+		dbConntect();
+		String query = "update chboard set boardheart = " + (content.getBoardHeart() - 1) + " where chnum = " + content.getBoardNum();
+		dbUpdateProcess(query);
+	}
+	
 	public static void contentVisitUp(ContentBean content) {
 		dbConntect();
 		String query = "update chboard set boardvisit = " + content.getBoardVisit() + 1 + " where boardnum = " + content.getBoardNum();
