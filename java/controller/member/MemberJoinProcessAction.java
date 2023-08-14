@@ -23,79 +23,76 @@ import util.dateService;
 import util.folderService;
 
 public class MemberJoinProcessAction implements Action {
-	
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String userId = request.getParameter("id");
-		String userPw = request.getParameter("password");
-		String userName = request.getParameter("name");
 		
-		ActionForward forward = new ActionForward();
-
-		HttpSession session = request.getSession();
-		userId = (String) session.getAttribute("userId");
-
 		String saveFolder = "image/Member";
 		int fileSize = 5 * 1024 * 1024;
-
 		ServletContext sc = request.getServletContext();
 		String realFolder = sc.getRealPath(saveFolder);
-
-		String userFolder = realFolder + File.separator + userId;
+		
+		String userFolder = realFolder + File.separator + dateService.toDay();
 		folderService.createFolder(userFolder);
+		
+		
+		MultipartRequest multi = new MultipartRequest(
+				request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
+		String userId = multi.getParameter("id");
+		System.out.println(userId);
+	    String userPw = multi.getParameter("password");
+	    String userName = multi.getParameter("name");
+	    
+	    ActionForward forward = new ActionForward();
 
-		int channelNum = Integer.parseInt(request.getParameter("channelNum"));
-		realFolder += File.separator + channelNum;
-		folderService.createFolder(realFolder);
 
-		// dateService 객체를 생성하여 현재 날짜 정보 문자열을 반환하는 
-		// toDay() 메소드를 호출하여 반환된 값을 realFolder 변수에 추가
-		dateService dateService = new dateService();  
-		realFolder += File.separator + util.dateService.toDay(); 
 
-		// 이전과 같이 util 대신 dateService로 수정합니다.
-		folderService.createFolder(realFolder);
 
-		MultipartRequest multi = new MultipartRequest(request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
-        
-        
+	    // dateService 클래스 메소드로 직접 접근
+	    realFolder += File.separator + util.dateService.toDay();
+
+	    folderService.createFolder(realFolder);
+
+
+	 
+		    
+		    
 
 		// 날짜 문자열 확인 및 파싱
-		String dateOfBirthStr = request.getParameter("date_birth");
+		String dateOfBirthStr = multi.getParameter("date_birth");
 		LocalDate dateOfBirth = null;
 		if (dateOfBirthStr != null && !dateOfBirthStr.isEmpty()) {
 			dateOfBirth = LocalDate.parse(dateOfBirthStr);
 		}
 
-		String userGender = request.getParameter("gender"); // 성별
-		String userPhone = request.getParameter("phone"); // 전화번호
-		String userAddress1 = request.getParameter("address1"); // 주소 
-		String userAddress2 = request.getParameter("address2"); // 상세주소
-		String userPost = request.getParameter("zip_code"); // 우편번호
-		String userEmail = request.getParameter("email"); // 이메일
-		String userCategory = request.getParameter("category"); // 관심 카테고리
+		String userGender = multi.getParameter("gender"); // 성별
+		String userPhone = multi.getParameter("phone"); // 전화번호
+		String userAddress1 = multi.getParameter("address1"); // 주소 
+		String userAddress2 = multi.getParameter("address2"); // 상세주소
+		String userPost = multi.getParameter("zip_code"); // 우편번호
+		String userEmail = multi.getParameter("email"); // 이메일
+		String userCategory = multi.getParameter("category"); // 관심 카테고리
 		String userProfile = multi.getFilesystemName("userProfile");  
 		
 		// 가입일 문자열 확인 및 파싱
-		String userJoindateStr = request.getParameter("joindate");
+		String userJoindateStr = multi.getParameter("joindate");
 		LocalDate userJoindate = null;
 		if (userJoindateStr != null && !userJoindateStr.isEmpty()) {
 			userJoindate = LocalDate.parse(userJoindateStr);
 		}
 
-		String statusIdParam = request.getParameter("status_id");
+		String statusIdParam = multi.getParameter("status_id");
 		int statusId = (statusIdParam != null && !statusIdParam.trim().isEmpty()) ? Integer.parseInt(statusIdParam) : 0;
 
 		// 수정일 문자열 확인 및 파싱
-		String updateDateStr = request.getParameter("update_date");
+		String updateDateStr = multi.getParameter("update_date");
 		LocalDate updateDate = null;
 		if (updateDateStr != null && !updateDateStr.isEmpty()) {
 			updateDate = LocalDate.parse(updateDateStr);
 		}
 
+		
 		Member m = new Member();
 		m.setUserId(userId);
 		m.setUserPw(userPw);
@@ -137,16 +134,6 @@ public class MemberJoinProcessAction implements Action {
 
 		return null;
 	}
-
-
-	public String getFileName(Part part) {
-		String contentDispositionHeader = part.getHeader("content-disposition");
-		String[] elements = contentDispositionHeader.split(";");
-		for (String element : elements) {
-			if (element.trim().startsWith("filename")) {
-				return element.substring(element.indexOf('=') + 1).trim().replace("\"", "");
-			}
-		}
-		return null;
-	}
+	
 }
+

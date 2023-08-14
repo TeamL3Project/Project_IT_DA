@@ -12,6 +12,7 @@ public class ChannelBean {
 	private int chfollow; // 구독자수
 	private Timestamp chopendate; // 채널오픈일
 	private int chvisit; // 채널 방문자수
+	private String userProfile; // 유저 프로파일
 
 	public int getChnum() {
 		return chnum;
@@ -83,6 +84,14 @@ public class ChannelBean {
 
 	public void setChvisit(int chvisit) {
 		this.chvisit = chvisit;
+	}
+
+	public String getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
 	}
 
 }
