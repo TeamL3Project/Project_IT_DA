@@ -42,7 +42,7 @@
             <hr>
             <div class="content_line">
                 <div class="content_tap_wrap">
-                    <h3 class="content_head"><span>${chcate_name }<em>${listcount }</em></span></h3>
+                    <h3 class="content_head"><span>${chcate_name}<em>${listcount }</em></span></h3>
                 </div>
                 <div class="category_sorting_wrap">
                     <div class="sorting_wrap">
