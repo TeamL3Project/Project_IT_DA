@@ -13,6 +13,10 @@
 		if (userId) {								//id값이 있는 경우
 			$("#userId").val(userId);				//아이디 입력란에 자동으로 id를 채워줌
 			$("#remember").prop('checked',true);	//자동으로 아이디 기억하기를 체크해줌
+			// 회원가입시 업로드한 프로필사진 경로
+			const imgsrc = '${pageContext.request.contextPath}/image/Member/' + userId + '/0/' + dateService.toDay() + '/';
+			//프로필 사진 출력
+			$("#profile_img").attr("src", imgsrc);
 		}
 		
 	});
@@ -38,12 +42,12 @@
 	%>
 	
 		<!-- 로그인이 되어 있는 경우 프로필사진 출력 -->
-		<div class="dropdown">
-		  <button class="dropbtn"><img src="./image/common/profile.png" style="width: 30px; height: auto;"></button>
-		  <div class="dropdown-content">
-		    <a href="myPage.me">마이페이지</a>
-		    <a href="logout.me">로그아웃</a>
-		  </div>
+				<div class="dropdown">
+			<button class="dropbtn"><img id="profile_img" src="" style="width: 30px; height: auto;"></button>
+			<div class="dropdown-content">
+				<a href="myPage.me">마이페이지</a>
+				<a href="logout.me">로그아웃</a>
+			</div>
 		</div>
 		
 	<%

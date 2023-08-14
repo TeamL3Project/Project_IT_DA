@@ -4,70 +4,63 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import Member.DB.Member;
 import Member.DB.MemberDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
+import util.dateService;
+import util.folderService;
 
 public class MemberJoinProcessAction implements Action {
 	
-	 private void createFolder(String folderPath) {
-	        File folder = new File(folderPath);
-	        if (!folder.exists()) {
-	            folder.mkdirs();
-	        }
-	    }
-
-	    private String toDay() {
-	        LocalDateTime now = LocalDateTime.now();
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-	        return now.format(formatter);
-	    }
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-
 		String userId = request.getParameter("id");
 		String userPw = request.getParameter("password");
 		String userName = request.getParameter("name");
 		
-		   // 프로필 사진을 저장할 기본 경로 설정
-        String saveFolder = "/image/members/";
-        String realFolder = "";
-        ServletContext sc = request.getServletContext();
-        realFolder = sc.getRealPath(saveFolder);
+		ActionForward forward = new ActionForward();
 
-        // 회원 ID 폴더 생성
-        realFolder += userId + '/';
-        createFolder(realFolder);
+		HttpSession session = request.getSession();
+		userId = (String) session.getAttribute("userId");
 
-        // 업로드 날짜 폴더 생성
-        realFolder += toDay() + '/';
-        createFolder(realFolder);
+		String saveFolder = "image/Member";
+		int fileSize = 5 * 1024 * 1024;
 
-        // 프로필 사진 파일을 받아 저장하기
-        Part profilePart = request.getPart("profilePicture");
-        String originalProfileName = profilePart.getSubmittedFileName();
-        String userProfile = null;
-        if (originalProfileName != null && !originalProfileName.isEmpty()) {
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-            String currentTime = now.format(formatter);
-            String uniqueProfileName = currentTime + "_" + originalProfileName;
-            userProfile = realFolder + uniqueProfileName;
-            profilePart.write(userProfile);
-        }
+		ServletContext sc = request.getServletContext();
+		String realFolder = sc.getRealPath(saveFolder);
+
+		String userFolder = realFolder + File.separator + userId;
+		folderService.createFolder(userFolder);
+
+		int channelNum = Integer.parseInt(request.getParameter("channelNum"));
+		realFolder += File.separator + channelNum;
+		folderService.createFolder(realFolder);
+
+		// dateService 객체를 생성하여 현재 날짜 정보 문자열을 반환하는 
+		// toDay() 메소드를 호출하여 반환된 값을 realFolder 변수에 추가
+		dateService dateService = new dateService();  
+		realFolder += File.separator + util.dateService.toDay(); 
+
+		// 이전과 같이 util 대신 dateService로 수정합니다.
+		folderService.createFolder(realFolder);
+
+		MultipartRequest multi = new MultipartRequest(request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
+        
         
 
 		// 날짜 문자열 확인 및 파싱
@@ -84,9 +77,7 @@ public class MemberJoinProcessAction implements Action {
 		String userPost = request.getParameter("zip_code"); // 우편번호
 		String userEmail = request.getParameter("email"); // 이메일
 		String userCategory = request.getParameter("category"); // 관심 카테고리
-		
-		
-
+		String userProfile = multi.getFilesystemName("userProfile");  
 		
 		// 가입일 문자열 확인 및 파싱
 		String userJoindateStr = request.getParameter("joindate");
@@ -118,7 +109,7 @@ public class MemberJoinProcessAction implements Action {
 		m.setUserEmail(userEmail);
 		m.setUserCategory(userCategory);
 		m.setStatusId(statusId);
-		m.setUserProfile(userProfile); // 프로필 사진 주소 설정
+		m.setUserProfile(userProfile); 
 
 		MemberDAO mdao = new MemberDAO();
 		int result = mdao.insert(m);
@@ -126,7 +117,6 @@ public class MemberJoinProcessAction implements Action {
 		if (result == 0) { // DB삽입 실패
 			System.out.println("회원가입 실패");
 
-			ActionForward forward = new ActionForward();
 			forward.setRedirect(true);
 
 			request.setAttribute("message", "회원가입 실패");
