@@ -32,7 +32,9 @@ public class MemberLoginAction implements Action {
 		request.setAttribute("userId", userId);
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
+
 		forward.setPath(request.getContextPath()+"/main");		//login 성공후 다시 메인페이지를 보여줌(세션에 id값이 있는 상태)
+
 		return forward;
 
 	}
