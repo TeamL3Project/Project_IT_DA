@@ -46,6 +46,7 @@ public class ContentByCategory implements Action {
             JsonArray.add(j);
             System.out.println(j);
         }
+        
         response.setContentType("text/html; charset=UTF-8");
         response.getWriter().print(JsonArray);
         return null;

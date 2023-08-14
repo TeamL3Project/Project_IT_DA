@@ -19,19 +19,23 @@ public class HeartCount implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 															throws ServletException, IOException {
 		
+		response.setContentType("application/json;charset=UTF-8");
 		int boardNum = Integer.parseInt(request.getParameter("boardNum"));
-		
+		int statecheck = Integer.parseInt(request.getParameter("heartstate"));
 		ContentDAO dao = new ContentDAO();
-		int plusValue = dao.plusheartCount(boardNum);		//기존 boardheart값의 + 1
-		int preValue = dao.previousValue(boardNum);			//1증가된 boardheard값을 이전으로 되돌림
+		int updatedValue = 0;
+		
+		if (statecheck == 0) {
+			updatedValue = dao.previousValue(boardNum);			//1증가된 boardheard값을 이전으로 되돌림
+			
+		}else if (statecheck == 1) {
+			updatedValue = dao.plusheartCount(boardNum);		//기존 boardheart값의 + 1
+			
+		}
 		
 		JsonObject jobj = new JsonObject();
 		jobj.addProperty("success", true);
-		
-		
-		jobj.addProperty("updatedValue", plusValue);
-		
-		response.setContentType("application/json;charset=UTF-8");
+		jobj.addProperty("updatedValue", updatedValue);
 		
 		try (PrintWriter out = response.getWriter()) {
             out.print(jobj.toString());

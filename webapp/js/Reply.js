@@ -131,8 +131,9 @@ function del(num){
 	$.ajax({
 		url : contextPath + '/ReplyDelete.co',
 		data : {num : num},
+		dataType : 'json',
 		success : function(rdata) {
-			if (rdata == true) {
+			if (rdata[0] === true) {
 				getList(option);
 			}else {
 				alert("댓글 삭제중 오류");

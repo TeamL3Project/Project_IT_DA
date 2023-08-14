@@ -35,7 +35,11 @@
 	margin: 20px 5px;
 }
 
-#selecbutt1, #selecbutt2, #selecbutt3 {
+form{
+	display : inline-block;
+}
+
+#selecbutt1, #selecbutt2, #selecbutt3, #selecbutt4 {
 	width: 130px;
 	height: 45px;
 	border: 1px solid black;
