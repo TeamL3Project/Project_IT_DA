@@ -9,29 +9,31 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChannelpageAction implements Action {
 
-	@Override
-	public ActionForward execute(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	  @Override
+	    public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
+	            throws ServletException, IOException {
 
-		ChannelDAO channeldao = new ChannelDAO();
-		List<ChannelBean> channelpage = new ArrayList<ChannelBean>();
+	        String chNum = request.getParameter("chNum"); // 요청에서 chNum 매개변수를 가져옵니다.
 
-		
-//		channelpage = channeldao.getChannellist();
+	        ChannelDAO channeldao = new ChannelDAO();
+	        List<ChannelBean> channellist = channeldao.getChannelList();
 
-		req.setAttribute("channelpage", channelpage);
+	        // chNum 매개변수를 사용하여 특정 채널 세부 정보를 가져와야 하는 경우
+	        // 예시:
+	         ChannelBean selectedChannel = channeldao.getChannelDetails(chNum);
+	         request.setAttribute("selectedChannel", selectedChannel);
 
-		
-		ActionForward forward = new ActionForward();
-		forward.setPath("channel/channelpage.jsp");
-		forward.setRedirect(false);
+	        request.setAttribute("channellist", channellist);
 
-		return forward;
-	}
+	        ActionForward forward = new ActionForward();
+	        forward.setPath("main/channelList.jsp");
+	        forward.setRedirect(false);
+
+	        return forward;
+	    }
 
 }
