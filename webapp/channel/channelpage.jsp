@@ -169,6 +169,7 @@ function setInnerHTML1() {
             <div class="row">
                 <c:forEach var="c" items="${channelhome}" varStatus="loop">
                     <div class="col-md-4">
+                    <a href="${pageContext.request.contextPath}/contents/${channel.chnum}/${c.boardNum}">
                         <img class="home_img" src="../image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}">
                         <div class="card-body card-body-font">
                             <h5 class="card-title">
@@ -189,6 +190,7 @@ function setInnerHTML1() {
                         </div>
                         <div class="row">
                     </c:if> 
+                </a>
                 </c:forEach>
             </div>
         </div>`;
@@ -202,12 +204,18 @@ function setInnerHTML2() {
 	    <div class="category-content">
 	       <table class="table table-bordered" style="margin: 0 8;">
 		        <tr>
-		          <td><a> 전체 </a></td>
+		          <td>
+		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channelCategoryData.chnum}">전체 </a>
+		          </td>
 		        </tr>
 				<c:forEach var="c" items="${chcategory}">
-					<tr>
-						<td>${c.chcate_Name}</td>
-					</tr>
+				  <tr>
+		          <td>
+		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${channelCategoryData.categoryName}&chcate_id=${channelCategoryData.categoryId}">
+		          ${c.chcate_Name}
+		      	  </a>
+		          </td>
+		        </tr>
 				</c:forEach>
 	       </table>
 	    </div>`;
@@ -285,7 +293,7 @@ function initializeDefaultContent() {
 			<table class="table table-bordered">
 				<c:forEach var="c" items="${channeldetail}">
 					<tr>
-						<td><a href="https://www.naver.com/" class='test'>${c.boardTitle}</a></td>
+						<td><a href="${pageContext.request.contextPath}/contents/${channel.chnum}/${c.boardNum}">${c.boardTitle}</a></td>
 					</tr>
 				</c:forEach>
 			</table>

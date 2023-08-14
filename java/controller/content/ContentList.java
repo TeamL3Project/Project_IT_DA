@@ -12,6 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import ChannelCategory.DB.ChannelCategoryBean;
+import ChannelCategory.DB.ChannelCategoryDAO;
 import Content.DB.ContentBean;
 import Content.DB.ContentDAO;
 import controller.action.Action;
@@ -24,7 +26,20 @@ public class ContentList implements Action {
 		
 		ContentDAO ContentDAO = new ContentDAO();
 		List<ContentBean> contentlist = new ArrayList<ContentBean>();
-		
+		ChannelCategoryDAO channelCategoryDAO = new ChannelCategoryDAO();
+        ChannelCategoryBean channelCategoryData = new ChannelCategoryBean();
+        
+        int channelNum = Integer.parseInt(request.getParameter("channelnum"));
+
+        channelCategoryData = channelCategoryDAO.getchcatedata(channelNum,channelNum);
+        
+        if (channelCategoryData != null) {
+            int chNum = channelCategoryData.getChNum();
+            int categoryId = channelCategoryData.getCategoryId();
+
+            contentlist = ContentDAO.getchcatedata(chNum, categoryId);
+        }
+        
 		int page = 1;
 		int limit = 10;
 		if(request.getParameter("page")!=null) {
@@ -74,6 +89,8 @@ public class ContentList implements Action {
 			request.setAttribute("contentlist", contentlist);
 			
 			request.setAttribute("limit", limit);
+			request.setAttribute("channelCategoryData", channelCategoryData);
+
 			ActionForward forward = new ActionForward();
 			forward.setRedirect(false);
 			

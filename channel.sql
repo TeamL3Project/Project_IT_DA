@@ -92,3 +92,8 @@ select *
 from chboard
 where boardNum = 21;
 
+
+select * from chboardcategory;
+
+select * from chboardcategory where chNum = 21
+order by chcate_id asc;
