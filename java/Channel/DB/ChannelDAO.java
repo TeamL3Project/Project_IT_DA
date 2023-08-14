@@ -289,4 +289,5 @@ public class ChannelDAO {
    		}
    		return channel;
    	}
+
 }

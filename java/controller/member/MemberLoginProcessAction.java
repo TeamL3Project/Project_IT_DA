@@ -35,6 +35,9 @@ public class MemberLoginProcessAction implements Action {
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", userId);
 			
+			int chNum = mdao.getChNum(userId);					//유저가 판매회원인 경우 채널번호를 세션에 저장
+			session.setAttribute("chNum", chNum);
+			
 			String IDStore = request.getParameter("remember");
 			Cookie cookie = new Cookie("userId", userId);
 			
@@ -43,6 +46,7 @@ public class MemberLoginProcessAction implements Action {
 				cookie.setMaxAge(2 * 60);
 				
 				response.addCookie(cookie);
+				cookie.setPath(request.getContextPath() + "/");
 				System.out.println("쿠키확인");
 				
 			}else {
@@ -51,7 +55,7 @@ public class MemberLoginProcessAction implements Action {
 			}
 		
 			forward.setRedirect(true);
-			forward.setPath(request.getContextPath()+"/main");	//로그인 성공 후 id값을 세션으로 들고감
+			forward.setPath(request.getContextPath() + "/main");//로그인 성공 후 id값을 세션으로 들고감
 
 			return forward;
 			

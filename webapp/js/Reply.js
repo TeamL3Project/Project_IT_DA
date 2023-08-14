@@ -22,11 +22,11 @@ function getList(state){
 			let output = "";
 					//ReplyList에서 가져옴
 			if (rdata.replylist.length > 0) {
-				output += '<li class="Reply_order_item ' + red1 + '" >'
-				   		+ '		<a href="javascript:getList(1)" class="Reply_order_button">등록순 </a>'
+				output += '<li class="reply_order_item ' + red1 + '" >'
+				   		+ '		<a href="javascript:getList(1)" class="reply_order_button">등록순 </a>'
 				   		+ '</li>'
-				   		+ '<li class="Reply_order_item ' + red2 + '" >'
-				   		+ '		<a href="javascript:getList(2)" class="Reply_order_button">최신순 </a>'
+				   		+ '<li class="reply_order_item ' + red2 + '" >'
+				   		+ '		<a href="javascript:getList(2)" class="reply_order_button">최신순 </a>'
 				   		+ '</li>';
 				$('.reply_order_list').html(output);		//등록순, 최신순 버튼을 붙여준다
 				
@@ -35,14 +35,9 @@ function getList(state){
 					const lev = this.replylev;
 					let reply_reply = '';
 					
-					if (lev == 1) {
-						reply_reply = ' reply_list_item__reply lev1';
-						
-					}else if (lev == 2) {
-						reply_reply = ' reply_list_item__reply lev2';
-						
-					}
-					
+					if (lev >= 1 && lev <= 10) {
+				        reply_reply = ' reply_list_item__reply lev' + lev;
+				    }
 					
 					output += '<li id="' + this.replyNum + '" class="reply_list_item' + reply_reply + '">'
 							+ '	<div class="reply_nick_area">'
@@ -61,7 +56,7 @@ function getList(state){
 							+ '  <div class="reply_info_box">'
 							+ '		<span class="reply_info_date">' + this.replydate + '</span>';
 					
-					if (lev < 2) {
+					if (lev < 10) {
 						output += ' <a href="javascript:replyform(' + this.replyNum + ','
 						  	   + lev + ',' + this.replyseq + ','
 						  	   + this.replyref + ')" class="reply_info_button">답글쓰기</a>'

@@ -22,7 +22,7 @@ public class countUpService {
 		}
 
 	}
-
+	
 	public static void contentVisitUp(ContentBean content) {
 		dbConntect();
 		String query = "update chboard set boardvisit = " + content.getBoardVisit() + 1 + " where boardnum = " + content.getBoardNum();
