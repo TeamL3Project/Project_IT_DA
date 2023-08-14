@@ -19,7 +19,7 @@
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <head>
     <meta charset="utf-8">
-    <title>카테고리명{chcate_name}:채널명${chname}</title>
+    <title>${param.chcate_name}:${chname}</title>
     <link rel="stylesheet" href="../css/content_list.css">
     <script src = "../js/contetn_list.js"></script>
     <jsp:include page="../main/header.jsp"/>
@@ -37,21 +37,25 @@
                         <a class=back_content href="javascript:history.back();"><img src="../image/content/errow_left.png" width="20"></a>
                     </div>
                 </div>
-                    <h2 class="head_title">jjjj${chName}</h2>
+                    <h2 class="head_title">${chName}</h2>
             </div>
             <hr>
             <div class="content_line">
                 <div class="content_tap_wrap">
-                    <h3 class="content_head"><span>${chcate_name}<em>${listcount }</em></span></h3>
+                    <h3 class="content_head"><span class="content_cate_title">${param.chcate_name}<em>${listcount }</em></span></h3>
                 </div>
+                
+                
                 <div class="category_sorting_wrap">
                     <div class="sorting_wrap">
                         <ul class="sorting_list">
                             <li class="sorting_item" role="radio" aria-checked="true">
-                                <a href class="sorting_link" data-clk="chlh_clist.ftlatest">최신순</a>
+                                <a href="contentlist.co?channelnum=${param.channelnum}&chcate_id=${param.chcate_id}&order=desc" 
+                                   class="sorting_link" data-clk="chlh_clist.ftlatest">최신순</a>
                             </li>
                             <li class="sorting_item" role="radio">
-                                <a href class="sorting_link" data-clk="chlh_clist.ftoldest">과거순</a>
+                                <a href="contentlist.co?channelnum=${param.channelnum}&chcate_id=${param.chcate_id}&order=asc"
+                                 class="sorting_link" data-clk="chlh_clist.ftoldest">과거순</a>
                             </li>
                         </ul>
                     </div>
@@ -66,10 +70,10 @@
                     <li class="content_item">
                            <div class="content_item_line">
 
-                            <a href><img src="${pageContext.request.contextPath}/image/content/${chnum }/${b.boardNum }/${b.thumbNail}" class="content_thumb">
+                            <a href = "${pageContext.request.contextPath}/contents/${param.channelnum }/${b.boardNum}"><img src="${pageContext.request.contextPath}/image/content/<%= request.getParameter("channelnum") %>/${b.boardNum }/${b.thumbNail}" class="content_thumb">
                             </a>
                             <div class="content_text">
-                                <a class="content_text_link" href="content_detail.co?num=${b.boardNum }">
+                                <a class="content_text_link" href="${pageContext.request.contextPath}/contents/${param.channelnum }/${b.boardNum}">
                                 
                                     <strong class="content_title">${b.boardTitle }</strong>
                                     	<c:if test="${b.boardTitle.length()>=20}">

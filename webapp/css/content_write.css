@@ -40,7 +40,6 @@ input[type="text"]{
 
 
 
-
 div {
     display: block;
 }
@@ -119,7 +118,7 @@ input[type="file"] {
 }
 
 .editor_group{
-	margin-top : 20px;
+	margin-top : 50px;
 }
 .board_write_wrap .board_tag_wrap{
 	width : 720px;
@@ -173,10 +172,10 @@ input[type="file"] {
 ul {
     display: block;
     list-style-type: disc;
-    /*margin-block-start: 1em;*/
-    /*margin-block-end: 1em;*/
-    /*margin-inline-start: 0px;*/
-    /*margin-inline-end: 0px;*/
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 li {
@@ -189,7 +188,6 @@ li {
     display: inline-block;
     vertical-align: top;
     margin: 6px 6px 0 0;
-
 }
 
 .viewer_tag_list{
@@ -209,19 +207,4 @@ li {
     border-radius: 16px;
     background-color: #f4f4f4;
     word-break: break-all;
-	border: none;
-}
-.thumbNailArea{
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	margin-top: 20px;
-}
-
-.thumbNailImage{
-	width: 100px;
-	display: none;
-}
-.thumbNailUpload{
-	display: inline-block;
-}
+}	
