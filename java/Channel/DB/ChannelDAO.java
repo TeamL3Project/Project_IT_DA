@@ -335,4 +335,33 @@ public class ChannelDAO {
 
 	    return channelDetails;
 	}
+	
+	public List<ChannelBean> goMyChannelList(String id) {
+		String sql = "SELECT chnum "
+				+ "FROM channellist "
+				+ "WHERE ownerid = ? ";
+		List<ChannelBean> chlist = new ArrayList<>();
+		
+		try (Connection con = ds.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			
+			pstmt.setString(1, id);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					ChannelBean channel = new ChannelBean();
+					channel.setChnum(rs.getInt("CHNUM"));
+					chlist.add(channel);
+				}
+				
+			} catch (NumberFormatException ex) {
+				ex.printStackTrace();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return chlist;
+	}
+	
 }

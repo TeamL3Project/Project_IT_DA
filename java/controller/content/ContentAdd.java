@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import Channel.DB.ChannelBean;
 import Content.DB.ContentBean;
 import Content.DB.ContentDAO;
+import ContentCategory.DB.ContentCategoryBean;
+import Tag.DB.TagBean;
+import Tag.DB.TagDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
 
@@ -23,13 +25,15 @@ public class ContentAdd implements Action {
 		
 		ContentDAO contnetdao = new ContentDAO();
 		ContentBean contentdata = new ContentBean();
-		ChannelBean channeldata = new ChannelBean();
+		ContentCategoryBean catedata = new ContentCategoryBean();
+		TagBean tdata = new TagBean();
+		TagDAO tdao = new TagDAO();
 		ActionForward forward = new ActionForward();
 		
 		String realFolder="";
 		
 		//webapp 아래에 꼭 폴더 생성하세요
-		String saveFolder="boardupload";
+		String saveFolder="contentupload";
 		
 		int fileSize=5*1024*1024;
 		// 업로드할 파일의 최대 사이즈 입니다. 5MB
@@ -48,9 +52,10 @@ public class ContentAdd implements Action {
 					new DefaultFileRenamePolicy());
 			
 			//BoardBean 객체에 글 등록 폼에서 입력받은 정보들을 저장합니다.
+			catedata.setChcate_Name(multi.getParameter("chcate_Name"));
 			contentdata.setBoardTitle(multi.getParameter("boardTitle"));
 			contentdata.setBoardContent(multi.getParameter("boardContent"));
-			contentdata.setBoardContent(multi.getParameter("boardContent"));
+			tdata.setTagname(multi.getParameter("tagname"));
 			
 			// 시스템 상에 업로드된 실제 파일명을 얻어 옵니다.
 			String filename = multi.getFilesystemName("thumbNail");
@@ -59,6 +64,7 @@ public class ContentAdd implements Action {
 			// 글 등록 처리를 위해 DAO의 boardInsert() 메서드를 호출합니다.
 			// 글 등록 폼에서 입력한 정보가 저장되어 있는 boarddata 객체를 전달합니다.
 			result = contnetdao.contentInset(contentdata);
+			result = tdao.tagInsert(tdata);
 			
 			// 글 등록에 실패할 경우 false를 반환합니다.
 			if(result==false) {

@@ -28,59 +28,52 @@
 </head>
 <body>
 <div class="board_write_wrap">
-    <form action="contentwritePreocess.co" method="post" enctype="multipart/form-data">
-        <div class="text_form board_head_wrap">
-            <select class="category_select_from">
-                <option disabled selected>카테고리를 선택하세요</option>
-                <c:forEach var="item" items="${cbctlist}">
-                    <option value="category_title">${item.chcate_Name}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <br>
-        <div class="board_subject_wrap">
-            <input class="text_from board_subject_from" type=text id="" placeholder="제목을 입력하세요">
-        </div>
-        <br>
-        <div class="board_file_wrap">
-            <input type="file" name="file" id="file">
-        </div>
-        <br>
-        <br>
-        <div class="board_content_wrap">
-            <div class="editor_group">
-		<textarea name="content" id="ckeditor" class="board_content_write" placeholder="내용을 입력하세요">
-    </textarea>
-            </div>
+	<div class="board_group">
+	<form action="contentadd.co" method="post" enctype="multipart/form-data">
+	<div class="text_form board_head_wrap">
+	<select class="category_select_from" >
+		<option disabled selected>카테고리를 선택하세요</option>
+		<c:forEach var="item" items="${cbctlist}">
+		<option value="category_title">${item.chcate_Name}</option>
+		</c:forEach>
+	</select>
+	</div>
+		<br>
+		<div class="board_subject_wrap">
+		<input class="text_from board_subject_from" type=text name="boardTitle" placeholder="제목을 입력하세요">
+		</div>
+		<br>
+			<div class="board_file_wrap">
+				<input class="file" type="file" name="thumbNail" id="file">
+		</div>
+		<br>
+		<br>
+	<div class="board_content_wrap">
+	<div class="editor_group">
+	<jsp:include page="CKeditor.jsp"/>
+<!-- 		<textarea id="ckeditor" class="board_content_write" placeholder="내용을 입력하세요">
+    </textarea> -->
+	</div>
 
-            <script>
-                ClassicEditor
-                    .create(document.querySelector('#ckeditor'))
-                    .catch(error => {
-                        console.error(error);
-                    });
-            </script>
-            <!--
-             <p>제목</p>
-             -->
-        </div>
-        <br>
-        <div class="board_tag_wrap">
-            <input class="board_tag_text" type=text id="input_tag" name="input_tag" placeholder="태그를 추가해 보세요(최대 5개)">
-            <button class="tag_add" type="button" onclick="action_add()">추가</button>
-            <div class="add_tag_group">
-                <div class="viewer_tag">
-                    <ul class="viewer_tag_list" id="ul_tag_list">
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="board_button_wrap">
-            <button class="board_write_button">작성취소</button>
-            <button type=submit class="board_write_button">작성완료</button>
-        </div>
-    </form>
+	</div>
+	<br>
+	<div class="board_tag_wrap">
+		<input class="board_tag_text" type=text id="input_tag" name="tagname" placeholder="태그를 추가해 보세요(최대 5개)">
+		<button class="tag_add" id="tag_add" type="button" onclick="action_add(); cnt_tag();  <!-- cnt_tag(); -->">추가</button>
+		 <div class="add_tag_group">
+			<div class="viewer_tag">
+				<ul class="viewer_tag_list" id="ul_tag_list" >
+				</ul>
+			</div>
+ 		</div>
+	</div>
+	<br>
+	<div class="board_button_wrap">
+		<button class="board_write_button" onClick="back();">작성취소</button>
+		<button type=submit class="board_write_button">작성완료</button>
+	</div>	
+	</form>
+	</div>
 </div>
 <jsp:include page="../main/footer.jsp"/>
 
