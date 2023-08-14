@@ -53,7 +53,14 @@ body {
 	font-weight: bold;
 }
 
-.bt-hover:hover, .on, .bt-on {
+.bt-hover:hover {
+	background: #FBD1A7;
+	color: #01273C;
+	opacity: 0.8;
+	border: 1px solid #FBD1A7;
+}
+
+.on, .bt-on {
 	background: #FBD1A7;
 	color: #01273C;
 	opacity: 0.8;
@@ -138,32 +145,95 @@ td>a {
 	max-width: 770px;
 	padding-left: 43px;
 }
-</style>
-<script>
-$(document).ready(function () {
-    checkLoginAndSetButtonState();
-    initializeDefaultContent();
-    setButtonClickEvents();
-    $("#subscribeBtn").on("click", function () {
-        alert("[${channel.chname}] 구독되었습니다.");
-        $(this).removeClass("bt-hover").addClass("bt-on").prop("disabled", true);
-    });
-});
 
-// 로그인 상태에 따른 구독하기 버튼 활성화/비활성화 설정
-function checkLoginAndSetButtonState() {
-    const userId = "${sessionScope.userId}";
-
-    if (!userId) {
-        $("#subscribeBtn").prop("disabled", true);
-    } else {
-        $("#subscribeBtn").prop("disabled", false);
-    }
+.bt-hover2 {
+	background: #ccccc;
+	color: #01273C;
+	opacity: 0.8;
+	border: 1px solid #ccccc;
 }
 
 
+</style>
+<script>
+$(document).ready(function() {
+    setButtonClickEvents();
+    initializeDefaultContent();
+
+       id = '${userId}'
+    	
+    	if(id){ //로그인 한 경우
+    		//구독 유무 확인 select하기
+    		//select * from sub where userid =? and chnum=?
+    
+	    $.ajax({
+			url : "../Channelissub.chl",
+			type: "POST",
+			data: { userId : id, chnum :  '${channel.chnum}' },
+			success: function(data) {
+				if(data==1) {				
+					$("#subscribeBtn").removeClass('bt-hover').addClass('bt-on');
+					//.prop('disabled', true);
+				}
+			}
+		});	
+   	}
+    
+    
+    $(document).on('click', '#subscribeBtn', function() {
+    	//세션 아이디값이 있는지 확인 
+    	//yes인 경우
+    	//ajax로 
+    	//insert into sub (userid, subchnum, subdate) 
+    	//values(${userId},${channel.chnum},timestamp);
+    	// 1 ? : 세션 아이디
+    	// 2 ? : 파라미터 
+    			//channelsub.ch?userId=admin
+    	id = '${userId}'
+    	console.log("test12");
+    		if (id) {
+                if ($("#subscribeBtn").hasClass('bt-on')) { // 이미 구독한 경우 (unsubscribe)
+                    // 구독 삭제
+                    $.ajax({
+                        url: "../Canclechsub.chl",
+                        type: "POST",
+                        data: { userId: id, chnum: '${channel.chnum}' },
+                        success: function(data) {
+                        	
+                            if (data == 1) {
+                                alert("[${channel.chname}] 구독이 취소되었습니다.");
+                                $("#subscribeBtn").removeClass('bt-on').addClass('bt-hover');
+                            } else {
+                                alert("구독 취소 오류입니다.");
+                            }
+                        }
+                    });
+                } else { // 구독하지 않은 경우 (subscribe)
+                    // 구독 추가
+	    		//구독 안한 사람 insert하기
+	    		$.ajax({
+	    			url : "../Channelsub.chl",
+	    			type: "POST",
+	    			data: { userId : id, chnum :  '${channel.chnum}' },
+	    			success: function(data) {
+		    				if(data==1) {
+		    					alert("[${channel.chname}] 구독되었습니다.");
+		        				$("#subscribeBtn").removeClass('bt-hover').addClass('bt-on');
+		
+		    				} else {
+		                        alert("구독 오류입니다.");
+		                    }
+		                }
+		            });
+		        }
+		    } else {
+		        alert("로그인 후 이용하세요.");
+		    }
+		});
+	});
+
 function setButtonClickEvents() {
-    $(".bt-item").click(function() {
+    $(".category .bt-item").click(function() {
         $(".bt-item.on").removeClass('on');
         $(this).addClass('on').css("box-shadow", "none");
         if ($(this).text() === "인기글") {
@@ -218,13 +288,13 @@ function setInnerHTML2() {
 	       <table class="table table-bordered" style="margin: 0 8;">
 		        <tr>
 		          <td>
-		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${chCategoryTotalData.chnum}/content/${chCategoryTotalData}">전체 </a>
+		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=0">전체</a>
 		          </td>
 		        </tr>
 				<c:forEach var="c" items="${chcategory}">
 				  <tr>
 		          <td>
-		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${channelCategoryData.categoryName}&chcate_id=${channelCategoryData.categoryId}">
+		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${c.chcate_Name}&chcate_id=${c.chcate_id}">
 		          ${c.chcate_Name}
 		      	  </a>
 		          </td>
@@ -234,14 +304,12 @@ function setInnerHTML2() {
 	    </div>`;
 }
 
-// 초기 내용을 "인기글" 섹션으로 설정하는 함수
 function initializeDefaultContent() {
-	setInnerHTML1();
+    setInnerHTML1();
     // "인기글" 버튼을 활성화 상태로 설정
     const homeButton = document.querySelector('.bt-item[value="인기글"]');
     homeButton.classList.add('on');
 }
-
 </script>
 </head>
 <body>
@@ -276,19 +344,11 @@ function initializeDefaultContent() {
 			<br>
 			<div class="sub_alram_btn"
 				style="padding: 30px; margin-top: -38px; padding-left: 15px;">
-				<c:choose>
-					<c:when test="${empty sessionScope.userId}">
-						<!-- 로그인하지 않은 사용자에게는 버튼을 비활성화 -->
-						<button class="btn bt-item bt-hover" id="subscribeBtn" disabled>구독하기</button>
-					</c:when>
-					<c:otherwise>
-						<!-- 로그인한 사용자에게만 활성화 버튼을 표시 -->
-						<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
-					</c:otherwise>
-				</c:choose>
+				<button class="btn bt-item bt-hover2" id="subscribeBtn">구독하기</button>
 				<img src="../image/channel/alram_white.png"
 					style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
 			</div>
+
 
 			<br> <br>
 		</div>
@@ -296,6 +356,7 @@ function initializeDefaultContent() {
 		<br>
 
 		<div class="category" style="padding: 0 235 display: flex;">
+
 			<input class="btn bt-item bt-hover" type='button' value='인기글'
 				onclick='setInnerHTML1()' /> <input class="btn bt-item bt-hover"
 				type='button' value='카테고리' onclick='setInnerHTML2()' />

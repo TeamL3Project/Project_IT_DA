@@ -13,9 +13,9 @@
 			$("#userId").val(userId);				//아이디 입력란에 자동으로 id를 채워줌
 			$("#remember").prop('checked',true);	//자동으로 아이디 기억하기를 체크해줌
 			// 회원가입시 업로드한 프로필사진 경로
-			const imgsrc = '${pageContext.request.contextPath}/image/Member/' + userId + '/0/' + dateService.toDay() + '/';
+			//const imgsrc = '${pageContext.request.contextPath}/image/Member/' + userId + '/0/' + dateService.toDay() + '/';
 			//프로필 사진 출력
-			$("#profile_img").attr("src", imgsrc);
+			//$("#profile_img").attr("src", imgsrc);
 		}
 		
 		

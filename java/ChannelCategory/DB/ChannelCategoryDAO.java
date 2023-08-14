@@ -38,56 +38,38 @@ public class ChannelCategoryDAO {
 		return ChannelCategoryList;
 	}
 
-	public ChannelCategoryBean getchcatedata(int chateId, int chNum) {
-		ChannelCategoryBean chcatedata = new ChannelCategoryBean();
-
-		String sql = "SELECT * FROM chboardcategory WHERE chcate_id = ? AND chNum = ?";
-
-		try (Connection con = dbService.ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
-
-			pstmt.setInt(1, chateId);
-			pstmt.setInt(2, chNum);
-
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					chcatedata.setCategoryId(rs.getInt("CATE_ID"));
-					chcatedata.setChNum(rs.getInt("CHNUM"));
-					chcatedata.setCategoryName(rs.getString("CHCATE_NAME"));
-
-				}
-			}
-		} catch (SQLException se) {
-			se.printStackTrace();
-		} catch (Exception e) {
-			System.out.println("getChcateData() 에러: " + e);
-		}
-		return chcatedata;
-	}
-
 	public ChannelCategoryBean getchTotaldata(int chNum) {
-		ChannelCategoryBean chcatedata = new ChannelCategoryBean();
+	    ChannelCategoryBean chcatedata = new ChannelCategoryBean();
+	   
+	    String sql;
+	    if (chNum == 0) {
+	        sql = "select * from CHBOARDCATEGORY order by chcate_id asc";
+	    } else {
+	        sql = "select * from CHBOARDCATEGORY where chNum = ? order by chcate_id asc";
+	    }
+	    
+	    try (Connection con = dbService.ds.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql);) {
 
-		String sql = "select * from chboardcategory where chNum = ? order by chcate_id asc";
+	        if (chNum != 0) {
+	            pstmt.setInt(1, chNum);
+	        }
 
-		try (Connection con = dbService.ds.getConnection(); 
-			PreparedStatement pstmt = con.prepareStatement(sql);) {
-
-			pstmt.setInt(1, chNum);
-
-
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					chcatedata.setCategoryId(rs.getInt("CATE_ID"));
-					chcatedata.setChNum(rs.getInt("CHNUM"));
-					chcatedata.setCategoryName(rs.getString("CHCATE_NAME"));
-
-				}
-			}
-		} catch (SQLException se) {
-			se.printStackTrace();
-		} catch (Exception e) {
-			System.out.println("getChcateData() 에러: " + e);
-		}
-		return chcatedata;
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                chcatedata.setCategoryId(rs.getInt("CHCATE_ID"));
+	                chcatedata.setChNum(rs.getInt("CHNUM"));
+	                chcatedata.setCategoryName(rs.getString("CHATE_NAME"));
+	            }
+	        }
+	    } catch (SQLException se) {
+	        se.printStackTrace();
+	    } catch (Exception e) {
+	        System.out.println("getchTotaldata() 에러: " + e);
+	    }
+	    
+	    return chcatedata;
 	}
+
+
 }
