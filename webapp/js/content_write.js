@@ -1,3 +1,4 @@
+
 function cnt_tag() {
     if($(".board_tag_text").val()==""){
         return;
@@ -58,8 +59,3 @@ $(document).ready(function () {
 
 })
 
-
-
-
-
-	 

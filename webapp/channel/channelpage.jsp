@@ -282,26 +282,26 @@ function setInnerHTML1() {
 
 
 function setInnerHTML2() {
-		const element = document.getElementById('my_div');
-		element.innerHTML = `
-	    <div class="category-content">
-	       <table class="table table-bordered" style="margin: 0 8;">
-		        <tr>
-		          <td>
-		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=0">전체</a>
-		          </td>
-		        </tr>
-				<c:forEach var="c" items="${chcategory}">
-				  <tr>
-		          <td>
-		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${c.chcate_Name}&chcate_id=${c.chcate_id}">
-		          ${c.chcate_Name}
-		      	  </a>
-		          </td>
-		        </tr>
-				</c:forEach>
-	       </table>
-	    </div>`;
+	const element = document.getElementById('my_div');
+	element.innerHTML = `
+    <div class="category-content">
+       <table class="table table-bordered" style="margin: 0 8;">
+	        <tr>
+	          <td>
+	          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_id=0">전체 </a>
+	          </td>
+	        </tr>
+			<c:forEach var="c" items="${chcategory}">
+			  <tr>
+	          <td>
+	          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${c.chcate_Name}&chcate_id=${c.chcate_id}">
+	          ${c.chcate_Name}
+	      	  </a>
+	          </td>
+	        </tr>
+			</c:forEach>
+       </table>
+    </div>`;
 }
 
 function initializeDefaultContent() {

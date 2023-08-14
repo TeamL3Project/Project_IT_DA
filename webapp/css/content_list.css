@@ -5,7 +5,6 @@ html, body {
 }
 
 html {
-	font-size: 10px;
 	line-height: 10px;
 	word-break: keep-all;
 	overflow-wrap: break-word;
@@ -214,11 +213,12 @@ background-color: #fff;
 }
 
 .content_head{
-	font-size : 2em;
+	font-size : 25px;
 	padding-top: 15px;
 padding-right: 20px;
 
 }
+
 
 em{
 	color : #FBD1A7;

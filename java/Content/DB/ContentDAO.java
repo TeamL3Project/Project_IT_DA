@@ -472,5 +472,84 @@ public class ContentDAO {
 		
 		return -1;
 	}
+	
+	public List<ContentBean> getAllchcatedata() {
+		String query = "SELECT * "
+				+ "FROM chboard "
+				+ "wh"
+				+ "order by boardDate asc";
+		List<ContentBean> contentList = new ArrayList<>();
+
+		try (Connection conn = ds.getConnection(); 
+			PreparedStatement pst = conn.prepareStatement(query);) {
+
+
+			try (ResultSet rs = pst.executeQuery()) {
+
+				while (rs.next()) {
+					ContentBean co = new ContentBean();
+					co.setBoardNum(rs.getInt("boardnum"));
+					co.setChNum(rs.getInt("ChNum"));
+					co.setWriter(rs.getString("Writer"));
+					co.setBoardTitle(rs.getString("BoardTitle"));
+					co.setBoardContent(rs.getString("BoardContent"));
+					co.setBoardHeart(rs.getInt("boardHeart"));
+					co.setChCate_id(rs.getInt("chCate_id"));
+					co.setBoardOpen(rs.getString("boardOpen"));
+					co.setBoardNore(rs.getString("boardNore"));
+					co.setBoardDate(rs.getTimestamp("boardDate"));
+					co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
+					co.setThumbNail(rs.getString("ThumbNail"));
+					contentList.add(co);
+
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return contentList;
+	}
+
+	public List<ContentBean> getAllchcatedata(int channelnum, String order) {
+		String query = "SELECT * "
+				+ "FROM chboard "
+				+ "WHERE chnum = ? "
+				+ "order by boardDate " + order;
+		List<ContentBean> contentList = new ArrayList<>();
+
+		 System.out.println(query);
+		
+		try (Connection conn = ds.getConnection(); 
+			PreparedStatement pst = conn.prepareStatement(query);) {
+
+			pst.setInt(1, channelnum);
+
+			try (ResultSet rs = pst.executeQuery()) {
+
+				while (rs.next()) {
+					ContentBean co = new ContentBean();
+					co.setBoardNum(rs.getInt("boardnum"));
+					co.setChNum(rs.getInt("ChNum"));
+					co.setWriter(rs.getString("Writer"));
+					co.setBoardTitle(rs.getString("BoardTitle"));
+					co.setBoardContent(rs.getString("BoardContent"));
+					co.setBoardHeart(rs.getInt("boardHeart"));
+					co.setChCate_id(rs.getInt("chCate_id"));
+					co.setBoardOpen(rs.getString("boardOpen"));
+					co.setBoardNore(rs.getString("boardNore"));
+					co.setBoardDate(rs.getTimestamp("boardDate"));
+					co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
+					co.setThumbNail(rs.getString("ThumbNail"));
+					contentList.add(co);
+
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return contentList;
+	}
 }
 

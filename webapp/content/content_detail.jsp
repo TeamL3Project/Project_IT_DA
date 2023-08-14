@@ -1,6 +1,8 @@
  <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,12 +25,11 @@
 <title>${co.boardTitle }</title>
 </head>
 <body>
-<input type="hidden" id="LoginId" value="${userId}" name="LoginId"><%-- Reply.js에서 사용하기 위해 추가 --%>
 <div class="board_detail_wrap">
 	<div class="board_detail_all_group">
 	<div class="board_detail_title_group">
 	<div class="board_detail_category">
-		<a href class="viewer_category_link">${ co.chcate_name}</a>
+		<a href class="viewer_category_link">${co.chcate_name}</a>
 	</div>
 	<div class="board_detail_title_inline">
 		<span class="board_detail_title">${co.boardTitle }</span>
