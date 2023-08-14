@@ -7,7 +7,6 @@
 			
 		})
 		
-		
 		const userId = '${userId}';
 		
 		if (userId) {								//id값이 있는 경우
@@ -18,6 +17,7 @@
 			//프로필 사진 출력
 			$("#profile_img").attr("src", imgsrc);
 		}
+		
 		
 	});
 </script>
@@ -42,12 +42,12 @@
 	%>
 	
 		<!-- 로그인이 되어 있는 경우 프로필사진 출력 -->
-				<div class="dropdown">
-			<button class="dropbtn"><img id="profile_img" src="" style="width: 30px; height: auto;"></button>
-			<div class="dropdown-content">
-				<a href="myPage.me">마이페이지</a>
-				<a href="logout.me">로그아웃</a>
-			</div>
+		<div class="dropdown">
+		  <button class="dropbtn"><img src="${pageContext.request.contextPath}/image/common/profile.png" style="width: 30px; height: auto;"></button>
+		  <div class="dropdown-content">
+		    <a href="${pageContext.request.contextPath}/myPage.me">마이페이지</a>
+		    <a href="${pageContext.request.contextPath}/logout.me">로그아웃</a>
+		  </div>
 		</div>
 		
 	<%
@@ -71,21 +71,21 @@
 					
 					<div class="modal-body">
 				    	<p><br>
-				    		<input type="text" name="userId" style="width:100%; height: 40px;
+				    		<input type="text" name="userId" id="userId" style="width:100%; height: 40px;
 				    			border: none; background: rgb(204, 204, 204);
 				    			border-bottom: 1px solid rgb(1, 39, 60) !important;
 				    			outline: none;"
 				    			placeholder="아이디"><br>
 				    	</p>
 						<p><br>
-							<input type="password" name="userPw" style="width:100%; height: 40px;
+							<input type="password" name="userPw" id="userPw" style="width:100%; height: 40px;
 				    			border: none; background: rgb(204, 204, 204);
 				    			border-bottom: 1px solid rgb(1, 39, 60) !important;
 				    			outline: none;"
 				    			placeholder="비밀번호">
 						</p>
 						<div id="rememberbox">
-						<label>
+						<label for="remember">
           					<input type="checkbox" name="remember" id="remember" value="store">아이디 기억하기
         				</label>
 						</div>

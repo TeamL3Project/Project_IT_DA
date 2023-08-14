@@ -16,6 +16,7 @@ public class ReplyReply implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		ReplyDAO redao = new ReplyDAO();
 		Reply re = new Reply();
 		

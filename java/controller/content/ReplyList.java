@@ -20,22 +20,23 @@ public class ReplyList implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+															throws ServletException, IOException {
 		
-		ReplyDAO cdao = new ReplyDAO();
+		ReplyDAO redao = new ReplyDAO();
 		
 		//{"replyNum" : $("#Reply_board_num").val(), state:state}
-		int replyNum = Integer.parseInt(request.getParameter("replyNum"));
+		int boardNum = Integer.parseInt(request.getParameter("boardNum"));
 		int state = Integer.parseInt(request.getParameter("state"));
 		
-		int listcount = cdao.getListCount(replyNum);
-		JsonArray jarray = cdao.getReplyList(replyNum, state);
+		int listcount = redao.getListCount(boardNum);
+		
+		JsonArray jarray = redao.getReplyList(boardNum, state);
 		
 		JsonObject object = new JsonObject();
 		object.addProperty("listcount", listcount);
 		
 		JsonElement JE = new Gson().toJsonTree(jarray);
-		object.add("boardlist", JE);
+		object.add("replylist", JE);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
