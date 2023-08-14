@@ -181,21 +181,18 @@ td {
 	</div>
 	<br>
 	<br>
-	<script>
-	document.addEventListener("DOMContentLoaded", function() {
-		  $(".bt-item").click(function() {
-		    $(".bt-item.on").removeClass('on');
-		    console.log('test');
-		    $(this).addClass('on').css("box-shadow", "none");
-		  });
-
-		  const subscribeBtn = document.getElementById("subscribeBtn");
-
-		  subscribeBtn.addEventListener("click", () => {
-		    alert("[${channel.chname}] 구독되었습니다.");
-		  });
-	});
-</script>
 	<jsp:include page="../main/footer.jsp" />
 </body>
+<script>
+$(document).ready(function() {
+  $(".bt-item").click(function() {
+    $(".bt-item.on").removeClass('on');
+    $(this).addClass('on').css("box-shadow", "none");
+  });
+
+  $("#subscribeBtn").click(function() {
+    alert("[${channeldata.chname}] 구독되었습니다.");
+  });
+});
+</script>
 </html>

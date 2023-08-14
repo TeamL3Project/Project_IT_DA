@@ -1,21 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
- 	<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-	<script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<html lang="ko">
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="${pageContext.request.contextPath}/css/common.css"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<html lang="ko">
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <title>channel Page</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -102,19 +103,19 @@ td>a {
 .home_img {
 	height: 50%;
 	width: 100%;
-	margin-top: 10;
-	border-radius: 10px;
+	border-radius: 20px;
+	padding: 15;
 }
 
-.col-md-4 {
+.colmd4 {
 	border: 1px solid #01273C;
-	width: 192px;
+	width: 210px;
+	display: inline-block;
 	height: 290px;
 	margin-bottom: 25px;
 	margin-right: 25px;
 	border-radius: 10px;
 	overflow: hidden;
-	display: inline-block;
 }
 
 .background-wrap {
@@ -125,7 +126,7 @@ td>a {
 .row {
 	display: flex;
 	flex-wrap: nowrap;
-	margin-left: -50;
+	margin-right: -50;
 }
 
 .card-body {
@@ -139,14 +140,27 @@ td>a {
 }
 </style>
 <script>
-$(document).ready(function() {
+$(document).ready(function () {
+    checkLoginAndSetButtonState();
     initializeDefaultContent();
     setButtonClickEvents();
-    $("#subscribeBtn").on("click", function() {
+    $("#subscribeBtn").on("click", function () {
         alert("[${channel.chname}] 구독되었습니다.");
-        $(this).removeClass('bt-hover').addClass('bt-on').prop('disabled', true);
+        $(this).removeClass("bt-hover").addClass("bt-on").prop("disabled", true);
     });
 });
+
+// 로그인 상태에 따른 구독하기 버튼 활성화/비활성화 설정
+function checkLoginAndSetButtonState() {
+    const userId = "${sessionScope.userId}";
+
+    if (!userId) {
+        $("#subscribeBtn").prop("disabled", true);
+    } else {
+        $("#subscribeBtn").prop("disabled", false);
+    }
+}
+
 
 function setButtonClickEvents() {
     $(".bt-item").click(function() {
@@ -167,8 +181,8 @@ function setInnerHTML1() {
         <div class="background-wrap">
             <div class="row">
                 <c:forEach var="c" items="${channelhome}" varStatus="loop">
-                <a href="BoardDetailAction.bo?num=${b.board_num}">
-                    <div class="col-md-4">
+                    <div class="colmd4">
+                    <a href="${pageContext.request.contextPath}/contents/${channel.chnum}/${c.boardNum}">
                         <img class="home_img" src="../image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}">
                         <div class="card-body card-body-font">
                             <h5 class="card-title">
@@ -185,11 +199,11 @@ function setInnerHTML1() {
                             </p>
                         </div>
                     </div>
-                    </a>
                     <c:if test="${(loop.index + 1) % 3 == 0 || loop.last}">
                         </div>
                         <div class="row">
                     </c:if> 
+                </a>
                 </c:forEach>
             </div>
         </div>`;
@@ -203,12 +217,18 @@ function setInnerHTML2() {
 	    <div class="category-content">
 	       <table class="table table-bordered" style="margin: 0 8;">
 		        <tr>
-		          <td><a> 전체 </a></td>
+		          <td>
+		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${chCategoryTotalData.chnum}/content/${chCategoryTotalData}">전체 </a>
+		          </td>
 		        </tr>
 				<c:forEach var="c" items="${chcategory}">
-					<tr>
-						<td>${c.chcate_Name}</td>
-					</tr>
+				  <tr>
+		          <td>
+		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${channelCategoryData.categoryName}&chcate_id=${channelCategoryData.categoryId}">
+		          ${c.chcate_Name}
+		      	  </a>
+		          </td>
+		        </tr>
 				</c:forEach>
 	       </table>
 	    </div>`;
@@ -231,12 +251,11 @@ function initializeDefaultContent() {
 			<div class="head"
 				style="display: flex; justify-content: space-between;">
 				<h3 style="margin-left: 25;">[${channel.chname}]</h3>
-				<form action='${pageContext.request.contextPath}/content/contentwrite.co' method="get">
-				<input type="hidden" name="chnum" value="${channel.chnum}">
-				<button class="btn bt-item bt-hover" style="margin: 9;">글쓰기</button>
-				</form>
+				<a
+					href="${pageContext.request.contextPath}/content/contentwrite.co?chnum=${channel.chnum}">
+					<button class="btn bt-item bt-hover" style="margin: 9;">글쓰기</button>
+				</a>
 			</div>
-
 			<div id="profile1" style="width: 735px;">
 				<div id="profile"
 					style="padding: 20; border-radius: 2px; border: 1.8px solid #01273c; float: left;">
@@ -257,10 +276,20 @@ function initializeDefaultContent() {
 			<br>
 			<div class="sub_alram_btn"
 				style="padding: 30px; margin-top: -38px; padding-left: 15px;">
-				<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
+				<c:choose>
+					<c:when test="${empty sessionScope.userId}">
+						<!-- 로그인하지 않은 사용자에게는 버튼을 비활성화 -->
+						<button class="btn bt-item bt-hover" id="subscribeBtn" disabled>구독하기</button>
+					</c:when>
+					<c:otherwise>
+						<!-- 로그인한 사용자에게만 활성화 버튼을 표시 -->
+						<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
+					</c:otherwise>
+				</c:choose>
 				<img src="../image/channel/alram_white.png"
 					style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
 			</div>
+
 			<br> <br>
 		</div>
 		<hr style="border: 1px bold silver;" width="100%">
@@ -285,7 +314,8 @@ function initializeDefaultContent() {
 			<table class="table table-bordered">
 				<c:forEach var="c" items="${channeldetail}">
 					<tr>
-						<td><a href="https://www.naver.com/" class='test'>${c.boardTitle}</a></td>
+						<td><a
+							href="${pageContext.request.contextPath}/contents/${channel.chnum}/${c.boardNum}">${c.boardTitle}</a></td>
 					</tr>
 				</c:forEach>
 			</table>

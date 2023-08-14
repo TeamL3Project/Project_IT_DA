@@ -1,6 +1,8 @@
 select * from CHANNELLIST;
 select * from CHBOARD;
 
+select * from ITDA_USER;
+
 SELECT * FROM chboard
 ORDER BY boardNum DESC;
 
@@ -92,3 +94,12 @@ select *
 from chboard
 where boardNum = 21;
 
+
+select * from chboardcategory;
+
+select * from chboardcategory where chNum = 21
+order by chcate_id asc;
+
+select * from chboard where chNum = 21 order by chcate_id asc;
+
+select * from chboardcategory where chNum = 21 order by chcate_id asc;
