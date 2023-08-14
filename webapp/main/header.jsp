@@ -7,17 +7,17 @@
 			
 		})
 		
-		const userId = '${userId}';
-		
-		if (userId) {								//id값이 있는 경우
-			$("#userId").val(userId);				//아이디 입력란에 자동으로 id를 채워줌
-			$("#remember").prop('checked',true);	//자동으로 아이디 기억하기를 체크해줌
-			// 회원가입시 업로드한 프로필사진 경로
-			const imgsrc = '${pageContext.request.contextPath}/image/Member/' + userId + '/0/' + dateService.toDay() + '/';
-			//프로필 사진 출력
-			$("#profile_img").attr("src", imgsrc);
-		}
-		
+		   const userId = '${userId}';
+    
+    if (userId) { // ID 값이 있는 경우
+        $("#userId").val(userId); // ID 필드에 자동으로 ID를 채웁니다.
+        $("#remember").prop('checked', true); // ID 자동 기억을 선택합니다.
+        
+        // 회원가입 시 업로드한 프로필 사진의 경로
+        const imgsrc = '${pageContext.request.contextPath}/image/Member/' + userId + '/0/' + util.dateService.toDay() + '/';
+        // 프로필 사진을 표시합니다.
+        $("#profile_img").attr("src", imgsrc);
+    }
 		
 	});
 </script>
@@ -37,18 +37,22 @@
 		</li>
 		
 	<%
-		String userId = (String) session.getAttribute("userId");
-		if (userId != null && !userId.equals("")) {
+	String userId = (String) session.getAttribute("userId");
+    String userProfilePath = (String) session.getAttribute("userProfilePath"); // 프로필 사진 경로 가져오기
+
+    if (userId != null && !userId.equals("")) {
 	%>
 	
-		<!-- 로그인이 되어 있는 경우 프로필사진 출력 -->
-		<div class="dropdown">
-		  <button class="dropbtn"><img src="${pageContext.request.contextPath}/image/common/profile.png" style="width: 30px; height: auto;"></button>
-		  <div class="dropdown-content">
-		    <a href="${pageContext.request.contextPath}/myPage.me">마이페이지</a>
-		    <a href="${pageContext.request.contextPath}/logout.me">로그아웃</a>
-		  </div>
-		</div>
+		<!-- 로그인한 경우 프로필 사진을 표시합니다. -->
+	<div class="dropdown">
+	    <button class="dropbtn">
+	        <img src="${userProfilePath}" style="width: 30px; height: auto;">
+	    </button>
+	    <div class="dropdown-content">
+	        <a href="${pageContext.request.contextPath}/myPage.me">마이 페이지</a>
+	        <a href="${pageContext.request.contextPath}/logout.me">로그아웃</a>
+	    </div>
+	</div>
 		
 	<%
 		}else {

@@ -33,35 +33,43 @@ public class MemberJoinProcessAction implements Action {
 		String userPw = request.getParameter("password");
 		String userName = request.getParameter("name");
 		
-		ActionForward forward = new ActionForward();
 
-		HttpSession session = request.getSession();
-		userId = (String) session.getAttribute("userId");
+		  ActionForward forward = new ActionForward();
 
-		String saveFolder = "image/Member";
-		int fileSize = 5 * 1024 * 1024;
+		    HttpSession session = request.getSession();
+		    userId = (String) session.getAttribute("userId");
 
-		ServletContext sc = request.getServletContext();
-		String realFolder = sc.getRealPath(saveFolder);
+		    String saveFolder = "image/Member";
+		    int fileSize = 5 * 1024 * 1024;
 
-		String userFolder = realFolder + File.separator + userId;
-		folderService.createFolder(userFolder);
+		    ServletContext sc = request.getServletContext();
+		    String realFolder = sc.getRealPath(saveFolder);
 
-		int channelNum = Integer.parseInt(request.getParameter("channelNum"));
-		realFolder += File.separator + channelNum;
-		folderService.createFolder(realFolder);
+		    String userFolder = realFolder + File.separator + userId;
+		    folderService.createFolder(userFolder);
 
-		// dateService 객체를 생성하여 현재 날짜 정보 문자열을 반환하는 
-		// toDay() 메소드를 호출하여 반환된 값을 realFolder 변수에 추가
-		dateService dateService = new dateService();  
-		realFolder += File.separator + util.dateService.toDay(); 
+		    
+		    realFolder += File.separator + channelNum;
+		    folderService.createFolder(realFolder);
 
-		// 이전과 같이 util 대신 dateService로 수정합니다.
-		folderService.createFolder(realFolder);
+		    // dateService 객체를 생성하여 현재 날짜 정보 문자열을 반환하는 
+		    // toDay() 메소드를 호출하여 반환된 값을 realFolder 변수에 추가
+		    dateService dateService = new dateService();
+		    realFolder += File.separator + util.dateService.toDay();
 
-		MultipartRequest multi = new MultipartRequest(request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
-        
-        
+		    // 이전과 같이 util 대신 dateService로 수정합니다.
+		    folderService.createFolder(realFolder);
+
+		    MultipartRequest multi = new MultipartRequest(request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
+
+		    // 프로필 사진 업로드 및 경로 처리
+		    Part profilePart = request.getPart("profile"); // 프로필 사진 Part 가져오기
+		    String userProfileFileName = getFileName(profilePart); // 업로드된 파일 이름 가져오기
+		    String userProfilePath = realFolder + File.separator + userProfileFileName; // 프로필 사진 파일 경로 생성
+
+		    // 프로필 사진 경로를 세션에 저장
+		    session.setAttribute("userProfilePath", userProfilePath);
+
 
 		// 날짜 문자열 확인 및 파싱
 		String dateOfBirthStr = request.getParameter("date_birth");
@@ -117,6 +125,7 @@ public class MemberJoinProcessAction implements Action {
 		if (result == 0) { // DB삽입 실패
 			System.out.println("회원가입 실패");
 
+			
 			forward.setRedirect(true);
 
 			request.setAttribute("message", "회원가입 실패");
