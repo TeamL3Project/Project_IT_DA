@@ -69,7 +69,7 @@ function getList(state){
 														
 					output += '  </div>'
 					
-					if ($("#LoginId").val() == this.replyWriter){		//글 작성자와 로그인한 사람이 일치하는지
+					if ($("#LoginId").val() == this.replywriter){		//글 작성자와 로그인한 사람이 일치하는지
 						output += '<div class="reply_tool">'
 							    + '		<div title="더보기" class="reply_tool_button">'
 							    + '     	<div>&#46;&#46;&#46;</div>' 
@@ -106,38 +106,36 @@ function getList(state){
 }//function(getList) end
 
 
-function updateForm(replyNum){
+function updateForm(num){
 	$('.reply_tool').hide();
 	
 	$('.LayerMore').hide();
 	
-	let $replyNum = $('#'+replyNum);
-	
-	const replycontent = $replyNum.find('.text_reply').text();
-	const selector = '#'+replyNum + '> .reply_nick_area'
-	
+	let $num = $('#'+num);
+	const replycontent = $num.find('.text_reply').text();
+	const selector = '#'+num + '> .reply_nick_area'
 	$(selector).hide();
 	
-	$replyNum.append($('.reply_list+.reply_write').clone());
-	$replyNum.find('textarea').val(replycontent);
-	$replyNum.find('.btn-register').attr('data-id', replyNum).addClass('update').text('수정완료');
-	$replyNum.find('.btn-cancel').css('display', 'block');
+	$num.append($('.reply_list+.reply_write').clone());
+	$num.find('textarea').val(replycontent);
+	$num.find('.btn-register').attr('data-id', num).addClass('update').text('수정완료');
+	$num.find('.btn-cancel').css('display', 'block');
 	const count = replycontent.length;
-	$replyNum.find('.reply_write_area_count').text(count+"/200");
+	$num.find('.reply_write_area_count').text(count+"/200");
 	
 }//fucntion(updateForm) end
 
 
 
-function del(replyNum){
+function del(num){
 	if (!confirm('정말 삭제하시겠습니까?')){
-		$('#reply_list_item_layer' + replyNum).hide();
+		$('#reply_list_item_layer' + num).hide();
 		return;
 	}
 
 	$.ajax({
 		url : contextPath + '/ReplyDelete.co',
-		data : {replyNum : replyNum},
+		data : {num : num},
 		success : function(rdata) {
 			if (rdata == 1) {
 				getList(option);

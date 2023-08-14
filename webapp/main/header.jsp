@@ -7,13 +7,13 @@
 			
 		})
 		
-		
 		const userId = '${userId}';
 		
 		if (userId) {								//id값이 있는 경우
 			$("#userId").val(userId);				//아이디 입력란에 자동으로 id를 채워줌
 			$("#remember").prop('checked',true);	//자동으로 아이디 기억하기를 체크해줌
 		}
+		
 		
 	});
 </script>
@@ -41,8 +41,8 @@
 		<div class="dropdown">
 		  <button class="dropbtn"><img src="${pageContext.request.contextPath}/image/common/profile.png" style="width: 30px; height: auto;"></button>
 		  <div class="dropdown-content">
-		    <a href="myPage.me">마이페이지</a>
-		    <a href="logout.me">로그아웃</a>
+		    <a href="${pageContext.request.contextPath}/myPage.me">마이페이지</a>
+		    <a href="${pageContext.request.contextPath}/logout.me">로그아웃</a>
 		  </div>
 		</div>
 		
@@ -67,21 +67,21 @@
 					
 					<div class="modal-body">
 				    	<p><br>
-				    		<input type="text" name="userId" style="width:100%; height: 40px;
+				    		<input type="text" name="userId" id="userId" style="width:100%; height: 40px;
 				    			border: none; background: rgb(204, 204, 204);
 				    			border-bottom: 1px solid rgb(1, 39, 60) !important;
 				    			outline: none;"
 				    			placeholder="아이디"><br>
 				    	</p>
 						<p><br>
-							<input type="password" name="userPw" style="width:100%; height: 40px;
+							<input type="password" name="userPw" id="userPw" style="width:100%; height: 40px;
 				    			border: none; background: rgb(204, 204, 204);
 				    			border-bottom: 1px solid rgb(1, 39, 60) !important;
 				    			outline: none;"
 				    			placeholder="비밀번호">
 						</p>
 						<div id="rememberbox">
-						<label>
+						<label for="remember">
           					<input type="checkbox" name="remember" id="remember" value="store">아이디 기억하기
         				</label>
 						</div>

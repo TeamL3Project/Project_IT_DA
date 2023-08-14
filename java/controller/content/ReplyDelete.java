@@ -17,11 +17,11 @@ public class ReplyDelete implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		int num = Integer.parseInt(request.getParameter("num"));
+		int replyNum = Integer.parseInt(request.getParameter("num"));
 		
 		ReplyDAO redao = new ReplyDAO();
 		
-		int result = redao.replyDelete(num);
+		int result = redao.replyDelete(replyNum);
 		
 		PrintWriter out = response.getWriter();
 		

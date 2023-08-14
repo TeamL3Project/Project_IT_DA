@@ -98,7 +98,7 @@ public class ReplyDAO {
 
 	public int replyDelete(int num) {					//댓글 삭제
 		String sql = "delete boardreply "
-				   + "where boardNum = ?";
+				   + "where replynum = ?";
 	
 		try (Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
@@ -145,7 +145,7 @@ public class ReplyDAO {
 	
 	public int replyUpdate(Reply re) {					//댓글 수정
 		String sql = "update boardreply "
-				   + "set replycontent = ? "
+				   + "set replycontent = ?, replyupdate = sysdate "
 				   + "where replynum = ?";
 		
 		try(Connection con = ds.getConnection();

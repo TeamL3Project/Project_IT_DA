@@ -118,7 +118,7 @@
 						</ul>
 					</div>
 				</div>	<%-- comment_head end --%>
-				<ul class="reply_list">	<%-- 댓글 목록 --%>
+				<ul class="reply_list" style="margin-left: 200px; margin-right: 200px;">	<%-- 댓글 목록 --%>
 				</ul>
 				<div class="reply_write">
 					<div class="reply_write_area">
