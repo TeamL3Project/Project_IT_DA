@@ -106,8 +106,6 @@
 		</div>
 	</div>
 </div>
-	<div class="reply_warp">
-		<div class="reply_group">
 			<div class="reply_area">
 				<div class="reply_head">
 					<h5 class="reply_title">
@@ -133,8 +131,6 @@
 					</div>
 				</div>	<%-- reply_write end --%>
 			</div>
-		</div>
-	</div>
 </div>
 <jsp:include page="../main/footer.jsp" />
 </body>
