@@ -103,19 +103,19 @@ td>a {
 .home_img {
 	height: 50%;
 	width: 100%;
-	margin-top: 10;
-	border-radius: 10px;
+	border-radius: 20px;
+	padding: 15;
 }
 
-.col-md-4 {
+.colmd4 {
 	border: 1px solid #01273C;
-	width: 192px;
+	width: 210px;
+	display: inline-block;
 	height: 290px;
 	margin-bottom: 25px;
 	margin-right: 25px;
 	border-radius: 10px;
 	overflow: hidden;
-	display: inline-block;
 }
 
 .background-wrap {
@@ -126,7 +126,7 @@ td>a {
 .row {
 	display: flex;
 	flex-wrap: nowrap;
-	margin-left: -50;
+	margin-right: -50;
 }
 
 .card-body {
@@ -140,14 +140,27 @@ td>a {
 }
 </style>
 <script>
-$(document).ready(function() {
+$(document).ready(function () {
+    checkLoginAndSetButtonState();
     initializeDefaultContent();
     setButtonClickEvents();
-    $("#subscribeBtn").on("click", function() {
+    $("#subscribeBtn").on("click", function () {
         alert("[${channel.chname}] 구독되었습니다.");
-        $(this).removeClass('bt-hover').addClass('bt-on').prop('disabled', true);
+        $(this).removeClass("bt-hover").addClass("bt-on").prop("disabled", true);
     });
 });
+
+// 로그인 상태에 따른 구독하기 버튼 활성화/비활성화 설정
+function checkLoginAndSetButtonState() {
+    const userId = "${sessionScope.userId}";
+
+    if (!userId) {
+        $("#subscribeBtn").prop("disabled", true);
+    } else {
+        $("#subscribeBtn").prop("disabled", false);
+    }
+}
+
 
 function setButtonClickEvents() {
     $(".bt-item").click(function() {
@@ -168,7 +181,7 @@ function setInnerHTML1() {
         <div class="background-wrap">
             <div class="row">
                 <c:forEach var="c" items="${channelhome}" varStatus="loop">
-                    <div class="col-md-4">
+                    <div class="colmd4">
                     <a href="${pageContext.request.contextPath}/contents/${channel.chnum}/${c.boardNum}">
                         <img class="home_img" src="../image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}">
                         <div class="card-body card-body-font">
@@ -205,7 +218,7 @@ function setInnerHTML2() {
 	       <table class="table table-bordered" style="margin: 0 8;">
 		        <tr>
 		          <td>
-		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channelCategoryData.chnum}">전체 </a>
+		          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${chCategoryTotalData.chnum}/content/${chCategoryTotalData}">전체 </a>
 		          </td>
 		        </tr>
 				<c:forEach var="c" items="${chcategory}">
@@ -238,12 +251,10 @@ function initializeDefaultContent() {
 			<div class="head"
 				style="display: flex; justify-content: space-between;">
 				<h3 style="margin-left: 25;">[${channel.chname}]</h3>
-				<form
-					action='${pageContext.request.contextPath}/content/contentwrite.co'
-					method="get">
-					<input type="hidden" name="chnum" value="${channel.chnum}">
+				<a
+					href="${pageContext.request.contextPath}/content/contentwrite.co?chnum=${channel.chnum}">
 					<button class="btn bt-item bt-hover" style="margin: 9;">글쓰기</button>
-				</form>
+				</a>
 			</div>
 			<div id="profile1" style="width: 735px;">
 				<div id="profile"
@@ -265,10 +276,20 @@ function initializeDefaultContent() {
 			<br>
 			<div class="sub_alram_btn"
 				style="padding: 30px; margin-top: -38px; padding-left: 15px;">
-				<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
+				<c:choose>
+					<c:when test="${empty sessionScope.userId}">
+						<!-- 로그인하지 않은 사용자에게는 버튼을 비활성화 -->
+						<button class="btn bt-item bt-hover" id="subscribeBtn" disabled>구독하기</button>
+					</c:when>
+					<c:otherwise>
+						<!-- 로그인한 사용자에게만 활성화 버튼을 표시 -->
+						<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
+					</c:otherwise>
+				</c:choose>
 				<img src="../image/channel/alram_white.png"
 					style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
 			</div>
+
 			<br> <br>
 		</div>
 		<hr style="border: 1px bold silver;" width="100%">
@@ -293,7 +314,8 @@ function initializeDefaultContent() {
 			<table class="table table-bordered">
 				<c:forEach var="c" items="${channeldetail}">
 					<tr>
-						<td><a href="${pageContext.request.contextPath}/contents/${channel.chnum}/${c.boardNum}">${c.boardTitle}</a></td>
+						<td><a
+							href="${pageContext.request.contextPath}/contents/${channel.chnum}/${c.boardNum}">${c.boardTitle}</a></td>
 					</tr>
 				</c:forEach>
 			</table>

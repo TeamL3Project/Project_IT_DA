@@ -63,4 +63,31 @@ public class ChannelCategoryDAO {
 		}
 		return chcatedata;
 	}
+
+	public ChannelCategoryBean getchTotaldata(int chNum) {
+		ChannelCategoryBean chcatedata = new ChannelCategoryBean();
+
+		String sql = "select * from chboardcategory where chNum = ? order by chcate_id asc";
+
+		try (Connection con = dbService.ds.getConnection(); 
+			PreparedStatement pstmt = con.prepareStatement(sql);) {
+
+			pstmt.setInt(1, chNum);
+
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					chcatedata.setCategoryId(rs.getInt("CATE_ID"));
+					chcatedata.setChNum(rs.getInt("CHNUM"));
+					chcatedata.setCategoryName(rs.getString("CHCATE_NAME"));
+
+				}
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("getChcateData() 에러: " + e);
+		}
+		return chcatedata;
+	}
 }

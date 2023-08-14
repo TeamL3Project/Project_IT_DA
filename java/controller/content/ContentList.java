@@ -28,10 +28,13 @@ public class ContentList implements Action {
 		List<ContentBean> contentlist = new ArrayList<ContentBean>();
 		ChannelCategoryDAO channelCategoryDAO = new ChannelCategoryDAO();
         ChannelCategoryBean channelCategoryData = new ChannelCategoryBean();
+        ChannelCategoryBean chCategoryTotalData = new ChannelCategoryBean();
         
         int channelNum = Integer.parseInt(request.getParameter("channelnum"));
 
+        chCategoryTotalData = channelCategoryDAO.getchTotaldata(channelNum);
         channelCategoryData = channelCategoryDAO.getchcatedata(channelNum,channelNum);
+        
         
         if (channelCategoryData != null) {
             int chNum = channelCategoryData.getChNum();
@@ -90,6 +93,7 @@ public class ContentList implements Action {
 			
 			request.setAttribute("limit", limit);
 			request.setAttribute("channelCategoryData", channelCategoryData);
+			request.setAttribute("chCategoryTotalData", chCategoryTotalData);
 
 			ActionForward forward = new ActionForward();
 			forward.setRedirect(false);
