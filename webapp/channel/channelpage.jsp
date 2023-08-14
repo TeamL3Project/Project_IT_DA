@@ -168,7 +168,7 @@ function setInnerHTML1() {
         <div class="background-wrap">
             <div class="row">
                 <c:forEach var="c" items="${channelhome}" varStatus="loop">
-                <a href="BoardDetailAction.bo?num=${b.board_num}">
+                <a href="${pageContext.request.contextPath}/contents/${channel.chnum}/${c.boardNum}">
                     <div class="col-md-4">
                         <img class="home_img" src="../image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}">
                         <div class="card-body card-body-font">
@@ -237,7 +237,7 @@ function initializeDefaultContent() {
 				<button class="btn bt-item bt-hover" style="margin: 9;">글쓰기</button>
 				</form>
 			</div>
-
+ 
 			<div id="profile1" style="width: 735px;">
 				<div id="profile"
 					style="padding: 20; border-radius: 2px; border: 1.8px solid #01273c; float: left;">
