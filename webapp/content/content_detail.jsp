@@ -20,6 +20,7 @@
     <script> var contextPath = "<%= request.getContextPath() %>"; </script>
     <script src="${pageContext.request.contextPath}/js/Reply.js"></script>
 	<link href='${pageContext.request.contextPath}/css/Reply.css' type='text/css' rel='stylesheet'>
+	<link rel="stylesheet" href="../css/content-styles.css" type="text/css">
 <title>${co.boardTitle }</title>
 </head>
 <body>
@@ -39,7 +40,7 @@
 			<div class="viewer_count_func_wrap">
 			     <div class="content_info">
                       <span class="content_comment_wrap">
-                            <a href><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/heart.png'>
+                            <a href="#" class="liketest"><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/heart.png'>
                                <span class="content_comment_count"></span>
                            		<em class="u_heart_count">${co.boardHeart}</em>
                             </a>
@@ -54,8 +55,9 @@
 	</div>
 	</div>
 	<div class="viewer_main_text_group">
-		<div class="content_main_text">
+		<div class="ck-content content_main_text">
 			${co.boardContent }
+			<input type="hidden" name="num" value="${co.boardNum}" id="Reply_board_num">
 		</div>
 	</div>
 	<div class="viewer_bottom_warp">
