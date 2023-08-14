@@ -1,5 +1,3 @@
-package controller.member;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,7 +21,6 @@ import util.dateService;
 import util.folderService;
 
 public class MemberJoinProcessAction implements Action {
-	
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -33,7 +30,6 @@ public class MemberJoinProcessAction implements Action {
 		String userPw = request.getParameter("password");
 		String userName = request.getParameter("name");
 		
-
 		  ActionForward forward = new ActionForward();
 
 		    HttpSession session = request.getSession();
@@ -48,7 +44,7 @@ public class MemberJoinProcessAction implements Action {
 		    String userFolder = realFolder + File.separator + userId;
 		    folderService.createFolder(userFolder);
 
-		    
+		    int channelNum = Integer.parseInt(request.getParameter("channelNum"));
 		    realFolder += File.separator + channelNum;
 		    folderService.createFolder(realFolder);
 
@@ -69,7 +65,6 @@ public class MemberJoinProcessAction implements Action {
 
 		    // 프로필 사진 경로를 세션에 저장
 		    session.setAttribute("userProfilePath", userProfilePath);
-
 
 		// 날짜 문자열 확인 및 파싱
 		String dateOfBirthStr = request.getParameter("date_birth");
@@ -125,7 +120,6 @@ public class MemberJoinProcessAction implements Action {
 		if (result == 0) { // DB삽입 실패
 			System.out.println("회원가입 실패");
 
-			
 			forward.setRedirect(true);
 
 			request.setAttribute("message", "회원가입 실패");
@@ -159,3 +153,4 @@ public class MemberJoinProcessAction implements Action {
 		return null;
 	}
 }
+
