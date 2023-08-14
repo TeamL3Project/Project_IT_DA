@@ -10,7 +10,7 @@
 		target.disabled = true;
 	}
 };*/
-/*
+
 function cnt_tag() {
     if ($('ul li').length < 6) {
         console.log($('ul li').length);
@@ -19,7 +19,7 @@ function cnt_tag() {
         target.prop('disabled', true); // 버튼 비활성화
     }
 }
-*/
+
 
 function back(){
 	window.history.back();
