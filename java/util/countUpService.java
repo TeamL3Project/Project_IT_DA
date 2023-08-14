@@ -7,7 +7,7 @@ import java.sql.*;
 
 import static util.dbService.dbConntect;
 
-public class visitService {
+public class countUpService {
 	private static int result = 0;
 
 	private static void dbUpdateProcess(String query) {
@@ -32,6 +32,17 @@ public class visitService {
 	public static void channelVisitUp(ChannelBean channel) {
 		dbConntect();
 		String query = "update channellist set chvisit = " + channel.getChvisit() + 1 + " where chnum = " + channel.getChnum();
+		dbUpdateProcess(query);
+	}
+
+	public static void ContentLikeUp(ContentBean content) {
+		dbConntect();
+		String query = "update chboard set boardheart = " + (content.getBoardHeart() + 1) + " where chnum = " + content.getBoardNum();
+		dbUpdateProcess(query);
+	}
+	public static void ContentLikeDown(ContentBean content) {
+		dbConntect();
+		String query = "update chboard set boardheart = " + (content.getBoardHeart() - 1) + " where chnum = " + content.getBoardNum();
 		dbUpdateProcess(query);
 	}
 }

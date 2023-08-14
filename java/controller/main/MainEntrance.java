@@ -25,7 +25,7 @@ public class MainEntrance implements Action {
         List<ContentBean> contentSelectBycategory = dao.contentSelectBycategory(firstConnect);
         List<ChannelCategoryBean> channelCategoryBeanList = channelCategoryDao.selectInfo();
         request.setAttribute("popcontentList",popcontentList);
-        request.setAttribute("contentSelectBycategory",contentSelectBycategory);
+//        request.setAttribute("contentSelectBycategory",contentSelectBycategory);
         request.setAttribute("channelCategory",channelCategoryBeanList);
 //        System.out.println(channelCategoryBeanList.);
         forward.setRedirect(false);
