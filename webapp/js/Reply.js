@@ -22,11 +22,11 @@ function getList(state){
 			let output = "";
 					//ReplyList에서 가져옴
 			if (rdata.replylist.length > 0) {
-				output += '<li class="reply_order_item ' + red1 + '" >'
-				   		+ '		<a href="javascript:getList(1)" class="reply_order_button">등록순 </a>'
+				output += '<li class="reply_order_item" >'
+				   		+ '		<a href="javascript:getList(1)" class="reply_order_button ' + red1 + '">등록순 </a>'
 				   		+ '</li>'
-				   		+ '<li class="reply_order_item ' + red2 + '" >'
-				   		+ '		<a href="javascript:getList(2)" class="reply_order_button">최신순 </a>'
+				   		+ '<li class="reply_order_item" >'
+				   		+ '		<a href="javascript:getList(2)" class="reply_order_button ' + red2 + '">최신순 </a>'
 				   		+ '</li>';
 				$('.reply_order_list').html(output);		//등록순, 최신순 버튼을 붙여준다
 				
@@ -131,9 +131,12 @@ function del(num){
 	$.ajax({
 		url : contextPath + '/ReplyDelete.co',
 		data : {num : num},
+		dataType : 'json',
 		success : function(rdata) {
-			if (rdata == 1) {
+			if (rdata[0] === true) {
 				getList(option);
+			}else {
+				alert("댓글 삭제중 오류");
 			}
 		}
 	})

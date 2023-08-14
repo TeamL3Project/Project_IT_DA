@@ -17,6 +17,7 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script> var contextPath = "<%= request.getContextPath() %>"; </script>
     <script src="${pageContext.request.contextPath}/js/Reply.js"></script>
+    <script src="${pageContext.request.contextPath}/js/Heart.js"></script>
 	<link href='${pageContext.request.contextPath}/css/Reply.css' type='text/css' rel='stylesheet'>
 	<link rel="stylesheet" href="../css/content-styles.css" type="text/css">
 <title>${co.boardTitle }</title>
@@ -39,11 +40,14 @@
 			<div class="viewer_count_func_wrap">
 			     <div class="content_info">
                       <span class="content_comment_wrap">
-                            <a href="#" class="liketest"><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/heart.png'>
-                               <span class="content_comment_count"></span>
+                            <a href="#" class="heart_butt" data-id="${co.boardNum}">
+                            	<img class="content_comment_img"
+                             	src= '${pageContext.request.contextPath}/image/content/heart.png'>
+                            	<span class="content_comment_count"></span>
+                            	<input type="hidden" name="boardHeart" value="${co.boardHeart}" id="boardHeart">
                            		<em class="u_heart_count">${co.boardHeart}</em>
                             </a>
-                            <a href><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/comment.png'>
+                            <a href="#reply_area"><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/comment.png'>
                                 <span class="content_comment_count"></span>
                                 <em class="u_cnt_count">${boardComment}</em>
                             </a>
@@ -105,7 +109,7 @@
 		</div>
 	</div>
 </div>
-			<div class="reply_area">
+			<div class="reply_area" id="reply_area">
 				<div class="reply_head">
 					<h5 class="reply_title">
 						댓글 <sup class="reply_count"></sup>

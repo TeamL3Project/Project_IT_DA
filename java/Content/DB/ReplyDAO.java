@@ -96,29 +96,58 @@ public class ReplyDAO {
 		
 	}
 
-	public int replyDelete(int num) {					//댓글 삭제
-		String sql = "delete boardreply "
-				   + "where replynum = ?";
-	
+	public boolean replyDelete(int num) {					//댓글 삭제
+		String sql = "select replyref, replylev, replyseq "
+				   + "from boardreply "
+				   + "where replynum = ?";				
+		
+		String sql2 = "delete from boardreply "
+				    + "where replyref = ? "
+				    + "and replylev >= ? "
+				    + "and replyseq >= ? "
+				    + "and replyseq <=(nvl((select min(replyseq)-1 "
+				    + "					   	from boardreply "
+				    + "					   	where replyref = ? "
+				    + "					   	and replylev = ? "
+				    + "					   	and replyseq > ?), (select max(replyseq) "
+				    + "										   	from boardreply "
+				    + "										   	where replyref = ?)"
+				    + "					   ) "
+				    + "				   )";
+		
+		boolean result = false;
+		
 		try (Connection con = ds.getConnection();
 			PreparedStatement pre = con.prepareStatement(sql);) {
 			
 			pre.setInt(1, num);
 			
-			result = pre.executeUpdate();
-			
-			if (result == 1) {
-				System.out.println("댓글 삭제가 정상처리되었습니다.");
-			}
-			
+			try(ResultSet rs = pre.executeQuery();){
+				if (rs.next()) {
+					try (PreparedStatement pre2 = con.prepareStatement(sql2)){
+						pre2.setInt(1, rs.getInt("replyref"));
+						pre2.setInt(2, rs.getInt("replylev"));
+						pre2.setInt(3, rs.getInt("replyseq"));
+						pre2.setInt(4, rs.getInt("replyref"));
+						pre2.setInt(5, rs.getInt("replylev"));
+						pre2.setInt(6, rs.getInt("replyseq"));
+						pre2.setInt(7, rs.getInt("replyref"));
+						
+						int count = pre2.executeUpdate();
+						if (count >= 1)
+							result = true;
+					}//pre2 end
+				}//re end
+			}//rs end
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("replyDelete() 에러: " + e);
 		}//pre try end
 		
 		return result;
-		
 	}
+	
+	
 
 	public int replyInsert(Reply re) {					//댓글 작성
 		String sql = "insert into boardreply "
