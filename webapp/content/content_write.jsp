@@ -58,7 +58,7 @@
 	<br>
 	<div class="board_tag_wrap">
 		<input class="board_tag_text" type=text id="input_tag" name="tagname" placeholder="태그를 추가해 보세요(최대 5개)">
-		<button class="tag_add" id="tag_add" type="button" onclick="action_add(); cnt_tag();  <!-- cnt_tag(); -->">추가</button>
+		<button class="tag_add" id="tag_add" type="button" onClick="action_add(); cnt_tag();  <!-- cnt_tag(); -->">추가</button>
 		 <div class="add_tag_group">
 			<div class="viewer_tag">
 				<ul class="viewer_tag_list" id="ul_tag_list" >

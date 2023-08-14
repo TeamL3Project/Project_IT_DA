@@ -1,6 +1,8 @@
  <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,22 +20,20 @@
     <script> var contextPath = "<%= request.getContextPath() %>"; </script>
     <script src="${pageContext.request.contextPath}/js/Reply.js"></script>
 	<link href='${pageContext.request.contextPath}/css/Reply.css' type='text/css' rel='stylesheet'>
-<title>${boardlist.boardTitle }게시글 제목</title>
-
+<title>${co.boardTitle }</title>
 </head>
 <body>
-<input type="hidden" id="LoginId" value="${userId}" name="LoginId"><%-- Reply.js에서 사용하기 위해 추가 --%>
 <div class="board_detail_wrap">
 	<div class="board_detail_all_group">
 	<div class="board_detail_title_group">
 	<div class="board_detail_category">
-		<a href class="viewer_category_link">${ cate_id}카테고리 이름</a>
+		<a href class="viewer_category_link">${co.chcate_name}</a>
 	</div>
 	<div class="board_detail_title_inline">
-		<span class="board_detail_title">${co.boardTitle }제목제목제목입니다제목입니다</span>
+		<span class="board_detail_title">${co.boardTitle }</span>
 	</div>
 	<div class="viewer_title_content">
-		<div class="viewer_date">${co.boardDate }2023.08.05. 오후 12:04
+		<div class="viewer_date"><fmt:formatDate pattern="yyyy.MM.dd a HH:mm" value="${co.boardDate}"/>
 		</div>
 		<div class="viewer_count">
 			<div class="viewer_count_func_wrap">
@@ -56,8 +56,6 @@
 	<div class="viewer_main_text_group">
 		<div class="content_main_text">
 			${co.boardContent }
-			<p>p로 글 내용 작성 입니다</p>		<%-- ContentDetail에서 가져옴 --%>
-			<input type="hidden" name="num" value="${co.boardNum}" id="Reply_board_num">
 		</div>
 	</div>
 	<div class="viewer_bottom_warp">
@@ -82,7 +80,7 @@
 			<div class="viewer_tag">
 				<ul class="viewer_tag_list">
 					<li class="viewer_tag_item">
-						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그1</a>
+						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그1${tagname }</a>
 					</li>
 					<li class="viewer_tag_item">
 						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그2</a>
@@ -97,8 +95,8 @@
                            		<em class="u_heart_count">${co.boardHeart}</em>
                             </a>
                             <a href><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/comment.png'>
-                                <span class="content_comment_count">${boardComment}</span>
-                                <em class="u_cnt_count">00</em>
+                                <span class="content_comment_count"></span>
+                                <em class="u_cnt_count">${boardComment}</em>
                             </a>
                       </span>
 				</div>
