@@ -18,7 +18,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 <jsp:include page="top.jsp"/>
-
+<div class="main_container">
 <div class="recommend_area">
     <div class="recommend_bar">
         <button type="button" class="left-button left-area"><span class="blind">이전</span></button>
@@ -52,13 +52,9 @@
         <button type="button" class="right-button right-area"><span class="blind">다음</span></button>
     </div>
 </div>
-<hr>
 <jsp:include page="channelList.jsp"/>
-
 <jsp:include page="pop_con_list.jsp"/>
-
+</div>
 <jsp:include page="footer.jsp"/>
-
 </body>
-
 </html>

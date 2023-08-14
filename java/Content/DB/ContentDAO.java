@@ -50,6 +50,7 @@ public class ContentDAO {
 					co.setBoardHeart(rs.getInt(6));
 					co.setChcate_id(rs.getInt(7));
 					co.setBoardDate(rs.getTimestamp(10));
+					co.setBoardVisit(rs.getInt(12));
 					co.setThumbNail(rs.getString(13));
 					co.setChcate_name(rs.getString(14));
 				}
@@ -65,7 +66,7 @@ public class ContentDAO {
 	}
 
 	public List<ContentBean> popcontentSelect() {
-		String query = "select * from (select * from chboard order by (boardheart + boardvisit) desc) where rownum <= 7";
+		String query = "select * from (select * from chboard order by (boardheart + boardvisit) desc) where rownum <= "+POPULAR_CONTENT_NUM;
 		List<ContentBean> contentList = new ArrayList<>();
 		try (Connection conn = ds.getConnection();
 				PreparedStatement pst = conn.prepareStatement(query);
