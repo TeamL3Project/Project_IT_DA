@@ -62,6 +62,10 @@ $(function() {
             }
         });
     });
+     
+     $("#cancel_btn").on("click", function () {
+    	 location.href = "<%=request.getContextPath()%>/main";
+    	});
 
 
 		// 회원가입 폼 제출 이벤트 리스너 등록
@@ -161,38 +165,41 @@ $(function() {
 							
 						});//submit end
 						
+						// 프로필 사진 업로드 및 미리보기 기능
 						$('input[type=file]').change(function(e){
-				            const inputfile = $(this).val().split('\\');
-				            const profileName = inputfile[inputfile.length - 1];
-				            const pattern = /(gif|jpg|jpeg|png)$/i;
+						    const inputfile = $(this).val().split('\\');
+						    const profileName = inputfile[inputfile.length - 1];
+						    const pattern = /(gif|jpg|jpeg|png)$/i;
 
-				            if (pattern.test(profileName)) {
-				                $('#profileName').text(profileName);
+						    if (pattern.test(profileName)) {
+						        $('#profileLabel > .center-div').text(profileName);
+						        
+						        const reader = new FileReader();
+						        reader.readAsDataURL(event.target.files[0]);
 
-				                const reader = new FileReader();
-				                reader.readAsDataURL(event.target.files[0]);
-
-				                reader.onload = function(){
-				                    $('#previewImage > img').attr('src', this.result);
-				                };
-				            } else {
-				                alert('이미지 파일(gif, jpg, jpeg, png)가 아닌 경우 업로드되지 않습니다.');
-				                $(this).val('');
-				            }
-				        });//change end
+						        reader.onload = function(){
+						            $('#previewImage > img').attr('src', this.result);
+						        };
+						    } else {
+						        alert('이미지 파일(gif, jpg, jpeg, png)이 아닌 경우 업로드되지 않습니다.');
+						        $(this).val('');
+						        $('#profileLabel > .center-div').text('파일 선택');
+						        $('#previewImage > img').attr('src', '');
+						    }
+						});
 				        
 		let channelcheck = '';
 
 	});//ready end
 </script>
 <div id="sellerback">
-    <form name="sellerform" id="sellerform" method="post" action="joinProcess.me">
+    <form name="sellerform" id="sellerform" method="post" action="joinProcess.me" enctype="multipart/form-data">
         <h1 style="margin: 30px 50px;">Sign in it-da</h1>
    
         <div class='num0 clearfix'>
                 <label for='id' style="float: left;"><span style="color: red">*</span>아이디</label>
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                    <input type="text" id="showid" name="id" placeholder="아이디를 입력하세요" maxLength="10" required> 
+                    <input type="text" id="showid" name="id" placeholder="아이디를 입력하세요" required> 
                     <input type='button' id="id_butt" value='중복확인' style="width: 20%;">
                 </div>
             </div>
@@ -212,7 +219,7 @@ $(function() {
 	<div class='num3 clearfix'>
 		<label for='channel' style="float: left;"><span style="color: red">*</span>이름</label><br>
 	    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-	        <input type='text' name='name' id='name' style="width: 100%;" required>
+	        <input type='text' name='name' id='name' style="width: 100%;" maxLength="10" required>
 	    </div>    
 	</div>
 	<div class='num4 clearfix'>
@@ -256,14 +263,12 @@ $(function() {
 	</div>
 	<div id="categories clearfix">
 		<label for='category' style="float: left; margin-left: 15px;"><span style="color: red">*</span>관심 카테고리</label><br>
-			<div id="section1">
+			<div id="section">
 			<label><input type='radio' name='category' id='category1' value="경제/시사"> 경제/시사</label>
 			<label><input type='radio' name='category' id='category2' value="문화예술"> 문화예술</label>
 			<label><input type='radio' name='category' id='category3' value="IT트렌드"> IT트렌드</label>
 			<label><input type='radio' name='category' id='category4' value="역사"> 역사</label>
 			<label><input type='radio' name='category' id='category5' value="과학"> 과학</label>
-			</div>
-			<div id="section2">
 			<label><input type='radio' name='category' id='category6' value="건강"> 건강</label>
 			<label><input type='radio' name='category' id='category7' value="요리"> 요리</label>
 			<label><input type='radio' name='category' id='category8' value="스포츠"> 스포츠</label>
@@ -271,22 +276,21 @@ $(function() {
 			<label><input type='radio' name='category' id='category10' value="취미"> 취미</label>
 			</div>
 	</div><br>
-	<form id="profileForm" method="post" enctype="multipart/form-data">
-	     <div class='num12 clearfix'>
-	<label for='profile' style="float: left;">프로필사진<span style="font-size: 12px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label><br>
-		<div id="profile_select">
-			<label for="inputFile">
-				<div class="center-div btn-Upload">파일 선택</div>
-			</label>
-			<input type='file' name='profile' id='profile' style="margin-top: 20px;" accept="image/*">
-		</div>
-		</div>
+	   <div class='num12 clearfix'>
+  <div id="profile_select" style="float:left; margin-right: 10px;">
+    <label for='profile' style="float: left;">프로필사진<span style="font-size: 12px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label>
+    <label for="inputFile">
+      <div class="center-div btn-Upload"></div>
+    </label>
+    <input type='file' name='profile' id='profile' accept="image/*">
+  </div>
+</div>
+
 	 <div class='num11 clearfix'>
                 <button type='submit' value="일반회원가입" class='signup_butt'>일반회원가입</button>
-                <button type='reset' value="취소" class='cancel_butt'>취소</button>
+               <button type='button' value="취소" class='cancel_butt' id='cancel_btn'>취소</button>
             </div>
         </form>
-	</form>
     </div>
 </body>
 

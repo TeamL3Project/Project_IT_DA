@@ -26,6 +26,7 @@ public class MemberFrontController extends HttpServlet {
 		int lastURI = RequestURI.lastIndexOf('/');
 		String command = RequestURI.substring(lastURI);
 		System.out.println(command);
+		System.out.println(request.getParameter("password")+"testtest");
 		
 		ActionForward forward = null;
 		Action action = null;
