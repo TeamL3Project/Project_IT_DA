@@ -22,13 +22,13 @@ public class countUpService {
 	
 	public static void contentVisitUp(ContentBean content) {
 		dbConntect();
-		String query = "update chboard set boardvisit = " + content.getBoardVisit() + 1 + " where boardnum = " + content.getBoardNum();
+		String query = "update chboard set boardvisit = " + (content.getBoardVisit() + 1) + " where boardnum = " + content.getBoardNum();
 		dbUpdateProcess(query);
 	}
 
-	public static void channelVisitUp(ChannelBean channel) {
+	public static void channelVisitDown(ChannelBean channel) {
 		dbConntect();
-		String query = "update channellist set chvisit = " + channel.getChvisit() + 1 + " where chnum = " + channel.getChnum();
+		String query = "update channellist set chvisit = " + (channel.getChvisit() - 1) + " where chnum = " + channel.getChnum();
 		dbUpdateProcess(query);
 	}
 

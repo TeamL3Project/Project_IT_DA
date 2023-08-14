@@ -13,12 +13,10 @@ public class dateService {
         return formattedDate;
     }
 
-    public static String toDay() {
+        public static String toDay() {
         LocalDateTime currentDate = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
         return formattedDate;
     }
-
-    
 }

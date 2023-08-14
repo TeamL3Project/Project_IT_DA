@@ -20,7 +20,6 @@
 	<link href='${pageContext.request.contextPath}/css/Reply.css' type='text/css' rel='stylesheet'>
 	<link rel="stylesheet" href="../css/content-styles.css" type="text/css">
 <title>${co.boardTitle }</title>
-
 </head>
 <body>
 <input type="hidden" id="LoginId" value="${userId}" name="LoginId"><%-- Reply.js에서 사용하기 위해 추가 --%>
@@ -40,7 +39,7 @@
 			<div class="viewer_count_func_wrap">
 			     <div class="content_info">
                       <span class="content_comment_wrap">
-                            <a href><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/heart.png'>
+                            <a href="#" class="liketest"><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/heart.png'>
                                <span class="content_comment_count"></span>
                            		<em class="u_heart_count">${co.boardHeart}</em>
                             </a>

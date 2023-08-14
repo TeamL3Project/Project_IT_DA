@@ -32,25 +32,16 @@ public class ImageUpload implements Action {
         realFolder += toDay()+'/';  // 개시날짜 폴더 생성
         createFolder(realFolder);
 
-
-
-        System.out.println("realFolder = " + realFolder);
-
         try {
             MultipartRequest multi = new MultipartRequest(req, realFolder, fileSize, "utf-8",
                     new DefaultFileRenamePolicy());
-
             JsonObject j = new JsonObject();
-            j.addProperty("url", url);
+            j.addProperty("url", url+multi.getOriginalFileName("upload"));
             resp.getWriter().print(j);
-            req.setAttribute("uploadDay",toDay());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
         return null;
-//      realFolder += contentNum;  // 콘텐트 폴더 생성
-//      createFolder(realFolder);
     }
 }
 
