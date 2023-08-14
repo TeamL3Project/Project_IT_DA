@@ -14,9 +14,6 @@ public class countUpService {
 		try (Connection connect = dbService.ds.getConnection();) {
 			Statement statement = connect.createStatement();
 			result = statement.executeUpdate(query);
-			if (result == 1) {
-				System.out.println("방문자 수 1 증가");
-			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

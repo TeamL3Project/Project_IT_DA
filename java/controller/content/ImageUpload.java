@@ -20,7 +20,6 @@ public class ImageUpload implements Action {
     public ActionForward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String channelNum = req.getHeader("channelNum");
-//      String contentNum = req.getHeader("contentNum");
         String contextPath = req.getContextPath();
         String realFolder = "";
         String saveFolder = "/image/content/";
@@ -44,6 +43,7 @@ public class ImageUpload implements Action {
             JsonObject j = new JsonObject();
             j.addProperty("url", url);
             resp.getWriter().print(j);
+            req.setAttribute("uploadDay",toDay());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
