@@ -161,7 +161,7 @@ $(function() {
 							
 						});//submit end
 						
-					    $('input[type=file]').change(function(e){
+						$('input[type=file]').change(function(e){
 				            const inputfile = $(this).val().split('\\');
 				            const profileName = inputfile[inputfile.length - 1];
 				            const pattern = /(gif|jpg|jpeg|png)$/i;
@@ -180,7 +180,7 @@ $(function() {
 				                $(this).val('');
 				            }
 				        });//change end
-
+				        
 		let channelcheck = '';
 
 	});//ready end
@@ -271,6 +271,7 @@ $(function() {
 			<label><input type='radio' name='category' id='category10' value="취미"> 취미</label>
 			</div>
 	</div><br>
+	<form id="profileForm" method="post" enctype="multipart/form-data">
 	     <div class='num12 clearfix'>
 	<label for='profile' style="float: left;">프로필사진<span style="font-size: 12px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label><br>
 		<div id="profile_select">
@@ -280,12 +281,12 @@ $(function() {
 			<input type='file' name='profile' id='profile' style="margin-top: 20px;" accept="image/*">
 		</div>
 		</div>
-	
 	 <div class='num11 clearfix'>
                 <button type='submit' value="일반회원가입" class='signup_butt'>일반회원가입</button>
                 <button type='reset' value="취소" class='cancel_butt'>취소</button>
             </div>
         </form>
+	</form>
     </div>
 </body>
 
