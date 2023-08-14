@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
 
 public class MemberDAO {
 	private DataSource ds;
@@ -75,31 +77,41 @@ public class MemberDAO {
 
 
 	public int insert(Member m) {
-		int result = 0;
-		
-		String sql = "insert into itda_user "
-				   + "(userId, userPw, userName, userBirth, userGender, userPhone, "
-				   + "userAddress1, userAddress2, userPost, userEmail, userCategory, "
-				   + "userJoindate, statusId) "
-				   + "values(?,?,?,?,?,?, "
-				   + "?,?,?,?,?,"
-				   + "sysdate, 1)";
-		
-		Date userBirth = Date.valueOf(m.getDateOfBirth());
-		try(Connection con = ds.getConnection();
-			PreparedStatement pre = con.prepareStatement(sql);) {
-			
-			pre.setString(1, m.getUserId());			//userId
-			pre.setString(2, m.getUserPw());			//userPw
-			pre.setString(3, m.getUserName());			//userName
-			pre.setDate(4, userBirth);					//userBirth
-			pre.setString(5, m.getUserGender());		//userGender
-			pre.setString(6, m.getUserPhone());			//userPhone
-			pre.setString(7, m.getUserAddress1());		//userAddress1
-			pre.setString(8, m.getUserAddress2());		//userAddress2
-			pre.setString(9, m.getUserPost());			//userPost
-			pre.setString(10, m.getUserEmail());		//userEmail
-			pre.setString(11, m.getUserCategory());		//userCategory
+	    int result = 0;
+
+	    String sql = "insert into itda_user "
+	               + "(userId, userPw, userName, userBirth, userGender, userPhone, "
+	               + "userAddress1, userAddress2, userPost, userEmail, userCategory, "
+	               + "userJoindate, statusId, updateDate, userProfile) "
+	               + "values(?,?,?,?,?,?, "
+	               + "?,?,?,?,?,"
+	               + "?, ?, ?, ?)";
+
+	    // LocalDate를 java.sql.Date로 변환
+	    Date userBirth = null;
+	    LocalDate dateOfBirth = m.getDateOfBirth();
+	    if (dateOfBirth != null) {
+	        userBirth = Date.valueOf(dateOfBirth);
+	    }
+
+	    try(Connection con = ds.getConnection();
+	        PreparedStatement pre = con.prepareStatement(sql);) {
+
+	        pre.setString(1, m.getUserId());          // userId
+	        pre.setString(2, m.getUserPw());          // userPw
+	        pre.setString(3, m.getUserName());        // userName
+	        pre.setDate(4, userBirth);                // userBirth
+	        pre.setString(5, m.getUserGender());      // userGender
+	        pre.setString(6, m.getUserPhone());       // userPhone
+	        pre.setString(7, m.getUserAddress1());    // userAddress1
+	        pre.setString(8, m.getUserAddress2());    // userAddress2
+	        pre.setString(9, m.getUserPost());        // userPost
+	        pre.setString(10, m.getUserEmail());      // userEmail
+	        pre.setString(11, m.getUserCategory());   // userCategory
+	        pre.setTimestamp(12, m.getUserJoindate()); // userJoindate
+	        pre.setInt(13, m.getStatusId());          // statusId
+	        pre.setTimestamp(14, m.getUpdateDate());  // updateDate
+	        pre.setString(15, m.getUserProfile());    // userProfile
 			
 			result = pre.executeUpdate();
 			if (result == 1) {

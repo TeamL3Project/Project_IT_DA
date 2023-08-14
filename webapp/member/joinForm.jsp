@@ -62,6 +62,10 @@ $(function() {
             }
         });
     });
+     
+     $("#cancel_btn").on("click", function () {
+    	 location.href = "<%=request.getContextPath()%>/main";
+    	});
 
 
 		// 회원가입 폼 제출 이벤트 리스너 등록
@@ -189,13 +193,13 @@ $(function() {
 	});//ready end
 </script>
 <div id="sellerback">
-    <form name="sellerform" id="sellerform" method="post" action="joinProcess.me">
+    <form name="sellerform" id="sellerform" method="post" action="joinProcess.me" enctype="multipart/form-data">
         <h1 style="margin: 30px 50px;">Sign in it-da</h1>
    
         <div class='num0 clearfix'>
                 <label for='id' style="float: left;"><span style="color: red">*</span>아이디</label>
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                    <input type="text" id="showid" name="id" placeholder="아이디를 입력하세요" maxLength="10" required> 
+                    <input type="text" id="showid" name="id" placeholder="아이디를 입력하세요" required> 
                     <input type='button' id="id_butt" value='중복확인' style="width: 20%;">
                 </div>
             </div>
@@ -215,7 +219,7 @@ $(function() {
 	<div class='num3 clearfix'>
 		<label for='channel' style="float: left;"><span style="color: red">*</span>이름</label><br>
 	    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-	        <input type='text' name='name' id='name' style="width: 100%;" required>
+	        <input type='text' name='name' id='name' style="width: 100%;" maxLength="10" required>
 	    </div>    
 	</div>
 	<div class='num4 clearfix'>
@@ -272,7 +276,6 @@ $(function() {
 			<label><input type='radio' name='category' id='category10' value="취미"> 취미</label>
 			</div>
 	</div><br>
-	<form id="profileForm" method="post" enctype="multipart/form-data">
 	   <div class='num12 clearfix'>
   <div id="profile_select" style="float:left; margin-right: 10px;">
     <label for='profile' style="float: left;">프로필사진<span style="font-size: 12px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label>
@@ -285,10 +288,9 @@ $(function() {
 
 	 <div class='num11 clearfix'>
                 <button type='submit' value="일반회원가입" class='signup_butt'>일반회원가입</button>
-                <button type='reset' value="취소" class='cancel_butt'>취소</button>
+               <button type='button' value="취소" class='cancel_butt' id='cancel_btn'>취소</button>
             </div>
         </form>
-	</form>
     </div>
 </body>
 

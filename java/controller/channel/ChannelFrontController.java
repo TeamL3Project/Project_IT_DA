@@ -21,7 +21,6 @@ public class ChannelFrontController extends HttpServlet {
 		String channel = requestURI.substring(contextPath.length());
 		String isChannel = channel.substring(0, 9);
 		String command = "";
-		System.out.println(isChannel);
 
 		if (isChannel.equals("/channels")) {
 			command = isChannel;
@@ -33,9 +32,11 @@ public class ChannelFrontController extends HttpServlet {
 			contextPath = request.getContextPath();
 			System.out.println("contextPath = " + contextPath);
 			int lastURI = requestURI.lastIndexOf('/');
+			System.out.println("lastURI="+ lastURI);
 			command = requestURI.substring(lastURI);
 		}
-
+		System.out.println("command=" + isChannel);
+		
 		// 초기화
 		ActionForward forward = null;
 		Action action = null;
@@ -53,6 +54,15 @@ public class ChannelFrontController extends HttpServlet {
 		case "/idcheck.chl":
 			action = new IdCheckAction();
 			break;
+		case "/Channelsub.chl": 
+            action = new ChannelsubAction();
+            break;
+		case "/Channelissub.chl": 
+            action = new ChannelissubAction();
+            break;	
+		case "/Canclechsub.chl": 
+            action = new CanclechsubAction();
+            break;	
 		}
 
 		forward = action.execute(request, response);

@@ -289,6 +289,96 @@ public class ChannelDAO {
    		}
    		return channel;
    	}
+
+	public ChannelBean getChannelDetails(String chNum) {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    ChannelBean channelDetails = null;
+
+	    try {
+	        conn = ds.getConnection();
+	        String query = "SELECT * FROM channellist WHERE chnum = ?";
+	        pstmt = conn.prepareStatement(query);
+	        pstmt.setString(1, chNum);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            channelDetails = new ChannelBean();
+	            channelDetails.setChnum(rs.getInt("chnum"));
+	            channelDetails.setOwnerid(rs.getString("ownerid"));
+	            channelDetails.setChname(rs.getString("chname"));
+	            channelDetails.setChprofile(rs.getString("chprofile"));
+	            channelDetails.setChinfo(rs.getString("chinfo"));
+	            channelDetails.setCate_id(rs.getInt("cate_id"));
+	            channelDetails.setChfollow(rs.getInt("chfollow"));
+	            channelDetails.setChopendate(rs.getTimestamp("chopendate"));
+	            channelDetails.setChvisit(rs.getInt("chvisit"));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (pstmt != null) {
+	                pstmt.close();
+	            }
+	            if (conn != null) {
+	                conn.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return channelDetails;
+	}
+
+	public int subinsert(String userId, int chnum) {
+		String sql = "insert into sub (subsnum, userid, subchnum, subdate) "
+					+ "    values(sub_seq.nextval,?, ?, sysdate)";
+		
+		try(Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+					
+			pre.setString(1, userId);					
+			pre.setInt(2, chnum);			
+				
+			result = pre.executeUpdate();	//삽입 성공시 1
+			System.out.println("구독 DB 삽입 성공");
+		}catch (Exception e) {
+			e.printStackTrace();
+				
+		}
+			
+		return result;
+		
+	}
+
+	public int subselect(String userId, int chnum) {
+        String sql = "select * from sub where userid =? and subchNum=?";
+        int result=0;
+        try (Connection con = ds.getConnection(); 
+   			 PreparedStatement pstmt = con.prepareStatement(sql);) {
+
+   			pstmt.setString(1, userId);
+   			pstmt.setInt(2, chnum);
+   			
+   			try (ResultSet rs = pstmt.executeQuery()) {
+   				if (rs.next()) {
+   					result = 1;
+   				}
+   			}
+   		} catch (SQLException se) {
+   			se.printStackTrace();
+   		} catch (Exception e) {
+   			System.out.println("getDeatil() 에러 :" + e);
+   		}
+   		return result;
+   	}
+
 	
 	public List<ChannelBean> goMyChannelList(String id) {
 		String sql = "SELECT chnum "
@@ -316,6 +406,32 @@ public class ChannelDAO {
 		}
 		
 		return chlist;
+	}
+
+	public int subdelete(String userId, int chnum) {
+		String sql = "delete from sub where userid = ? and subchnum = ?";
+	
+		try(Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+					
+			pre.setString(1, userId);					
+			pre.setInt(2, chnum);			
+				
+			result = pre.executeUpdate();	
+			
+			if(result == 0 ) {
+				System.out.println("삭제 실패");
+			}else {
+				System.out.println("삭제 성공");
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+				
+		}
+			
+		return result;
+	
 	}
 
 }
