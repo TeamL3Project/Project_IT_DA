@@ -2,11 +2,15 @@
 	resize: none
 }
 
-.reply_area .reply_head .reply_count {
+.reply_area .reply_head .reply_title {
 	float: left;
 	margin-top: 3px;
 	margin-right: 12px;
 	font-size: 17px;
+}
+
+.reply_count {
+	top: 0em;
 }
 
 .reply_area .reply_head .reply_order .reply_order_list {
@@ -25,6 +29,7 @@ dl, ol, ul {
 }
 
 .reply_area .reply_head .reply_order .reply_order_item {
+	float: left;
 	margin-left: 8px;
 }
 
@@ -43,17 +48,10 @@ a {
 	text-decoration: none;
 }
 
-
-
-
 button {
 	cursor: pointer;
 	border: 0;
 	background: none;
-}
-
-img {
-	vertical-align: middle;
 }
 
 fieldset, img {
@@ -87,11 +85,33 @@ textarea.reply_write_area_text {
 .reply_list_item__reply.lev1 {
 	margin-left: 46px;
 }
-
 .reply_list_item__reply.lev2 {
-	margin-left: 92px;
+	margin-left: 46px;
 }
-
+.reply_list_item__reply.lev3 {
+	margin-left: 46px;
+}
+.reply_list_item__reply.lev4 {
+	margin-left: 46px;
+}
+.reply_list_item__reply.lev5 {
+	margin-left: 46px;
+}
+.reply_list_item__reply.lev6 {
+	margin-left: 46px;
+}
+.reply_list_item__reply.lev7 {
+	margin-left: 46px;
+}
+.reply_list_item__reply.lev8 {
+	margin-left: 46px;
+}
+.reply_list_item__reply.lev9 {
+	margin-left: 46px;
+}
+.reply_list_item__reply.lev10 {
+	margin-left: 46px;
+}
 .reply_area .reply_list .reply_list_item {
 	position: relative;
 	border-top: 1px solid #f2f2f2;
@@ -135,8 +155,8 @@ textarea.reply_write_area_text {
 }
 
 .reply_write {
-	margin: 12px 0 29px;
-	padding: 16px 10px 10px 18px;
+	margin: 16px 0 26px;
+	padding: 5px 10px 25px 18px;
 	border: 2px solid rgba(0, 0, 0, 0.1);
 	border-radius: 6px;
 	box-sizing: border-box;
@@ -236,18 +256,15 @@ a:hover {
 }
 
 .red {
-	color: red;
+	color: red !important;
 }
 
 .gray {
-	color: gray;
+	color: gray !important;
 }
 
-.reply_list_item .reply_nick_area img {
-	border-radius: 50%;
-	border: 1px solid #ccc;
-	float: left;
-	margin-right: 20px;
+.reply_list_item .reply_nick_area {
+	font-size: 14px;
 }
 
 .reply_write_area_text {
@@ -282,13 +299,9 @@ a:hover {
 	display:none;
 }
 
-.reply_warp{
-	width: 100%;
-	margin-left: 100px;
-}
 .reply_area{
 	width: 70%;
-	margin-left: 200px;
+	margin-left: 250px;
 }
 .reply_head, .reply_write{
 	margin-left: 200px;

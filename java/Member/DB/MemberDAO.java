@@ -113,4 +113,31 @@ public class MemberDAO {
 		return result;
 	}
 
+	public int getChNum(String userId) {
+		String sql = "select chNum "
+				   + "from channellist "
+				   + "where ownerid = '" + userId + "'";
+		
+		try (Connection con = ds.getConnection();
+			PreparedStatement pre = con.prepareStatement(sql);) {
+				
+			try (ResultSet rs = pre.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("chNum");
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	
+	}
+
+	
+	
+	
+	
+	
+	
 }
