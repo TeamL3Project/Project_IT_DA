@@ -1,6 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script> var contextPath = "<%= request.getContextPath() %>"; </script>
 <script>
+<<<<<<< HEAD
+$(function () {
+    $("#joinForm").click(function () {
+        location.href = "join.me";
+    });
+
+    const userId = '<%=session.getAttribute("userId")%>';
+	const userProfile = '<%=session.getAttribute("userProfile")%>';
+	const userFolder = '<%=util.dateService.toDay()%>';
+    
+    //id값이 있는 경우
+    if (userId) {
+        $("#userId").val(userId); 
+
+        // 회원가입시 업로드한 프로필사진 경로
+        let profileImgPath = contextPath + "/image/Member/" + userId + "/" + userFolder + "/";  //경로 추가
+        //location.href="${pageContext.request.contextPath}/main";
+        
+
+        // 프로필 사진 파일 이름과 확장자 추가
+        // 경로에 저장된 이미지를 찾고 출력하기 위함
+        if (userProfile) {
+            profileImgPath += userProfile;
+        } else {
+            profileImgPath += "profile.png"; 
+        }
+
+        // 프로필 사진 출력
+        if (profileImgPath) {
+            $("#profile_img").attr("src", profileImgPath);
+        }
+    }
+});
+=======
 	$(function(){
 		$("#joinForm").click(function(){
 			location.href = "/join.me";
@@ -74,6 +109,7 @@
 		
 		
 	});
+>>>>>>> 901179c332e5f0ba60302de18277b56748504b6a
 </script>
 <div class="backyard">
 <nav id="navbody">
@@ -89,11 +125,28 @@
 		  		 style="width: 30px; height: auto;">
 		  	</a>
 		</li>
-		
-	<%
-	String userId = (String) session.getAttribute("userId");
-    String userProfilePath = (String) session.getAttribute("userProfilePath"); // 프로필 사진 경로 가져오기
 
+<<<<<<< HEAD
+			<%
+			String userId = (String) session.getAttribute("userId");
+			String userProfilePath = (String) session.getAttribute("userProfilePath"); // 프로필 사진 경로 가져오기
+
+			if (userId != null && !userId.equals("")) {
+			%>
+
+			<!-- 로그인한 경우 프로필 사진을 표시합니다. -->
+			<div class="dropdown">
+				<button class="dropbtn">
+					<img id="profile_img" src="${userProfilePath}" style="width: 30px; height: auto;" />
+				</button>
+				<div class="dropdown-content">
+					<a href="${pageContext.request.contextPath}/myPage.me">마이 페이지</a> <a
+						href="${pageContext.request.contextPath}/logout.me">로그아웃</a>
+				</div>
+			</div>
+
+			<%
+=======
     if (userId != null && !userId.equals("")) {
 	%>
 	
@@ -109,6 +162,7 @@
 	</div>
 		
 	<%
+>>>>>>> 901179c332e5f0ba60302de18277b56748504b6a
 		}else {
 	%>
 	  
