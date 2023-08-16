@@ -1,5 +1,11 @@
 package Tag.DB;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -50,5 +56,31 @@ public class TagDAO {
 //		return tag;
 //	}
 
+
+
+	public List<TagBean> getTagNameList(int boardNum, int chnum) {
+		String sql = "select tag.tagname "
+				+ "from chboard join tag "
+				+ "on chboard.boardnum = tag.boardnum "
+				+ "where chboard.chnum = ? and chboard.boardnum = ? ";
+		
+		List<TagBean> tlist = new ArrayList<>();
+		try (Connection conn = ds.getConnection(); 
+				PreparedStatement pst = conn.prepareStatement(sql);) {
+
+			pst.setInt(1, boardNum);
+			pst.setInt(2, chnum);
+			try (ResultSet rs = pst.executeQuery();) {
+				while (rs.next()) {
+					TagBean t = new TagBean();
+					tlist.add(t);
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+				
+		return tlist;
+	}
 
 }

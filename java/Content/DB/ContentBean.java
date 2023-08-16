@@ -11,11 +11,22 @@ public class ContentBean {
     private String boardNore;
     private String thumbNail;
     private Timestamp boardDate, boardUpdate;
+    private int cnt;
     
-    private String chcate_name;
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+
+	private String chcate_name;
     private String chname;
 
     private String intro;
+	private int tagid;
+	private String tagname;
 
     public String getIntro() {
         return intro;
@@ -25,7 +36,25 @@ public class ContentBean {
         this.intro = intro;
     }
 
-    public String getChname() {
+
+    
+    public int getTagid() {
+		return tagid;
+	}
+
+	public void setTagid(int tagid) {
+		this.tagid = tagid;
+	}
+
+	public String getTagname() {
+		return tagname;
+	}
+
+	public void setTagname(String tagname) {
+		this.tagname = tagname;
+	}
+
+	public String getChname() {
 		return chname;
 	}
 

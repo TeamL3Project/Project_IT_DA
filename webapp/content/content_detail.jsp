@@ -28,7 +28,7 @@
 	<div class="board_detail_all_group">
 	<div class="board_detail_title_group">
 	<div class="board_detail_category">
-		<a href class="viewer_category_link">${co.chcate_name}</a>
+		<a href="${pageContext.request.contextPath}/channels/${co.chNum}" class="viewer_category_link">${co.chcate_name}</a>
 	</div>
 	<div class="board_detail_title_inline">
 		<span class="board_detail_title">${co.boardTitle }</span>
@@ -49,7 +49,7 @@
                             </a>
                             <a href="#reply_area"><img class="content_comment_img2" src= '${pageContext.request.contextPath}/image/content/comment.png'>
                                 <span class="content_comment_count"></span>
-                                <em class="u_cnt_count">${boardComment}</em>
+                                <em class="u_cnt_count">${rcnt}</em>
                             </a>
                       </span>
 				</div>
@@ -83,12 +83,12 @@
 		<div class="viewer_bottom_info">
 			<div class="viewer_tag">
 				<ul class="viewer_tag_list">
+	 			<c:forEach var="t" items="${tname}" varStatus="status">
 					<li class="viewer_tag_item">
-						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그1${tagname }</a>
+						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">${t[status.index]}</a>
+						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">${t}</a>
 					</li>
-					<li class="viewer_tag_item">
-						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그2</a>
-					</li>
+				</c:forEach>
 				</ul>
 			</div>
 			<div class="viewer_bottom_count_wrap">
@@ -100,7 +100,7 @@
                             </a>
                             <a href><img class="content_comment_img2" src= '${pageContext.request.contextPath}/image/content/comment.png'>
                                 <span class="content_comment_count"></span>
-                                <em class="u_cnt_count">${boardComment}</em>
+                                <em class="u_cnt_count">${rcnt}</em>
                             </a>
                       </span>
 				</div>
