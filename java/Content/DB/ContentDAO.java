@@ -230,7 +230,7 @@ public class ContentDAO {
 	    String query = "SELECT * FROM (SELECT * FROM chboard WHERE chNum = ? ORDER BY boardvisit DESC) WHERE ROWNUM <= 6";
 	    List<ContentBean> contentList = new ArrayList<>();
 
-	    try (Connection con = ds.getConnection(); 
+	    try (Connection con = dbService.ds.getConnection();
 	         PreparedStatement pstmt = con.prepareStatement(query)) {
 	        
 	        pstmt.setInt(1, chNum); 
@@ -336,7 +336,7 @@ public class ContentDAO {
 				+ "where chNum = ? "
 				+ "AND chcate_id = ? ";
 		int x = 0;
-		try (Connection con = ds.getConnection();
+		try (Connection con = dbService.ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setInt(1, chnum);
 			pstmt.setInt(2, chcate_id);
@@ -498,7 +498,7 @@ public class ContentDAO {
 				+ "order by boardDate asc";
 		List<ContentBean> contentList = new ArrayList<>();
 
-		try (Connection conn = ds.getConnection(); 
+		try (Connection conn = dbService.ds.getConnection();
 			PreparedStatement pst = conn.prepareStatement(query);) {
 			
 			int startrow = (page - 1) * limit + 1; //읽기 시작할 row 번호(1 11 21 31 ...
@@ -544,7 +544,7 @@ public class ContentDAO {
 		String sql = "select count(*) from chboard "
 				+ "where chNum = ? ";
 		int x = 0;
-		try (Connection con = ds.getConnection(); 
+		try (Connection con = dbService.ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setInt(1, channelnum);
 
