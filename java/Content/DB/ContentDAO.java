@@ -485,17 +485,32 @@ public class ContentDAO {
 		return contentList;
 	}
 
-	public List<ContentBean> getchcatedata(int chNum, int categoryId, int page, int limit) {
+	public List<ContentBean> getchcatedata(int chNum, int categoryId, int page, int limit, String order) {
+//		String query = "SELECT * "
+//				+ "from (select rownum rnum, j.* "
+//				+ "			from(select * "
+//				+ "				FROM chboard natural join chboardcategory "
+//				+ "				WHERE chnum = ? "
+//				+ "				and chcate_id = ? ) j "
+//				+ "where rownum <= ? "
+//				+ ")"
+//				+ "where rnum >= ? and rnum <= ? "
+//				+ "order by boardDate asc";
 		String query = "SELECT * "
 				+ "from (select rownum rnum, j.* "
-				+ "			from(select * "
-				+ "				FROM chboard natural join chboardcategory "
-				+ "				WHERE chnum = ? "
-				+ "				and chcate_id = ? ) j "
-				+ "where rownum <= ? "
-				+ ")"
-				+ "where rnum >= ? and rnum <= ? "
-				+ "order by boardDate asc";
+				+ "	 from(select chboard.*, nvl(cnt,0) cnt, "
+				+ "			(select chcate_name from  chboardcategory c where c.chcate_id=chboard.chcate_id)  chcate_name"
+				+ "		     from chboard left join  (select boardnum, count(*) cnt"
+				+ "					     			from boardreply"
+				+ "					      			group by boardnum "
+				+ "                      ) f"
+				+ "          on chboard.boardnum = f.boardnum "
+				+ "          where chboard.chnum = ? and chboard.chcate_id =? "
+				+ "          order by boardDate " + order + ", chboard.boardnum desc"
+				+ "          ) j "
+				+ "      where rownum <= ? "
+				+ "     ) "
+				+ "where rnum >= ? and rnum <= ? ";
 		List<ContentBean> contentList = new ArrayList<>();
 
 		try (Connection conn = ds.getConnection(); 
@@ -529,6 +544,7 @@ public class ContentDAO {
 					co.setBoardDate(rs.getTimestamp("boardDate"));
 					co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
 					co.setThumbNail(rs.getString("ThumbNail"));
+					co.setCnt(rs.getInt("cnt"));
 					contentList.add(co);
 
 				}
