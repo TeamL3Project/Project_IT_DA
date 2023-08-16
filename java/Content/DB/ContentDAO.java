@@ -247,30 +247,42 @@ public class ContentDAO {
 
 	}
 
-	public List<ContentBean> channelhomeSelect() {
-		String query = "select * from (select * from chboard order by boardvisit desc) where rownum <= 6";
-		List<ContentBean> contentList = new ArrayList<>();
+	public List<ContentBean> channelhomeSelect(int chNum) {
+	    String query = "SELECT * FROM (SELECT * FROM chboard WHERE chNum = ? ORDER BY boardvisit DESC) WHERE ROWNUM <= 6";
+	    List<ContentBean> contentList = new ArrayList<>();
 
-		try (Connection conn = ds.getConnection();
-				PreparedStatement pst = conn.prepareStatement(query);
-				ResultSet rs = pst.executeQuery();) {
-
-			while (rs.next()) {
-				ContentBean co = new ContentBean();
-				co.setBoardNum(rs.getInt(1));
-				co.setChNum(rs.getInt(2));
-				co.setWriter(rs.getString(3));
-				co.setBoardTitle(rs.getString(4));
-				co.setBoardContent(rs.getString(5));
-				co.setThumbNail(rs.getString(13));
-				contentList.add(co);
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return contentList;
+	    try (Connection con = ds.getConnection(); 
+	         PreparedStatement pstmt = con.prepareStatement(query)) {
+	        
+	        pstmt.setInt(1, chNum); 
+	        
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                ContentBean co = new ContentBean();
+	                co.setBoardNum(rs.getInt("boardnum"));
+	                co.setChNum(rs.getInt("ChNum"));
+	                co.setWriter(rs.getString("Writer"));
+	                co.setBoardTitle(rs.getString("BoardTitle"));
+	                co.setBoardContent(rs.getString("BoardContent"));
+	                co.setBoardHeart(rs.getInt("boardHeart"));
+	                co.setChCate_id(rs.getInt("chCate_id"));
+	                co.setBoardOpen(rs.getString("boardOpen"));
+	                co.setBoardNore(rs.getString("boardNore"));
+	                co.setBoardDate(rs.getTimestamp("boardDate"));
+	                co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
+	                co.setThumbNail(rs.getString("ThumbNail"));
+	                contentList.add(co);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        System.out.println("channelhomeSelect() 에러: " + ex); 
+	    }
+	    return contentList;
 	}
+
 
 	// 게시물 목록을 가져오는 메소드입니다.
 	public List<ContentBean> getBoardListByBoardNum(int chnum) {
