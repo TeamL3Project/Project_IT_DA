@@ -1,126 +1,91 @@
 package controller.content;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import Content.DB.ContentBean;
+import Content.DB.ContentDAO;
+import Tag.DB.TagDAO;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import controller.action.Action;
+import controller.action.ActionForward;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+import util.dbService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
+import java.io.IOException;
+import java.sql.*;
+import java.util.List;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
-import Content.DB.ContentBean;
-import Content.DB.ContentDAO;
-import ContentCategory.DB.ContentCategoryBean;
-import ContentCategory.DB.ContentCategoryDAO;
-import Tag.DB.TagBean;
-import Tag.DB.TagDAO;
-import controller.action.Action;
-import controller.action.ActionForward;
-import util.messeage;
+import static util.dateService.toDay;
+import static util.folderService.createFolder;
 
 public class ContentAdd implements Action {
-		private static final int Join_Fail = 0;
-		private static final int Join_Success = 1;
-		private HttpSession session;
-
-		private ContentBean setContentFromRequest(MultipartRequest multi) {
-			ContentBean content = new ContentBean();
-
-			content.setBoardTitle(multi.getParameter("boardTitle"));
-			content.setBoardContent(multi.getParameter("boardContent"));
-			content.setThumbNail(multi.getParameter("thumbNail"));
-
-
-
-
-			return content;
-
-		}
-
-		private ContentCategoryBean setContentCategoryFromRequest(MultipartRequest multi) {
-			ContentCategoryBean catedata = new ContentCategoryBean();
-
-			catedata.setChcate_Name(multi.getParameter("chcate_Name"));
-
-			return catedata;
-
-		}
-		private TagBean setTagFromRequest(MultipartRequest multi) {
-			TagBean tdata = new TagBean();
-
-			tdata.setTagname(multi.getParameter("tagname"));
-
-			return tdata;
-
-		}
 
 	public ActionForward execute(HttpServletRequest request,
-				HttpServletResponse response) throws ServletException, IOException {
-
+								 HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String contextPath = request.getContextPath();
+		String realFolder = "";
+		String saveFolder = "/image/content/";
+		ServletContext sc = request.getServletContext();
+		realFolder = sc.getRealPath(saveFolder);
+		int fileSize = 5 * 1024 * 1024;
+		String Writer = (String) session.getAttribute("userId");
+		int channelNum = (int) session.getAttribute("chnum");
+		realFolder += String.valueOf(channelNum) + '/';
+		createFolder(realFolder);
+		realFolder += toDay() + '/';
+		createFolder(realFolder);
 		ActionForward forward = new ActionForward();
-		session = request.getSession();
-		int chnum = (int) session.getAttribute("chnum");
-		String userId = (String) session.getAttribute("userId");
-		int chcate_id = (int) session.getAttribute("chcate_id");
-		String saveFolder = "image/ContentUpload";
-		int fileSize = 5*1024*1024;
 
-		ServletContext sc = request.getServletContext();		//실제 저장 경로를 지정
-		String realFolder = sc.getRealPath(saveFolder);
-		System.out.println("realFolder = " + realFolder);
+		MultipartRequest multi = new MultipartRequest(
+				request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
 
-		//userid별 디렉토리 생성
-		String chFolder = realFolder + File.separator + chnum;
-
-		File directory =  new File(chFolder);
-		if (!directory.exists()) {
-			directory.mkdirs();
-		}
-
-		try {MultipartRequest multi = new MultipartRequest(
-			request,chFolder,fileSize,"UTF-8",new DefaultFileRenamePolicy());
-
-
-			ContentBean condata = setContentFromRequest(multi);
-			ContentCategoryBean catedata = setContentCategoryFromRequest(multi);
-			TagBean tdata = setTagFromRequest(multi);
-
-			ContentDAO condao = new ContentDAO();
-			ContentCategoryDAO catedao = new ContentCategoryDAO();
-			TagDAO tdao = new TagDAO();
-
-//			int contentResult = condao.InsertContent(chnum, chcate_id);
-			List<ContentCategoryBean> cateResult = catedao.chcategorySelect(chnum);
-			boolean tagResult = tdao.tagInsert(tdata);
-
-
-			if (contentResult == Join_Fail  || tagResult == false) {//DB에 삽입되지 않은 경우
-				System.out.println(messeage.Join.FAIL);
-
-				forward.setRedirect(true);
-				request.setAttribute("message", messeage.Join.FAIL);
-				forward.setPath(request.getContextPath()+"/main");
-
-			}else if (contentResult == Join_Fail  && tagResult == true) {	//DB에 삽입된 경우
-				forward.setRedirect(true);
-				request.setAttribute("message", messeage.Join.SUCCESS);
-	            forward.setPath(request.getContextPath()+"/main");
-
+		String contentText = multi.getParameter("content");
+		
+		Document doc = Jsoup.parse(contentText);
+		Elements paragraphs = doc.select("p");
+		String Intro = "";
+		for (int i = 0; i < paragraphs.size(); i++) {
+			System.out.println(paragraphs.get(i).text());
+			boolean text = paragraphs.get(i).text().matches("^(?=.*\\S).*$");
+			if (text) {
+				Intro += paragraphs.get(i).text();
+				if (Intro.length() > 80) {
+					break;
+				}
 			}
-
-
-		}catch (Exception e) {
-			e.printStackTrace();
-
 		}
 
-		return forward;
+		ContentDAO dao = new ContentDAO();
+		ContentBean con = new ContentBean();
+		con.setChNum(channelNum);
+		con.setWriter(Writer);
+		con.setBoardTitle(multi.getParameter("boardTitle"));
+		con.setBoardContent(multi.getParameter("content"));
+		con.setChcate_id(Integer.parseInt(multi.getParameter("categoryId")));
+		con.setThumbNail(multi.getFilesystemName("thumbNail"));
+		con.setIntro(Intro);
+		dao.contentInsert(con);
+		List<ContentBean> newcontent = dao.newContentSelect(channelNum);
+		int contentNum = newcontent.get(0).getBoardNum();
+		int tagLength = 0;
+		if (multi.getParameterValues("tagname") != null) {
+			tagLength = multi.getParameterValues("tagname").length;
+		}
+		TagDAO tagDao = new TagDAO();
 
+		for (int i = 0; i < tagLength; i++) {
+			String tag = multi.getParameterValues("tagname")[i];
+			tagDao.tagInsert(tag, contentNum);
+		}
+
+		forward.setRedirect(true);
+		forward.setPath(contextPath + "/channels/" + channelNum);
+		return forward;
 	}
 
 }

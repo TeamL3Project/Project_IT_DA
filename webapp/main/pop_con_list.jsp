@@ -13,7 +13,7 @@
             </button>
             <t:forEach var="c" items="${channelCategory}">
                 <t:set var="categoryLength" value="${fn:length(c.categoryName)}" />
-                <button class="contents_category btn bt-item bt-hover bt-${categoryLength}" id="1">${c.categoryName}
+                <button class="contents_category btn bt-item bt-hover bt-${categoryLength}" id="${c.categoryId}">${c.categoryName}
                 </button>
             </t:forEach>
         </div>
