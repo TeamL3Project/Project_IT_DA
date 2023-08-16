@@ -82,12 +82,13 @@ body {
 
 .channel_data {
 	width: 934px;
-    height: 220px;
-    border: 1px solid black;
-    border-radius: 15px;
-    padding: 25;
-    margin-left: -188;
-    margin-bottom: 18;
+	height: 220px; border : 1px solid black; border-radius : 15px; padding
+	: 25; margin-left : -188;
+	margin-bottom: 18;
+	border: 1px solid black;
+	border-radius: 15px;
+	padding: 25;
+	margin-left: -188;
 }
 
 tr>td:nth-child(odd) {
@@ -127,7 +128,8 @@ td {
 				</div>
 				<div class="sub_alram_btn"
 					style="padding: 30; margin-top: -38; padding-left: 15; margin-left: -580;">
-					<button class="btn bt-item bt-hover" id="subscribeBtn">구독하기</button>
+					<button class="btn bt-item bt-hover subscribeBtn" id="subscribeBtn"
+						data-channel-num="${channeldata.chnum}">구독하기</button>
 					<img src="image/channel/alram_white.png"
 						style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
 				</div>
@@ -155,7 +157,7 @@ td {
 						</table>
 					</div>
 				</div>
-				
+
 				<div class="channel_info2">
 					<p class="infotitle" style="margin-bottom: 0;">판매자 정보</p>
 					<div class="sellerinfo">
@@ -184,15 +186,15 @@ td {
 	<jsp:include page="../main/footer.jsp" />
 </body>
 <script>
-$(document).ready(function() {
-  $(".bt-item").click(function() {
-    $(".bt-item.on").removeClass('on');
-    $(this).addClass('on').css("box-shadow", "none");
-  });
+	$(document).ready(function() {
+		$(".bt-item").click(function() {
+			$(".bt-item.on").removeClass('on');
+			$(this).addClass('on').css("box-shadow", "none");
+		});
 
-  $("#subscribeBtn").click(function() {
-    alert("[${channeldata.chname}] 구독되었습니다.");
-  });
-});
+		$("#subscribeBtn").click(function() {
+			alert("[${channeldata.chname}] 구독되었습니다.");
+		});
+	});
 </script>
 </html>
