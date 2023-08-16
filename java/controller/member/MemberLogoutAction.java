@@ -19,11 +19,10 @@ public class MemberLogoutAction implements Action {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		ActionForward forward = new ActionForward();
-		forward.setPath(request.getContextPath()+"/main");
-		forward.setRedirect(true);
+		response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write("{\"success\": true}");
 		
-		return forward;
+		return null;
 	}
 
 }
