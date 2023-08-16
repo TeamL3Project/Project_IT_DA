@@ -14,6 +14,7 @@ public class SellerJoinAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 															throws ServletException, IOException {
+		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("./member/Seller_Form.jsp");
@@ -21,5 +22,4 @@ public class SellerJoinAction implements Action {
 		return forward;
 		
 	}
-
 }

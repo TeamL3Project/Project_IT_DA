@@ -195,7 +195,7 @@ textarea {
 	font-weight: 400;
 }
 
-.reply_write .register-box .button {
+.reply_write .register_box .button {
 	display: inline-block;
 	min-width: 46px;
 	height: 34px;
@@ -283,11 +283,11 @@ a:hover {
 	font-size: small;
 }
 
-.register-box {
+.register_box {
 	height: 20px;
 }
 
-.reply_write .register-box .btn-cancel {
+.reply_write .register_box .btn-cancel {
 	display: none;
 }
 

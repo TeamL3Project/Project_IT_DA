@@ -509,5 +509,31 @@ public class ContentDAO {
 
 		return contentList;
 	}
+	
+	   public int getListCount(int chnum, int chcate_id) {
+		      String sql = "select count(*) from chboard "
+		            + "where chNum = ? "
+		            + "AND chcate_id = ? ";
+		      int x = 0;
+		      try (Connection con = ds.getConnection(); 
+		            PreparedStatement pstmt = con.prepareStatement(sql);) {
+		         pstmt.setInt(1, chnum);
+		         pstmt.setInt(2, chcate_id);
+
+		         try (ResultSet rs = pstmt.executeQuery()) {
+		            if(rs.next()) {
+		                x = rs.getInt(1);
+		            }
+		            
+		         } catch (SQLException e) {
+		            e.printStackTrace();
+		         }
+		      } catch (Exception ex) {
+		         ex.printStackTrace();
+		         System.out.println("getListCount() 에러: " + ex);
+		      }
+
+		      return x;
+		   } // getListCount() end
 }
 

@@ -21,13 +21,11 @@ public class ReplyUpdate implements Action {
 		Reply re = new Reply();
 		
 		re.setReplyContent(request.getParameter("replycontent"));
-		System.out.println("replycontent=" + re.getReplyContent());
 		
 		re.setReplyNum(Integer.parseInt(request.getParameter("replyNum")));
 		
 		int ok = redao.replyUpdate(re);
 		response.getWriter().print(ok);
-		
 		
 		return null;
 	}

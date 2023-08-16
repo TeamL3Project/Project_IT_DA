@@ -26,7 +26,6 @@ public class MemberFrontController extends HttpServlet {
 		int lastURI = RequestURI.lastIndexOf('/');
 		String command = RequestURI.substring(lastURI);
 		System.out.println(command);
-		System.out.println(request.getParameter("password")+"testtest");
 		
 		ActionForward forward = null;
 		Action action = null;
@@ -49,6 +48,9 @@ public class MemberFrontController extends HttpServlet {
 				break;	
 			case "/logout.me":
 				action = new MemberLogoutAction();
+				break;
+			case "/sellerCheck.me":
+				action = new SellerCheckAction();
 				break;
 			case "/sellerjoin.me":
 				action = new SellerJoinAction();
