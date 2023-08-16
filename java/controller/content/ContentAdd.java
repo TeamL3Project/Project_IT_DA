@@ -99,7 +99,7 @@ public class ContentAdd implements Action {
 			boolean tagResult = tdao.tagInsert(tdata);
 
 
-			if (contentResult == Join_Fail  || tagResult == false) {				//DB에 삽입되지 않은 경우
+			if (contentResult == Join_Fail  || tagResult == false) {//DB에 삽입되지 않은 경우
 				System.out.println(messeage.Join.FAIL);
 
 				forward.setRedirect(true);

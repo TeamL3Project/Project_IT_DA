@@ -434,4 +434,37 @@ public class ChannelDAO {
 	
 	}
 
+	public boolean checksub(String userId, int chnum) {
+		int count = 0;
+		
+		String sql = "SELECT COUNT(*) as count FROM sub WHERE userid = ? AND subchnum = ?"; 
+		
+		
+
+	    try (Connection conn = ds.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
+	        pstmt.setString(1, userId);
+	        pstmt.setInt(2, chnum);
+
+	        
+	        try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                	count = rs.getInt(1);
+                    if (count > 0) {
+                    	System.out.println("count : " +  count);
+                        return true;
+                    }
+                }
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        } catch (SQLException e) {
+            System.out.println("checksub() 에러 :" + e);
+        }
+        return false;
+    }
 }
+
+
+
