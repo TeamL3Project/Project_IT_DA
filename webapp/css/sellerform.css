@@ -9,7 +9,7 @@
 
 #sellerform {
 	width: 40%;
-	height: 950px;
+	height: 990px;
 	border: 1px solid black;
 	margin: 80px auto 50px auto;
 	background: white;
@@ -67,7 +67,7 @@ label {
 	border-radius: 10px;
 	font-weight: 500;
 	cursor: pointer;
-	display: flex;
+	display: inline-block;
 	align-items: center;
 	justify-content: center;
 }
@@ -90,10 +90,12 @@ label {
 
 #profile_select {
 	display: inline-block;
+	margin-right: 630px;
 }
 
 #profile_preview {
 	display: inline-block;
+	margin-right: 630px;
 }
 
 #phone {

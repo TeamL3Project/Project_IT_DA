@@ -4,11 +4,15 @@ $(function(){
 
 	$(document).on('click',".heart_butt",function(e) {
 		e.preventDefault();
+		
+		
         
         if (clickCK === 0) {
+			$('.content_comment_img').attr('src', contextPath + '/image/content/heart2.png');
         	heartstate = 1;
         	clickCK = 1;
         }else if(clickCK === 1){
+			$('.content_comment_img').attr('src', contextPath + '/image/content/heart.png');
 			heartstate = 0;
 			clickCK = 0;
 		}
