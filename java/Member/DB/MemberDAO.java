@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.naming.Context;
@@ -80,12 +81,13 @@ public class MemberDAO {
 	    int result = 0;
 
 	    String sql = "insert into itda_user "
-	               + "(userId, userPw, userName, userBirth, userGender, userPhone, "
-	               + "userAddress1, userAddress2, userPost, userEmail, userCategory, "
-	               + "userJoindate, statusId, updateDate, userProfile) "
-	               + "values(?,?,?,?,?,?, "
-	               + "?,?,?,?,?,"
-	               + "?, ?, ?, ?)";
+	            + "(userId, userPw, userName, userBirth, userGender, userPhone, "
+	            + "userAddress1, userAddress2, userPost, userEmail, userCategory, "
+	            + "userJoindate, statusId, userProfile) "
+	            + "values(?,?,?,?,?,?, "
+	            + "?,?,?,?,?,"
+	            + "SYSDATE, 1, ?)";
+
 
 	    // LocalDate를 java.sql.Date로 변환
 	    Date userBirth = null;
@@ -108,21 +110,22 @@ public class MemberDAO {
 	        pre.setString(9, m.getUserPost());        // userPost
 	        pre.setString(10, m.getUserEmail());      // userEmail
 	        pre.setString(11, m.getUserCategory());   // userCategory
-	        pre.setTimestamp(12, m.getUserJoindate()); // userJoindate
-	        pre.setInt(13, m.getStatusId());          // statusId
-	        pre.setTimestamp(14, m.getUpdateDate());  // updateDate
-	        pre.setString(15, m.getUserProfile());    // userProfile
-			
-			result = pre.executeUpdate();
-			if (result == 1) {
-				System.out.println("회원정보 삽입 완료");
-			}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-				
-		return result;
+	        
+	        // userProfile 설정
+	        if (m.getUserProfile() != null && !m.getUserProfile().trim().isEmpty()) {
+	            pre.setString(12, m.getUserProfile()); // 사용자가 업로드한 파일명 사용
+	        }
+	     
+	        result = pre.executeUpdate();
+	        if (result == 1) {
+	            System.out.println("회원정보 삽입 완료");
+	        }
+
+	    }catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return result;
 	}
 
 	public int getChNum(String userId) {
@@ -146,10 +149,49 @@ public class MemberDAO {
 	
 	}
 
-	
-	
-	
-	
-	
+	public String getUserProfile(String userId) {
+	    Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    String userProfileImg = null;
+
+	    try {
+	        con = ds.getConnection();
+	        String sql = "SELECT userProfile FROM itda_user WHERE userid=?";
+	        pstmt = con.prepareStatement(sql);
+	        pstmt.setString(1, userId);
+	        
+	        rs = pstmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            userProfileImg = rs.getString("userProfile");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        if (rs != null) {
+	            try {
+	                rs.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (pstmt != null) {
+	            try {
+	                pstmt.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        if (con != null) {
+	            try {
+	                con.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    return userProfileImg;
+	}
 	
 }
