@@ -36,8 +36,6 @@ public class MemberLoginProcessAction implements Action {
 
 			int chNum = mdao.getChNum(userId); // 유저가 판매회원인 경우 채널번호를 세션에 저장
 			session.setAttribute("chNum", chNum);
-			
-			
 
 			// 사용자의 프로필 이미지 가져오기
 			String userProfile = mdao.getUserProfile(userId);
@@ -48,8 +46,6 @@ public class MemberLoginProcessAction implements Action {
 			} else {
 				session.setAttribute("userProfile", "profile.png");
 			}
-			
-			
 
 			String IDStore = request.getParameter("remember");
 			Cookie cookie = new Cookie("userId", userId);
