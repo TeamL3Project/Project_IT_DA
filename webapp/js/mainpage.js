@@ -47,19 +47,29 @@ $(function () {
                     $(".popular-list-ul").html("");
                 }
                 $(data).each(function () {
-                    if (data.length != 10) {
-                        $(".loader").css('display', 'none');
-                    } else {
-                        $(".loader").css('display', 'flex');
+                        if (data.length != 10) {
+                            $(".loader").css('display', 'none');
+                        } else {
+                            $(".loader").css('display', 'flex');
+                        }
+                        if (this.intro.length > 85){
+                            this.intro = this.intro.substring(0,85)+"...";
+                        }
+                        if(this.boardTitle.length > 25){
+                            this.boardTitle = this.boardTitle.substring(0,25)+"...";
+                        }
+                        var appendData = '<a href="contents/' + this.chNum + '/' + this.boardNum + '" class="popular-list-card">'
+                            + '<li class="popular-list-content"><span class="popular-list-title">' + this.boardTitle + '</span><br>'
+                            + '<p>' +  this.intro + '</p></li>'
+                            + '<li class="popular-list-imgframe">';
+                        if (this.thumbNail == null) {
+                            appendData += '<img src="image/common/itda_logo3.png" class="popular-list-img"></li></a>'
+                        } else {
+                            appendData += '<img src="image/content/' + this.chNum + '/' + this.boardNum + '/' + this.thumbNail + '" class="popular-list-img"></li></a>'
+                        }
+                        $(".popular-list-ul").append(appendData);
                     }
-                    const appendData = '<a href="/contents/' + this.chNum + '/' + this.boardNum + '" class="popular-list-card">'
-                        + '<li class="popular-list-content"><span class="popular-list-title">' + this.boardTitle + '</span><br>'
-                        + '<span>' + this.boardContent + '</span></li>'
-                        + '<li class="popular-list-imgframe">'
-                        + '<img src="image/content/' + this.chNum + '/' + this.boardNum + '/' + this.thumbNail + '" class="popular-list-img"></li>'
-                        + '</a>'
-                    $(".popular-list-ul").append(appendData);
-                })
+                )
             }
         })
     }

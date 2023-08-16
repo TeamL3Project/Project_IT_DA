@@ -36,7 +36,7 @@ public class ChannelMoveAction implements Action {
 
 		ChannelBean channel = channeldao.getChannellist(chnum);
 
-		List<ContentBean> channelhome = dao.channelhomeSelect();
+		List<ContentBean> channelhome = dao.channelhomeSelect(chnum);
 		List<ContentBean> channeldetail = dao.getBoardListByBoardNum(chnum);
 		List<ContentCategoryBean> chcategory = category.chcategorySelect(chnum);
 

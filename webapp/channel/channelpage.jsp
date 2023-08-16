@@ -153,12 +153,12 @@ td>a {
 	border: 1px solid #ccccc;
 }
 
-
 </style>
 <script>
 $(document).ready(function() {
     setButtonClickEvents();
     initializeDefaultContent();
+    
 
        id = '${userId}'
     	
@@ -173,7 +173,7 @@ $(document).ready(function() {
 			success: function(data) {
 				if(data==1) {				
 					$("#subscribeBtn").removeClass('bt-hover').addClass('bt-on');
-					//.prop('disabled', true);
+					$("#subscribeBtn").text("구독완료");
 				}
 			}
 		});	
@@ -190,7 +190,7 @@ $(document).ready(function() {
     	// 2 ? : 파라미터 
     			//channelsub.ch?userId=admin
     	id = '${userId}'
-    	console.log("test12");
+    	
     		if (id) {
                 if ($("#subscribeBtn").hasClass('bt-on')) { // 이미 구독한 경우 (unsubscribe)
                     // 구독 삭제
@@ -200,9 +200,10 @@ $(document).ready(function() {
                         data: { userId: id, chnum: '${channel.chnum}' },
                         success: function(data) {
                         	
-                            if (data == 1) {
+                        	if (data == 1) {
                                 alert("[${channel.chname}] 구독이 취소되었습니다.");
-                                $("#subscribeBtn").removeClass('bt-on').addClass('bt-hover');
+                                $("#subscribeBtn").removeClass('bt-on').addClass('bt-item');
+                                $("#subscribeBtn").text("구독하기");
                             } else {
                                 alert("구독 취소 오류입니다.");
                             }
@@ -219,7 +220,7 @@ $(document).ready(function() {
 		    				if(data==1) {
 		    					alert("[${channel.chname}] 구독되었습니다.");
 		        				$("#subscribeBtn").removeClass('bt-hover').addClass('bt-on');
-		
+		        				$("#subscribeBtn").text("구독완료");
 		    				} else {
 		                        alert("구독 오류입니다.");
 		                    }
@@ -344,7 +345,7 @@ function initializeDefaultContent() {
 			<br>
 			<div class="sub_alram_btn"
 				style="padding: 30px; margin-top: -38px; padding-left: 15px;">
-				<button class="btn bt-item bt-hover2" id="subscribeBtn">구독하기</button>
+				<button class="btn bt-item" id="subscribeBtn">구독하기</button>
 				<img src="../image/channel/alram_white.png"
 					style="width: 38px; height: 38px; margin-left: 10px; display: inline-block;">
 			</div>

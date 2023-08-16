@@ -1,19 +1,16 @@
 package controller.content;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import ChannelCategory.DB.ChannelCategoryBean;
-import ChannelCategory.DB.ChannelCategoryDAO;
 import Content.DB.ContentBean;
 import Content.DB.ContentDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContentList implements Action {
 	
@@ -37,7 +34,7 @@ public class ContentList implements Action {
         	listcount = contentlist.size();
         }else {  //카테고리
         	contentlist = ContentDAO.getchcatedata(channelnum, categoryId);        	
-        	listcount = ContentDAO.getListCount(channelnum, categoryId);
+//        	listcount = ContentDAO.getListCount(channelnum, categoryId);
         }
         
  

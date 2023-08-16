@@ -23,20 +23,11 @@ body {
 
 
 .board_write_wrap{
-	min-width:680px;
-	max-width : 720px;
-	margin-left: auto;
-    margin-right: auto;
+	width : 1080px;
+	margin : 0px auto 60px;
     padding-top : 60px;
 }
 
-input[type="text"]{
-	box-shadow : none;
-	border : none;
-	border-bottom : 1px solid;
-	
-	
-}
 
 
 
@@ -53,7 +44,7 @@ div {
 }
 
 .category_select_from{
-	min-width : 720px;
+	width : 100%;
 	height : 50px;
 	font-size:15px;
 	border : none;
@@ -63,9 +54,9 @@ div {
 }
 
 
-select::option{
-	margin:10px;
-}
+/*select::option{*/
+/*	margin:10px;*/
+/*}*/
 
 .board_write_wrap .board_content_wrap{
 	text-align : center;
@@ -74,8 +65,7 @@ select::option{
 }
 
 .board_subject_from{
-	max-width : 720px;
-	width : 720px;
+	width : 100%;
 	height : 50px;
 	font-size:15px;
 	border : none;
@@ -84,8 +74,7 @@ select::option{
 }
 
 .board_content_write{
-	max-width : 720px;
-	min-width : 690px;
+	width : 100%;
 	height : 350px;
 	padding : 15px;
 	
@@ -112,16 +101,18 @@ input[type="file"] {
 	margin-top : 20px;
     height: 30px;
     border-bottom: 1px solid #dddddd;
-    width: 720px;
+	width : 100%;
     color: #999999;
     font-size:13px
 }
-
+.board_file_wrap{
+	display: inline-block;
+}
 .editor_group{
-	margin-top : 50px;
+	margin-top : 20px;
 }
 .board_write_wrap .board_tag_wrap{
-	width : 720px;
+	width : 100%;
 	}
 .board_tag_wrap{
 	display : inline-block;
@@ -130,37 +121,37 @@ input[type="file"] {
 
 .tag_add{
 	border : none;
-	font-size : 10px;
-	margin : 0px 10px;
+	font-size : 15px;
 	padding: 10px 15px;
-}	
+	height: 50px;
+	width: 65px;
+}
 	
 
 .board_tag_text{
 	padding-left : 15px;
-	width : 480px;
+	width : 93.9%;
 	height : 50px;
 	font-size:15px;
 	border : none;
 	border-bottom : 1px solid;
+	box-shadow: none;
+	margin-top: 10px;
+	}
 	
-}
 
-.board_write_wrap .board_button_wrap{
+.board_button_wrap{
 	text-align : right;
-	padding-top : 60px;
-	margin-bottom : 60px;
+	margin-top : 80px;
 	max-width:720px;
+	display: inline-block;
+	float: right;
 }
 
 .board_write_button{
 	padding : 10px;
 	border : none;
-	margin-top : 20px;
-	margin-left : 10px;
-	margin-right : 0px;
-	margin-bottom : 0px;
-	
+	margin: 20px 0 0 10px;
 }	
 
 
@@ -172,10 +163,8 @@ input[type="file"] {
 ul {
     display: block;
     list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
 }
 
 li {
@@ -184,10 +173,10 @@ li {
 
 .viewer_tag_item {
     overflow: hidden;
-    max-width: 100%;
+    width: auto;
     display: inline-block;
     vertical-align: top;
-    margin: 6px 6px 0 0;
+    margin: 10px 6px 0 0;
 }
 
 .viewer_tag_list{
@@ -207,4 +196,43 @@ li {
     border-radius: 16px;
     background-color: #f4f4f4;
     word-break: break-all;
-}	
+	border: none;
+	cursor : pointer;
+	text-align: center;
+}
+
+.thumbNailArea{
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	margin-left: 15px;
+}
+.thumbNailName{
+	width: 100%;
+	margin: 10px;
+}
+
+.thumbNailImage{
+	width: 130px;
+	height: 130px;
+	display: none;
+	border-radius: 15px;
+	margin-top: 15px;
+}
+.thumbNailUploadArea{
+	border: 2px dashed #c9c9c9;
+}
+
+.thumbNailUpload{
+	margin: 10px 0 0 15px;
+	display: inline-block;
+}
+
+.ck-editor__editable {
+	height: 1000px;
+}
+
+.ck-dropdown__panel {
+	overflow-y: scroll;
+	max-height: 200px;
+}

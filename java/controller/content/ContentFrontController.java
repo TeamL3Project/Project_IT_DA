@@ -46,9 +46,6 @@ public class ContentFrontController extends HttpServlet {
             case "/upload.co":
                 action = new ImageUpload();
                 break;
-            case "/contentregit.co":
-                action = new ContentRegist();
-                break;
             case "/contentByCategory.co":
                 action = new ContentByCategory();
                 break;
@@ -63,6 +60,9 @@ public class ContentFrontController extends HttpServlet {
             	break;
             case "/contentwrite.co":
             	action = new ContentWrite();
+            	break;
+                case "/contentadd.co":
+            	action = new ContentAdd();
             	break;
             case "/ReplyList.co":
 				action = new ReplyList();

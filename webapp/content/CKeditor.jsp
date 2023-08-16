@@ -10,9 +10,7 @@
         max-height: 200px;
     }
 </style>
-<script src="ckeditor5/build/ckeditor.js"></script>
-<textarea name="content" id="editor"></textarea>
-<script src="ImageUploadAdapter.js"></script>
+
 <script>
     ClassicEditor.create(document.querySelector('#editor'), {
         language: 'ko',

@@ -1,13 +1,10 @@
 package Tag.DB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
-import Content.DB.ContentBean;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class TagDAO {
 	
@@ -21,32 +18,37 @@ public class TagDAO {
 			System.out.println("DB 연결 실패 : " + ex);
 		}
 	}
-	
-	
-	public boolean tagInsert(TagBean t) {
-		int result = 0; // 초기값
 
-		ContentBean co = new ContentBean();
-
-		String sql = "INSERT INTO tag " 
+	public boolean tagInsert(String tag, int channelNumber) {
+		String sql = "INSERT INTO tag "
 				+ " (tagid, boardnum, tagname)"
 				+ "	VALUES(tag_seq.nextval, ?, ?)";
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
-
-			// 새로운 글을 등록하는 부분입니다.
-			pstmt.setInt(1, co.getBoardNum());
-			pstmt.setString(2, t.getTagname());
-
-			result = pstmt.executeUpdate();
-			if (result == 1) {
-				System.out.println("데이터 삽입이 모두 완료되었습니다.");
-				return true;
-			}
+			pstmt.setInt(1, channelNumber);
+			pstmt.setString(2, tag);
+			pstmt.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println("tagInset() 에러: " + ex);
 		}
 		return false;
 	} // tagInset()메서드 end
+//보류
+//	public TagBean tagSelect (int contentNum){
+//		TagBean tag;
+//		String query = "select * from tag where boardnum = ?";
+//
+//		try(Connection con = ds.getConnection();
+//			PreparedStatement pst = con.prepareStatement(query);) {
+//
+//			pst.setInt(1, contentNum);
+//
+////			if()
+//		}catch (Exception ex){
+//			ex.printStackTrace();
+//		}
+//
+//		return tag;
+//	}
+
 
 }

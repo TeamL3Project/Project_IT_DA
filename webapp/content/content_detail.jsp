@@ -21,7 +21,7 @@
     <script src="${pageContext.request.contextPath}/js/Reply.js"></script>
     <script src="${pageContext.request.contextPath}/js/Heart.js"></script>
 	<link href='${pageContext.request.contextPath}/css/Reply.css' type='text/css' rel='stylesheet'>
-	<link rel="stylesheet" href="../css/content-styles.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/content-styles.css" type="text/css">
 <title>${co.boardTitle }</title>
 </head>
 <body>

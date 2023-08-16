@@ -22,12 +22,9 @@ public class MainEntrance implements Action {
         ChannelCategoryDAO channelCategoryDao = new ChannelCategoryDAO();
         int firstConnect = 0;
         List<ContentBean> popcontentList = dao.popcontentSelect();
-        List<ContentBean> contentSelectBycategory = dao.contentSelectBycategory(firstConnect);
         List<ChannelCategoryBean> channelCategoryBeanList = channelCategoryDao.selectInfo();
         request.setAttribute("popcontentList",popcontentList);
-//        request.setAttribute("contentSelectBycategory",contentSelectBycategory);
         request.setAttribute("channelCategory",channelCategoryBeanList);
-//        System.out.println(channelCategoryBeanList.);
         forward.setRedirect(false);
         forward.setPath("main/protomain.jsp");
         return forward;
