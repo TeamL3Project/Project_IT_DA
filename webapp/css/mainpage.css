@@ -230,7 +230,7 @@
 }
 
 .row.area {
-	width: 900px;
+	width: 1000px;
 	margin: 0 auto;
 	padding: 20px 0;
 	
@@ -241,7 +241,7 @@
 }
 
 .card {
-	margin: 0 auto;
+	margin: 15 auto;
 	background-color: white;
 	overflow: hidden;
 	transition: all 0.3s ease-in-out;

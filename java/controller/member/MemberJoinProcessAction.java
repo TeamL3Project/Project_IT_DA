@@ -3,14 +3,14 @@ package controller.member;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Enumeration;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -19,8 +19,6 @@ import Member.DB.Member;
 import Member.DB.MemberDAO;
 import controller.action.Action;
 import controller.action.ActionForward;
-import util.dateService;
-import util.folderService;
 
 public class MemberJoinProcessAction implements Action {
 
@@ -28,44 +26,68 @@ public class MemberJoinProcessAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String saveFolder = "image/Member";
-		int fileSize = 5 * 1024 * 1024;
-		ServletContext sc = request.getServletContext();
-		String realFolder = sc.getRealPath(saveFolder);
-		
-		String userFolder = realFolder + File.separator + dateService.toDay();
-		folderService.createFolder(userFolder);
-		
-		
-		MultipartRequest multi = new MultipartRequest(
-				request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
-		String userId = multi.getParameter("id");
-		System.out.println(userId);
+		 // 이미지 저장 디렉토리 설정
+	    String saveFolder = "image/Member";
+	    int fileSize = 5 * 1024 * 1024;
+
+	    // 서버 저장 경로 설정
+	    ServletContext sc = request.getServletContext();
+	    String realFolder = sc.getRealPath(saveFolder);
+
+	    // MultipartRequest 객체 생성 및 요청 값 처리
+	    MultipartRequest multi = new MultipartRequest(
+	        request, realFolder, fileSize, "UTF-8", new DefaultFileRenamePolicy());
+
+	    // 사용자 폴더 생성
+	    String userId = multi.getParameter("id");
+	    String userFolder = realFolder + File.separator + userId;
+	    util.folderService.createFolder(userFolder);
+
+	    // 날짜별 폴더 생성
+	    userFolder += File.separator + util.dateService.toDay();
+	    util.folderService.createFolder(userFolder);
+
+	    // 사용자 정보 파라미터 처리
+	    System.out.println(userId);
 	    String userPw = multi.getParameter("password");
 	    String userName = multi.getParameter("name");
-	    
+
 	    ActionForward forward = new ActionForward();
 
+	    // 파일 이동 처리 부분 추가
+	    String paramName = "";
+	    String fileName = "";
+	    Enumeration<?> files = multi.getFileNames();
 
+	    while (files.hasMoreElements()) {
+	        paramName = (String) files.nextElement(); // 파일 업로드 파라미터 이름 조회
+	        fileName = multi.getFilesystemName(paramName); // 업로드된 파일 이름 조회
+	        if (fileName == null) { // 파일이 존재하지 않을 경우, 다음 파일 검사
+	            continue;
+	        }
 
+	        File sourceFile = new File(realFolder + File.separator + fileName); // 원본 경로 설정
+	        File destinationFile = new File(userFolder + File.separator + fileName); // 실제 사용자 날짜별 폴더 경로 설정
 
-	    // dateService 클래스 메소드로 직접 접근
-	    realFolder += File.separator + util.dateService.toDay();
+	        if (sourceFile.exists()) { // 원본 파일이 존재할 경우
+	            sourceFile.renameTo(destinationFile); // 사용자 날짜별 폴더로 이동
+	        }
+	    }
+		
+		
+		
 
-	    folderService.createFolder(realFolder);
+		
+	    
 
-
-	 
-		    
-		    
-
-		// 날짜 문자열 확인 및 파싱
+	    // 생년월일 문자열 파싱 및 LocalDate 형 변환
 		String dateOfBirthStr = multi.getParameter("date_birth");
 		LocalDate dateOfBirth = null;
 		if (dateOfBirthStr != null && !dateOfBirthStr.isEmpty()) {
 			dateOfBirth = LocalDate.parse(dateOfBirthStr);
 		}
 
+		// 사용자 정보 변수 할당
 		String userGender = multi.getParameter("gender"); // 성별
 		String userPhone = multi.getParameter("phone"); // 전화번호
 		String userAddress1 = multi.getParameter("address1"); // 주소 
@@ -73,15 +95,9 @@ public class MemberJoinProcessAction implements Action {
 		String userPost = multi.getParameter("zip_code"); // 우편번호
 		String userEmail = multi.getParameter("email"); // 이메일
 		String userCategory = multi.getParameter("category"); // 관심 카테고리
-		String userProfile = multi.getFilesystemName("userProfile");  
+		String userProfile = multi.getFilesystemName("profile");
 		
-		// 가입일 문자열 확인 및 파싱
-		String userJoindateStr = multi.getParameter("joindate");
-		LocalDate userJoindate = null;
-		if (userJoindateStr != null && !userJoindateStr.isEmpty()) {
-			userJoindate = LocalDate.parse(userJoindateStr);
-		}
-
+		//"status_id" 파라미터 값을 정수로 변환하여 statusId 변수에 할당
 		String statusIdParam = multi.getParameter("status_id");
 		int statusId = (statusIdParam != null && !statusIdParam.trim().isEmpty()) ? Integer.parseInt(statusIdParam) : 0;
 
@@ -92,6 +108,8 @@ public class MemberJoinProcessAction implements Action {
 			updateDate = LocalDate.parse(updateDateStr);
 		}
 
+		// 현재 시간을 Timestamp 형태로 userJoindate 값으로 설정
+		Timestamp userJoindate = new Timestamp(System.currentTimeMillis());
 		
 		Member m = new Member();
 		m.setUserId(userId);
@@ -106,7 +124,8 @@ public class MemberJoinProcessAction implements Action {
 		m.setUserEmail(userEmail);
 		m.setUserCategory(userCategory);
 		m.setStatusId(statusId);
-		m.setUserProfile(userProfile); 
+		m.setUserProfile(userProfile);
+		m.setUserJoindate(userJoindate);
 
 		MemberDAO mdao = new MemberDAO();
 		int result = mdao.insert(m);
@@ -136,4 +155,3 @@ public class MemberJoinProcessAction implements Action {
 	}
 	
 }
-
