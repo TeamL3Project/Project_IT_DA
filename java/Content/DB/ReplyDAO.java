@@ -3,6 +3,7 @@ package Content.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -261,5 +262,36 @@ public class ReplyDAO {
 		
 		
 	}
+
+	public Reply getReplyCount(int channelnum) {
+		Reply r = new Reply();
+		String sql = "select COALESCE(b.cnt, 0) as cnt "
+				+ "from chboard a "
+				+ "left outer join (select boardnum, count(replynum) as cnt "
+				+ "				 from boardreply "
+				+ "				 group by boardnum) b "
+				+ "on a.boardnum = b.boardnum "
+				+ "where a.chnum = ? "
+				+ "order by a.boardnum ";
+		
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, channelnum);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					r.setCnt(rs.getInt("cnt"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("getListCount() 에러: " + ex);
+		}
+
+		return r;
+	} // ReplyCount() end
+
 	
 }
