@@ -40,10 +40,7 @@ public class ContentMove implements Action {
 		ContentDAO dao = new ContentDAO();
 		ContentBean co = dao.contentSelect(boardNum);
 		ReplyDAO redao = new ReplyDAO();
-		TagDAO tdao = new TagDAO();
 		
-		List<TagBean> tname = new ArrayList<TagBean>();
-		tname = tdao.getTagNameList(boardNum, chnum);
 		
 		int rcnt = 0;
 		rcnt = redao.getListCount(boardNum);
@@ -51,7 +48,6 @@ public class ContentMove implements Action {
 		contentVisitUp(co);
 		request.setAttribute("co", co);
 		request.setAttribute("rcnt", rcnt);
-		request.setAttribute("tname", tname);
 		
 
 		forward.setPath("/content/content_detail.jsp");

@@ -81,7 +81,6 @@ $(function(){
 
 		//id값이 있는 경우
 		if (userId) {
-			$("#userId").val(userId);
 
 			// 회원가입시 업로드한 프로필사진 경로
 			let profileImgPath = contextPath + "/image/Member/" + userId + "/"

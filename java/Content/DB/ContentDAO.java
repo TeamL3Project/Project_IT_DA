@@ -57,17 +57,17 @@ public class ContentDAO {
 			try (ResultSet rs = pst.executeQuery();) {
 
 				if (rs.next()) {
-					co.setBoardNum(rs.getInt(1));
-					co.setChNum(rs.getInt(2));
-					co.setWriter(rs.getString(3));
-					co.setBoardTitle(rs.getString(4));
-					co.setBoardContent(rs.getString(5));
-					co.setBoardHeart(rs.getInt(6));
-					co.setChcate_id(rs.getInt(7));
-					co.setBoardDate(rs.getTimestamp(10));
-					co.setBoardVisit(rs.getInt(12));
-					co.setThumbNail(rs.getString(13));
-					co.setChcate_name(rs.getString(14));
+					co.setBoardNum(rs.getInt("boardnum"));
+					co.setChNum(rs.getInt("chnum"));
+					co.setWriter(rs.getString("writer"));
+					co.setBoardTitle(rs.getString("boardtitle"));
+					co.setBoardHeart(rs.getInt("boardheart"));
+					co.setChcate_id(rs.getInt("chcate_id"));
+					co.setBoardDate(rs.getTimestamp("boarddate"));
+					co.setBoardVisit(rs.getInt("boardvisit"));
+					co.setThumbNail(rs.getString("thumbnail"));
+					co.setBoardContent(rs.getString("boardcontent"));
+					co.setChcate_name(rs.getString("chcate_name"));
 				}
 
 			} catch (SQLException ex) {
