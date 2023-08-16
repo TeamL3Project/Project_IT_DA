@@ -7,17 +7,13 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./css/sellerform.css">
-	<link rel="stylesheet" href="css/common.css">
-<jsp:include page="../main/header.jsp"/>
-</head>
-<body style="margin: 0;">
 <script>
 $(function() {
 	$('#sellerform').submit(function() {
-		var channel = $('#channel').val().trim();
-		var phone = $('#phone').val().trim();
-		var email = $("#email").val().trim();
-		var intro = $('#intro').val().trim();
+		var channel = $('#channel').val();
+		var phone = $('#phone').val();
+		var email = $("#email").val();
+		var intro = $('#intro').val();
 		
 		if (channel == '') {
 			alert("채널명을 입력하세요");
@@ -47,15 +43,9 @@ $(function() {
 			return false;
 		
 		}
+
 		
-		const channel1 = $('#channel');
-
-		if ($.trim(channel1.val()) == '') {
-			alert('채널명을 입력하세요');
-			channel.focus();
-			return false;
-		}
-
+		let channelcheck = '';
 		let submit_channel_val = $.trim(channel1.val()); 	//submit channel값과 중복검사 channel값이 다른 경우
 			
 		if (submit_channel_val != channelcheck) {
@@ -94,7 +84,7 @@ $(function() {
 			return false;
 		}
 			
-		
+		return true;
 		
 	});//submit end
 	
@@ -167,12 +157,18 @@ $(function() {
 		location.href="${pageContext.request.contextPath}/main";
 	})
 	
+	document.querySelector('.btn-Upload').addEventListener('click', function() {
+        document.getElementById('profile').click();
+    });
 	
 });//ready end
 
-	</script>
+</script>
+</head>
+<body style="margin: 0;">
 <div id="sellerback">
-<form name='sellerform' id='sellerform' enctype="multipart/form-data" method='post' action='sellerjoinprocess.me'>
+<form name='sellerform' id='sellerform' enctype="multipart/form-data" method='post'
+ action='${pageContext.request.contextPath}/sellerjoinprocess.me'>
 	<h1 style="margin: 30px 50px;">Join Seller</h1>
 	<div class='num0'>
 		<label for='id' style="float: left;">&nbsp;아이디</label>
@@ -186,13 +182,13 @@ $(function() {
 	    </div>
 	</div>
 	<div class='num2 clearfix'>
-	<label for='profile'>채널 프로필<span style="font-size: 12px; display: felx;
+	<label for='profile' style="float: left;">채널 프로필<span style="font-size: 12px; display: felx;
 	 padding-right: 130px;"> (설정하지 않으면 기본프로필로 나타납니다.)</span></label><br>
 		<div id="profile_select">
 			<label for="inputFile">
 				<div class="btn-Upload">파일 선택</div>
-			</label>
 			<input type='file' name='profile' id='profile' style="margin-top: 20px;" accept="image/*">
+			</label>
 		</div>
 		<div id="profile_preview">
 			<span id="profileName"></span>
@@ -236,7 +232,7 @@ $(function() {
 	<div class='num5'>	
 		<label for='info' style="float: left;"><span style="color: red">*</span>채널 소개글</label><br>
 			<textarea rows='10' name='info' id='info' maxLength='300'
-			 placeholder='채널 소개글을 작성해주세요. 최대 300자'></textarea>
+			 placeholder='채널 소개글을 작성해주세요. 최대 300자' required></textarea>
 	</div>
 	<div class='num6 clearfix'>
 		<button type='submit' value="판매회원가입" class='signup_butt'>판매회원가입</button>

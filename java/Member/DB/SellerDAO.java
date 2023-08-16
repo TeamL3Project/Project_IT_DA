@@ -46,33 +46,54 @@ public class SellerDAO {
 	}//insertSeller end
 
 
-	 public Seller getSellerdata(int chnum) {
-	        Seller seller = new Seller();
-	        String sql = "SELECT s.* "
-	                   + "FROM channellist c "
-	                   + "INNER JOIN seller s ON c.ownerid = s.userid "
-	                   + "WHERE c.chNum = ?";
+	public Seller getSellerdata(int chnum) {
+		Seller seller = new Seller();
+	 	String sql = "SELECT s.* "
+	               + "FROM channellist c "
+	               + "INNER JOIN seller s ON c.ownerid = s.userid "
+	               + "WHERE c.chNum = ?";
 
-	        try (Connection con = ds.getConnection();
-	             PreparedStatement pstmt = con.prepareStatement(sql);) {
+	    try (Connection con = ds.getConnection();
+	        PreparedStatement pstmt = con.prepareStatement(sql);) {
 
-	            pstmt.setInt(1, chnum);
+	        pstmt.setInt(1, chnum);
 
-	            try (ResultSet rs = pstmt.executeQuery()) {
-	                if (rs.next()) {
-	                    seller.setUserId(rs.getString("USERID"));
-	                    seller.setSellerPhone(rs.getString("SELLERPHONE"));
-	                    seller.setSellerEmail(rs.getString("SELLEREMAIL"));
-	                    seller.setSellerJoindate(rs.getString("SELLERJOINDATE"));
-	                }
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                seller.setUserId(rs.getString("USERID"));
+	                seller.setSellerPhone(rs.getString("SELLERPHONE"));
+	                seller.setSellerEmail(rs.getString("SELLEREMAIL"));
+	                seller.setSellerJoindate(rs.getString("SELLERJOINDATE"));
 	            }
-	        } catch (SQLException se) {
-	            se.printStackTrace();
-	        } catch (Exception e) {
-	            System.out.println("getDetail() 에러: " + e);
 	        }
-	        return seller;
+	    } catch (SQLException se) {
+	        se.printStackTrace();
+	    } catch (Exception e) {
+	        System.out.println("getDetail() 에러: " + e);
 	    }
+	    
+	    return seller;
+	}
+
+
+	public boolean IdCheck(String userId) {
+	 	String sql = "select userid "
+	               + "from seller "
+	               + "where userid = ?";
+
+	    try (Connection con = ds.getConnection();
+	        PreparedStatement pre = con.prepareStatement(sql);) {
+
+	        pre.setString(1, userId);
+	        try (ResultSet rs = pre.executeQuery()) {
+	        	return rs.next();
+	        }
+	    }catch (Exception e) {
+	    	e.printStackTrace();
+	    }
+	    
+		return false;
+	}
 
 }
 
