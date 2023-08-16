@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import Channel.DB.ChannelBean;
+import Tag.DB.TagBean;
 
 public class ContentDAO {
 	private int result = 0;
@@ -31,8 +32,10 @@ public class ContentDAO {
 
 	public ContentBean contentSelect(int boardNum) {
 		// String query = "select * from chboard where boardnum = ?";
-		String query = "select chboard.*, chboardcategory.chcate_name " + "from chboard   join chboardcategory "
-				+ "on   chboard.chnum  =  chboardcategory.chnum " + "where boardnum = ?  "
+		String query = "select chboard.*, chboardcategory.chcate_name " 
+				+ "from chboard   join chboardcategory "
+				+ "on   chboard.chnum  =  chboardcategory.chnum "
+				+ "where boardnum = ?  "
 				+ "and chboard.chcate_id = chboardcategory.chcate_id ";
 		ContentBean co = new ContentBean();
 		try (Connection con = ds.getConnection(); PreparedStatement pst = con.prepareStatement(query);) {
@@ -382,42 +385,32 @@ public class ContentDAO {
 		return false;
 	} // boardInset()메서드 end
 
-	public List<ContentBean> getchcatedata(int chNum, int categoryId) {
-			String query = "SELECT * FROM content WHERE chNum = ? AND chcate_id = ?";
-			List<ContentBean> contentList = new ArrayList<>();
-	
-			try (Connection conn = ds.getConnection(); 
-				PreparedStatement pst = conn.prepareStatement(query);) {
-	
-				pst.setInt(1, chNum);
-				pst.setInt(2, categoryId);
-	
-				try (ResultSet rs = pst.executeQuery()) {
-	
-					while (rs.next()) {
-						ContentBean co = new ContentBean();
-						co.setBoardNum(rs.getInt("boardnum"));
-						co.setChNum(rs.getInt("ChNum"));
-						co.setWriter(rs.getString("Writer"));
-						co.setBoardTitle(rs.getString("BoardTitle"));
-						co.setBoardContent(rs.getString("BoardContent"));
-						co.setBoardHeart(rs.getInt("boardHeart"));
-						co.setChCate_id(rs.getInt("chCate_id"));
-						co.setBoardOpen(rs.getString("boardOpen"));
-						co.setBoardNore(rs.getString("boardNore"));
-						co.setBoardDate(rs.getTimestamp("boardDate"));
-						co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
-						co.setThumbNail(rs.getString("ThumbNail"));
-						contentList.add(co);
+	public int getListCount(int chnum, int chcate_id) {
+		String sql = "select count(*) from chboard "
+				+ "where chNum = ? "
+				+ "AND chcate_id = ? ";
+		int x = 0;
+		try (Connection con = ds.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setInt(1, chnum);
+			pstmt.setInt(2, chcate_id);
 
-					}
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					 x = rs.getInt(1);
 				}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
-			return contentList;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("getListCount() 에러: " + ex);
 		}
+
+		return x;
+	} // getListCount() end
+	
 
 	
 	public int plusheartCount(int boardNum) {
@@ -485,57 +478,37 @@ public class ContentDAO {
 		return -1;
 	}
 	
-	public List<ContentBean> getAllchcatedata() {
+
+	public List<ContentBean> getAllchcatedata(int channelnum, String order, int page, int limit) {
 		String query = "SELECT * "
-				+ "FROM chboard "
-				+ "wh"
-				+ "order by boardDate asc";
+				+ "from (select rownum rnum, j.* "
+				+ "	 from(select chboard.*, nvl(cnt,0) cnt, "
+				+ "			(select chcate_name from  chboardcategory c where c.chcate_id=chboard.chcate_id)  chcate_name"
+				+ "		     from chboard left join  (select boardnum, count(*) cnt"
+				+ "					     			from boardreply"
+				+ "					      			group by boardnum "
+				+ "                      ) f"
+				+ "          on chboard.boardnum = f.boardnum "
+				+ "          where chboard.chnum = ? "
+				+ "          order by boardDate " + order + ", chboard.boardnum desc"
+				+ "          ) j "
+				+ "      where rownum <= ? "
+				+ "     ) "
+				+ "where rnum >= ? and rnum <= ? ";
 		List<ContentBean> contentList = new ArrayList<>();
-
-		try (Connection conn = ds.getConnection(); 
-			PreparedStatement pst = conn.prepareStatement(query);) {
-
-
-			try (ResultSet rs = pst.executeQuery()) {
-
-				while (rs.next()) {
-					ContentBean co = new ContentBean();
-					co.setBoardNum(rs.getInt("boardnum"));
-					co.setChNum(rs.getInt("ChNum"));
-					co.setWriter(rs.getString("Writer"));
-					co.setBoardTitle(rs.getString("BoardTitle"));
-					co.setBoardContent(rs.getString("BoardContent"));
-					co.setBoardHeart(rs.getInt("boardHeart"));
-					co.setChCate_id(rs.getInt("chCate_id"));
-					co.setBoardOpen(rs.getString("boardOpen"));
-					co.setBoardNore(rs.getString("boardNore"));
-					co.setBoardDate(rs.getTimestamp("boardDate"));
-					co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
-					co.setThumbNail(rs.getString("ThumbNail"));
-					contentList.add(co);
-
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return contentList;
-	}
-
-	public List<ContentBean> getAllchcatedata(int channelnum, String order) {
-		String query = "SELECT * "
-				+ "FROM chboard "
-				+ "WHERE chnum = ? "
-				+ "order by boardDate " + order;
-		List<ContentBean> contentList = new ArrayList<>();
-
+		// 한 페이지당 10개씩 목록인 경우 1페이지, 2페이지, 3페이지, 4페이지 ...
+		int startrow = (page - 1) * limit + 1; //읽기 시작할 row 번호(1 11 21 31 ...
+		int endrow = startrow + limit - 1; // 읽을 마지막 row 번호(10 20 30 40 ...
+		
 		 System.out.println(query);
 		
 		try (Connection conn = ds.getConnection(); 
 			PreparedStatement pst = conn.prepareStatement(query);) {
 
 			pst.setInt(1, channelnum);
+			pst.setInt(2, endrow);
+			pst.setInt(3, startrow);
+			pst.setInt(4, endrow);
 
 			try (ResultSet rs = pst.executeQuery()) {
 
@@ -548,6 +521,63 @@ public class ContentDAO {
 					co.setBoardContent(rs.getString("BoardContent"));
 					co.setBoardHeart(rs.getInt("boardHeart"));
 					co.setChCate_id(rs.getInt("chCate_id"));
+					co.setChcate_name(rs.getString("chcate_name"));
+					co.setBoardOpen(rs.getString("boardOpen"));
+					co.setBoardNore(rs.getString("boardNore"));
+					co.setBoardDate(rs.getTimestamp("boardDate"));
+					co.setBoardUpdate(rs.getTimestamp("boardUpdate"));
+					co.setThumbNail(rs.getString("ThumbNail"));
+					co.setCnt(rs.getInt("cnt"));
+					contentList.add(co);
+
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return contentList;
+	}
+
+	public List<ContentBean> getchcatedata(int chNum, int categoryId, int page, int limit) {
+		String query = "SELECT * "
+				+ "from (select rownum rnum, j.* "
+				+ "			from(select * "
+				+ "				FROM chboard natural join chboardcategory "
+				+ "				WHERE chnum = ? "
+				+ "				and chcate_id = ? ) j "
+				+ "where rownum <= ? "
+				+ ")"
+				+ "where rnum >= ? and rnum <= ? "
+				+ "order by boardDate asc";
+		List<ContentBean> contentList = new ArrayList<>();
+
+		try (Connection conn = ds.getConnection(); 
+			PreparedStatement pst = conn.prepareStatement(query);) {
+			
+			int startrow = (page - 1) * limit + 1; //읽기 시작할 row 번호(1 11 21 31 ...
+			int endrow = startrow + limit - 1; // 읽을 마지막 row 번호(10 20 30 40 ...
+			
+			 System.out.println(query);
+
+			pst.setInt(1, chNum);
+			pst.setInt(2, categoryId);
+			pst.setInt(3, endrow);
+			pst.setInt(4, startrow);
+			pst.setInt(5, endrow);
+
+			try (ResultSet rs = pst.executeQuery()) {
+
+				while (rs.next()) {
+					ContentBean co = new ContentBean();
+					co.setBoardNum(rs.getInt("boardnum"));
+					co.setChNum(rs.getInt("ChNum"));
+					co.setWriter(rs.getString("Writer"));
+					co.setBoardTitle(rs.getString("BoardTitle"));
+					co.setBoardContent(rs.getString("BoardContent"));
+					co.setBoardHeart(rs.getInt("boardHeart"));
+					co.setChCate_id(rs.getInt("chCate_id"));
+					co.setChcate_name(rs.getString("chcate_name"));
 					co.setBoardOpen(rs.getString("boardOpen"));
 					co.setBoardNore(rs.getString("boardNore"));
 					co.setBoardDate(rs.getTimestamp("boardDate"));
@@ -563,6 +593,30 @@ public class ContentDAO {
 
 		return contentList;
 	}
+
+	public int getListAllCount(int channelnum) {
+		String sql = "select count(*) from chboard "
+				+ "where chNum = ? ";
+		int x = 0;
+		try (Connection con = ds.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setInt(1, channelnum);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					 x = rs.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("getAllListCount() 에러: " + ex);
+		}
+
+		return x;
+	} // getListAllCount() end
 
 }
 

@@ -17,6 +17,7 @@
 		<div class="forinline">
 			<div class="myPage-profile">
 				<img src="./image/common/profile.png" class="myPageprofile">
+				<input type="text" class="idView" value="${userId}" readOnly>
 			</div>
 			<a href="infoUpdate.me" class="infobutt"><img src="./image/common/option.png" class="infobuttimg"></a>
 		</div>

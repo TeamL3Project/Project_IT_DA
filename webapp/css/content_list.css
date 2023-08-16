@@ -213,15 +213,16 @@ background-color: #fff;
 }
 
 .content_head{
-	font-size : 25px;
+	font-size : 18px;
 	padding-top: 15px;
 padding-right: 20px;
+font-family :'나눔고딕';
 
 }
 
 
 em{
-	color : #FBD1A7;
+	color : #f2b476;
 	font-style : normal;
 	font-size : 17pt;
 	padding : 10px;
@@ -386,6 +387,17 @@ hr{
 	width:13px;
 	margin-top: 0px;
 margin-right: 2px;
-margin-bottom: 0px;
+margin-bottom: 10px;
 margin-left: 5px;
+}
+
+.pagination{
+	margin-bottom : 60px;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #fbd1a7;
+    border-color: #fbd1a7;
 }

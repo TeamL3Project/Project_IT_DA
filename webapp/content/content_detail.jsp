@@ -1,9 +1,6 @@
- <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-    
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <html>
 <head>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -12,24 +9,25 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<meta charset="utf-8">
-	<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">
-    <jsp:include page="../main/header.jsp"/>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link href="${pageContext.request.contextPath}/css/content_detail.css" type="text/css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script> var contextPath = "<%= request.getContextPath() %>"; </script>
     <script src="${pageContext.request.contextPath}/js/Reply.js"></script>
     <script src="${pageContext.request.contextPath}/js/Heart.js"></script>
 	<link href='${pageContext.request.contextPath}/css/Reply.css' type='text/css' rel='stylesheet'>
+	<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">	
+	<link href="${pageContext.request.contextPath}/css/content_detail.css" type="text/css" rel="stylesheet">
 	<link rel="stylesheet" href="../css/content-styles.css" type="text/css">
+    <jsp:include page="../main/header.jsp"/>
 <title>${co.boardTitle }</title>
 </head>
 <body>
+<input type="hidden" id="LoginId" value="${userId}" name="LoginId">
 <div class="board_detail_wrap">
 	<div class="board_detail_all_group">
 	<div class="board_detail_title_group">
 	<div class="board_detail_category">
-		<a href class="viewer_category_link">${co.chcate_name}</a>
+		<a href="${pageContext.request.contextPath}/channels/${co.chNum}" class="viewer_category_link">${co.chcate_name}</a>
 	</div>
 	<div class="board_detail_title_inline">
 		<span class="board_detail_title">${co.boardTitle }</span>
@@ -48,9 +46,9 @@
                             	<input type="hidden" name="boardHeart" value="${co.boardHeart}" id="boardHeart">
                            		<em class="u_heart_count">${co.boardHeart}</em>
                             </a>
-                            <a href="#reply_area"><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/comment.png'>
+                            <a href="#reply_area"><img class="content_comment_img2" src= '${pageContext.request.contextPath}/image/content/comment.png'>
                                 <span class="content_comment_count"></span>
-                                <em class="u_cnt_count">${boardComment}</em>
+                                <em class="u_cnt_count">${rcnt}</em>
                             </a>
                       </span>
 				</div>
@@ -59,8 +57,7 @@
 	</div>
 	</div>
 	<div class="viewer_main_text_group">
-		<div class="ck-content content_main_text">
-			${co.boardContent }
+		<div class="ck-content content_main_text">${co.boardContent }
 			<input type="hidden" name="num" value="${co.boardNum}" id="Reply_board_num">
 		</div>
 	</div>
@@ -85,12 +82,12 @@
 		<div class="viewer_bottom_info">
 			<div class="viewer_tag">
 				<ul class="viewer_tag_list">
+	 			<c:forEach var="t" items="${tname}" varStatus="status">
 					<li class="viewer_tag_item">
-						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그1${tagname }</a>
+						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">${t[status.index]}</a>
+						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">${t}</a>
 					</li>
-					<li class="viewer_tag_item">
-						<a href class="viewer_tag_link" data-clk="chlh_cont.tag">#태그2</a>
-					</li>
+				</c:forEach>
 				</ul>
 			</div>
 			<div class="viewer_bottom_count_wrap">
@@ -100,9 +97,9 @@
                                <span class="content_comment_count"></span>
                            		<em class="u_heart_count">${co.boardHeart}</em>
                             </a>
-                            <a href><img class="content_comment_img" src= '${pageContext.request.contextPath}/image/content/comment.png'>
+                            <a href><img class="content_comment_img2" src= '${pageContext.request.contextPath}/image/content/comment.png'>
                                 <span class="content_comment_count"></span>
-                                <em class="u_cnt_count">${boardComment}</em>
+                                <em class="u_cnt_count">${rcnt}</em>
                             </a>
                       </span>
 				</div>

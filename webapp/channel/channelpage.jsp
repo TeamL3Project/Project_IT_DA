@@ -289,13 +289,13 @@ function setInnerHTML2() {
        <table class="table table-bordered" style="margin: 0 8;">
 	        <tr>
 	          <td>
-	          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_id=0">전체 </a>
+	          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_id=0&chname=${channel.chname}">전체 </a>
 	          </td>
 	        </tr>
 			<c:forEach var="c" items="${chcategory}">
 			  <tr>
 	          <td>
-	          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${c.chcate_Name}&chcate_id=${c.chcate_id}">
+	          <a href="${pageContext.request.contextPath}/channel/contentlist.co?channelnum=${channel.chnum}&chcate_name=${c.chcate_Name}&chcate_id=${c.chcate_id}&chname=${channel.chname}">
 	          ${c.chcate_Name}
 	      	  </a>
 	          </td>

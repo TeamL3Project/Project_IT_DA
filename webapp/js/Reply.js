@@ -221,7 +221,7 @@ $(function() {getList(option);
 		}
 		
 		const replyNum = $(this).attr('data-id');
-		
+		console.log(replyNum);
 		$.ajax({
 			url : contextPath + '/ReplyUpdate.co',
 			data : {replyNum : replyNum,
