@@ -35,7 +35,7 @@ public class ContentByCategory implements Action {
             j.addProperty("chNum", content.getChNum());
             j.addProperty("writer", content.getWriter());
             j.addProperty("boardTitle", content.getBoardTitle());
-            j.addProperty("boardContent", content.getBoardContent());
+            j.addProperty("boardContent", content.getBoardContent().toString());
             j.addProperty("boardHeart", content.getBoardHeart());
             j.addProperty("chCate_id", content.getChCate_id());
             j.addProperty("boardOpen", content.getBoardOpen());
@@ -43,8 +43,8 @@ public class ContentByCategory implements Action {
             j.addProperty("boardDate", String.valueOf(content.getBoardDate()));
             j.addProperty("boardUpdate", String.valueOf(content.getBoardUpdate()));
             j.addProperty("thumbNail", content.getThumbNail());
+            j.addProperty("intro", content.getIntro().toString());
             JsonArray.add(j);
-            System.out.println(j);
         }
         
         response.setContentType("text/html; charset=UTF-8");

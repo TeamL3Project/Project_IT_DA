@@ -1,14 +1,11 @@
 package ContentCategory.DB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ContentCategoryDAO {
@@ -85,7 +82,7 @@ public class ContentCategoryDAO {
 		}
 		
 		public List<ContentCategoryBean> getCategoryNameList(int chnum) {
-			String sql = "select chcate_name "
+			String sql = "select * "
 					+ "from chboardcategory "
 					+ "where chnum = ?";
 			List<ContentCategoryBean> ContentCategoryList = new ArrayList<>();
@@ -97,7 +94,9 @@ public class ContentCategoryDAO {
 					
 				while (rs.next()) {
 					ContentCategoryBean ca = new ContentCategoryBean();
-					ca.setChcate_Name(rs.getString(1));
+					ca.setChcate_id(rs.getInt(1));
+					ca.setChNum(rs.getInt(2));
+					ca.setChcate_Name(rs.getString(3));
 					ContentCategoryList.add(ca);
 				}
 

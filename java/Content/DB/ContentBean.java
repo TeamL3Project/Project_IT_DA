@@ -1,6 +1,6 @@
 package Content.DB;
 
-import java.sql.Timestamp;
+import java.sql.*;
 
 public class ContentBean {
     private int boardNum, chNum, boardHeart, chCate_id, boardVisit;
@@ -23,11 +23,20 @@ public class ContentBean {
 
 	private String chcate_name;
     private String chname;
-    
+
+    private String intro;
 	private int tagid;
 	private String tagname;
-	
-    
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+
+
     
     public int getTagid() {
 		return tagid;

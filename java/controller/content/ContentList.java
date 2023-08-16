@@ -57,7 +57,7 @@ public class ContentList implements Action {
         	replycount = redao.getReplyCount(channelnum);
         	
         }else {  //카테고리
-        	contentlist = ContentDAO.getchcatedata(channelnum, categoryId, page, limit);        	
+        	contentlist = ContentDAO.getchcatedata(channelnum, categoryId, page, limit);
         	listcount = ContentDAO.getListCount(channelnum, categoryId);
         	replycount = redao.getReplyCount(channelnum);
         }
