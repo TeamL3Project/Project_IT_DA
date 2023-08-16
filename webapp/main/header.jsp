@@ -5,9 +5,9 @@
 $(function(){
 	$("#joinForm").click(function(){
 		location.href = "/join.me";
-		
+
 	})
-	
+
 	$("#logoutLink").click(function(e) {
         e.preventDefault();
         $.ajax({
@@ -23,9 +23,9 @@ $(function(){
             }
         });
     });
-	
-	
-	
+
+
+
 	function getid() {
 		var saveId = getCookie("saveid");
 		if(saveId != "") {
@@ -33,7 +33,7 @@ $(function(){
 			$("#remember").prop("checked",true);
 		}
 	} //getid()
-	
+
 	function saveid() {
 		var expdate = new Date();
 		// 기본적으로 3일동안 기억하게 함. 일수를 조절하려면 * 3에서 숫자를 조절하면 됨
@@ -42,16 +42,17 @@ $(function(){
 		} else {
 			expdate.setTime(expdate.getTime() - 1); // 쿠키 삭제조건
 		}
-		
+
 		setCookie("saveid", $("#userId").val(), expdate);
 	} //saveid()
-		 
+
 	function setCookie (name, value, expires) {
 		document.cookie = name + "=" + escape (value) +"; path=/; expires=" + expires.toGMTString();
 	} //setCookie(name,value,expires)
 
 	function getCookie(Name) {
 		var search = Name + "=";
+		console.log(search);
 		if (document.cookie.length > 0) { // 쿠키가 설정되어 있다면
 			offset = document.cookie.indexOf(search);
 			if (offset != -1) { // 쿠키가 존재하면
@@ -68,31 +69,26 @@ $(function(){
 	} //getCookie(Name)
 
 	getid();
-	
+
 	$("#remember").click(function(){
 		saveid();
 	});//#chkuser_id.click
-		
-		
+
+
 		const userId = '<%=session.getAttribute("userId")%>';
 		const userProfile = '<%=session.getAttribute("userProfile")%>';
 		const userFolder = '<%=util.dateService.toDay()%>';
-		
 
 		//id값이 있는 경우
 		if (userId) {
-
-			// 회원가입시 업로드한 프로필사진 경로
-			let profileImgPath = contextPath + "/image/Member/" + userId + "/"
-					+ userFolder + "/"; //경로 추가
-			//location.href="${pageContext.request.contextPath}/main";
-
 			// 프로필 사진 파일 이름과 확장자 추가
 			// 경로에 저장된 이미지를 찾고 출력하기 위함
-			if (userProfile) {
-				profileImgPath += userProfile;
+			let profileImgPath = "";
+			contextPath + "/image/Member/" + userId + "/"+ userFolder + "/"
+			if (userProfile != "profile.png") {
+				profileImgPath += contextPath + "/image/Member/" + userId + "/"+ userFolder + "/"+userProfile;
 			} else {
-				profileImgPath += "profile.png";
+				profileImgPath += contextPath + "/image/common/profile.png";
 			}
 
 			// 프로필 사진 출력

@@ -110,7 +110,8 @@ public class MemberDAO {
 	        pre.setString(9, m.getUserPost());        // userPost
 	        pre.setString(10, m.getUserEmail());      // userEmail
 	        pre.setString(11, m.getUserCategory());   // userCategory
-	        
+	        pre.setString(12, null); // 사용자가 업로드한 파일명 사용
+
 	        // userProfile 설정
 	        if (m.getUserProfile() != null && !m.getUserProfile().trim().isEmpty()) {
 	            pre.setString(12, m.getUserProfile()); // 사용자가 업로드한 파일명 사용
