@@ -35,7 +35,8 @@
                                         </t:when>
                                         <t:otherwise>
                                             <img class="card_img"
-                                                 src="image/content/${c.chNum}/${c.boardNum}/${c.thumbNail}">
+                                                 src="image/content/${c.chNum}/${c.boardDate2}/${c.thumbNail}">
+<%--                                            <t:out value="${c.boardDate.substring(0,10)}..."/>--%>
                                         </t:otherwise>
                                     </t:choose>
                                     <div class="card-body card-body-font">

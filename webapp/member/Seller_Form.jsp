@@ -217,17 +217,17 @@ $(function() {
 	<div id="categories clearfix">
 		<label for='category' style="float: left; margin-left: 15px;"><span style="color: red">*</span>채널 카테고리</label><br>
 			<div id="section1">
-			<input type='radio' name='category' id='category1' value="1"> 공부
-			<input type='radio' name='category' id='category2' value="2"> 게임
-			<input type='radio' name='category' id='category3' value="3"> 운동
-			<input type='radio' name='category' id='category4' value="4"> 등산
-			<input type='radio' name='category' id='category5' value="5"> 낚시</div>
+			<input type='radio' name='category' id='category1' value="1"> 경제/시사
+			<input type='radio' name='category' id='category2' value="2"> 문화/예술
+			<input type='radio' name='category' id='category3' value="3"> IT트렌트
+			<input type='radio' name='category' id='category4' value="4"> 역사
+			<input type='radio' name='category' id='category5' value="5"> 과학</div>
 			<div id="section2">
-			<input type='radio' name='category' id='category6' value="6"> 경제
-			<input type='radio' name='category' id='category7' value="7"> 문학
-			<input type='radio' name='category' id='category8' value="8"> 정치
-			<input type='radio' name='category' id='category9' value="9"> 환경
-			<input type='radio' name='category' id='category10' value="10"> 역사</div>
+			<input type='radio' name='category' id='category6' value="6"> 건강
+			<input type='radio' name='category' id='category7' value="7"> 요리
+			<input type='radio' name='category' id='category8' value="8"> 스포츠
+			<input type='radio' name='category' id='category9' value="9"> 재테크
+			<input type='radio' name='category' id='category10' value="10"> 취미</div>
 	</div>
 	<div class='num5'>	
 		<label for='info' style="float: left;"><span style="color: red">*</span>채널 소개글</label><br>

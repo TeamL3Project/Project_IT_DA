@@ -1,5 +1,4 @@
 import UploadAdapter from "./ImageUploadAdapter.js";
-
 ClassicEditor.create(document.querySelector('#editor'), {
     language: 'ko',
     extraPlugins: [MyCustomUploadAdapterPlugin],

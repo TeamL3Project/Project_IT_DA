@@ -159,27 +159,20 @@ a {
 }
 
 .intro {
-	width: 40%;
-	height: 150px;
+	width: 825px;
+	height: 200px;
 }
 
 #join_seller {
 	float: right;
 	border: none;
-	background: rgb(1, 39, 60);
-	color: rgb(251, 209, 167);
+	background: white;
+	color: rgb(1, 39, 60);
+	z-index: 1;
+	font-weight: bold;
 	position: relative;
-	right: 20px;
-	top: 5px;
-}
-
-#title {
-	color: rgb(251, 209, 167);
-}
-
-#line {
-	text-align: center;
-	color: rgb(251, 209, 167);
+	top: -45px;
+	right: 50px;
 }
 
 /*footer.jsp*/

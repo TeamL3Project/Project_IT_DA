@@ -12,7 +12,17 @@ public class ContentBean {
     private String thumbNail;
     private Timestamp boardDate, boardUpdate;
     private int cnt;
-    
+
+	private String boardDate2;
+
+	public String getBoardDate2() {
+		return boardDate.toString().substring(0,10);
+	}
+
+	public void setBoardDate2(String boardDate2) {
+		this.boardDate2 = boardDate2;
+	}
+
 	public int getCnt() {
 		return cnt;
 	}

@@ -18,9 +18,7 @@ public class MemberLoginAction implements Action {
 		
 		String userId = "";
 		Cookie[] cookies = request.getCookies();
-		
-		
-		
+
 		if(cookies != null) {
 			for(int i = 0; i < cookies.length; i++) {
 				if(cookies[i].getName().equals("userId")) {
@@ -32,11 +30,8 @@ public class MemberLoginAction implements Action {
 		request.setAttribute("userId", userId);
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
-
 		forward.setPath(request.getContextPath()+"/main");		//login 성공후 다시 메인페이지를 보여줌(세션에 id값이 있는 상태)
 		
 		return forward;
-
 	}
-
 }

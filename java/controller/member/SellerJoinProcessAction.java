@@ -41,7 +41,6 @@ public class SellerJoinProcessAction implements Action {
 		ch.setCate_id(Integer.parseInt(multi.getParameter("category")));
 		ch.setChname(multi.getParameter("channel"));
 		ch.setChprofile(multi.getFilesystemName("profile"));
-
 		return ch;
 	}
 

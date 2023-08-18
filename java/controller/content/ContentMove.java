@@ -34,9 +34,8 @@ public class ContentMove implements Action {
 		System.out.println(chInfo.substring(firstURI, 3));
 		int boardNum = Integer.parseInt(chInfo.substring(lastURI + 1));
 		String firstURICut = chInfo.substring(firstURI, 3);
-		int chnum = Integer.parseInt(firstURICut.substring(1, 3));
+		int chnum = Integer.parseInt(chInfo.substring(firstURI + 1, lastURI));
 		System.out.println("chnum = " + chnum);
-
 		ContentDAO dao = new ContentDAO();
 		ContentBean co = dao.contentSelect(boardNum);
 		ReplyDAO redao = new ReplyDAO();

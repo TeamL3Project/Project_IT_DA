@@ -32,6 +32,11 @@ $(function () {
     });
 
     function callContents_ajax(categoryNum) {
+        if (isCategoryButtonOn != categoryNum) {
+            pageCount = FIRST_PAGE;
+            isCategoryButtonOn = categoryNum;
+            $(".popular-list-ul").html("");
+        }
         $.ajax({
             type: "GET",
             url: contextPath + "/contentByCategory.co",
@@ -41,31 +46,27 @@ $(function () {
             },
             dataType: "json",
             success: function (data) {
-                if (isCategoryButtonOn != categoryNum) {
-                    pageCount = FIRST_PAGE;
-                    isCategoryButtonOn = categoryNum;
-                    $(".popular-list-ul").html("");
-                }
+
                 $(data).each(function () {
                         if (data.length != 10) {
                             $(".loader").css('display', 'none');
                         } else {
                             $(".loader").css('display', 'flex');
                         }
-                        if (this.intro.length > 85){
-                            this.intro = this.intro.substring(0,85)+"...";
+                        if (this.intro.length > 80) {
+                            this.intro = this.intro.substring(0, 80) + "...";
                         }
-                        if(this.boardTitle.length > 25){
-                            this.boardTitle = this.boardTitle.substring(0,25)+"...";
+                        if (this.boardTitle.length > 17) {
+                            this.boardTitle = this.boardTitle.substring(0, 17) + "...";
                         }
                         var appendData = '<a href="contents/' + this.chNum + '/' + this.boardNum + '" class="popular-list-card">'
                             + '<li class="popular-list-content"><span class="popular-list-title">' + this.boardTitle + '</span><br>'
-                            + '<p>' +  this.intro + '</p></li>'
+                            + '<p>' + this.intro + '</p></li>'
                             + '<li class="popular-list-imgframe">';
                         if (this.thumbNail == null) {
                             appendData += '<img src="image/common/itda_logo3.png" class="popular-list-img"></li></a>'
                         } else {
-                            appendData += '<img src="image/content/' + this.chNum + '/' + this.boardNum + '/' + this.thumbNail + '" class="popular-list-img"></li></a>'
+                            appendData += '<img src="image/content/' + this.chNum + '/' + this.boardDate.substring(0, 10) + '/' + this.thumbNail + '" class="popular-list-img"></li></a>'
                         }
                         $(".popular-list-ul").append(appendData);
                     }
@@ -79,6 +80,7 @@ $(function () {
     $('.contents_category').click(function () {
         if (isCategoryButtonOn == $(this).prop('id')) return;
         const categoryNum = $(this).prop('id');
+        console.log(categoryNum);
         callContents_ajax(categoryNum);
     })
 
@@ -91,14 +93,13 @@ $(function () {
         if (!isExecuted && currentScrollPosition + 1188 >= totalHeight - 1) {
             isExecuted = true;
             setTimeout(() => {
+                pageCount++;
                 callContents_ajax(isCategoryButtonOn);
                 console.log(pageCount);
-                pageCount++;
                 isExecuted = false;
-            }, 700);
+        }, 700);
         }
     });
-    // var contextPath = '<%= request.getContextPath() %>';
     let firstEntrance = 0;
     callContents_ajax(firstEntrance);
 });
