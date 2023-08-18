@@ -338,7 +338,7 @@ function initializeDefaultContent() {
 					</div>
 
 				</div>
-				<img src="../image/channel/${channel.chnum}/${channel.chprofile}"
+				<img src="../image/MemberUpload/${channel.ownerid}/${channel.chprofile}"
 					style="width: 360px; height: 320px; border-bottom-left-radius: 50px; padding: 10px; margin-top: 10px;">
 			</div>
 

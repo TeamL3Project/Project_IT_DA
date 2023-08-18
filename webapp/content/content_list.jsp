@@ -116,7 +116,6 @@
 
 							<li class="content_item">
 								<div class="content_item_line">
-                                           ${b.boardNum}
 									<a href="${pageContext.request.contextPath}/contents/${param.channelnum}/${b.boardNum}"><img
 										src="${pageContext.request.contextPath}/image/content/${param.channelnum}/${b.boardNum }/${b.thumbNail}"
 										class="content_thumb"> </a>

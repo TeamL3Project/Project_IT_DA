@@ -33,11 +33,14 @@ public class ChannelListAction implements Action {
 	            // 카테고리 아이디가 있는 경우, 해당 카테고리 아이디의 채널 목록을 가져옵니다.
 	            channelList = channelDAO.getChannelList(catIdStr);
 	        }
-	        
+
+
+
 	        JsonArray jsonArray = new JsonArray();
 	        for (ChannelBean channel : channelList) {
 	            JsonObject j = new JsonObject();
 	            j.addProperty("chNum", channel.getChnum());
+	            j.addProperty("ownerId", channel.getOwnerid());
 	            j.addProperty("chName", channel.getChname());
 	            j.addProperty("chprofile", channel.getChprofile());
 	            j.addProperty("chinfo", channel.getChinfo());

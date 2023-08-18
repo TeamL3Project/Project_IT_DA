@@ -24,6 +24,7 @@ public class MainEntrance implements Action {
         List<ContentBean> popcontentList = dao.popcontentSelect();
         List<ChannelCategoryBean> channelCategoryBeanList = channelCategoryDao.selectInfo();
         request.setAttribute("popcontentList",popcontentList);
+
         request.setAttribute("channelCategory",channelCategoryBeanList);
         forward.setRedirect(false);
         forward.setPath("main/protomain.jsp");
